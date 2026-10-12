@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://joim-store.ru/sitemap.xml

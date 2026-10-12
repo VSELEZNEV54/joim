@@ -1,0 +1,84 @@
+/* delivery: страница «Доставка и оплата» (src/pages/delivery.html).
+   Порядок как на странице: заголовок · липкая строка чипов-якорей · три раздела · три ссылки.
+   Раздел: слева заголовок, текст и ссылка на тёмной странице, справа светлая карточка (условия строками, в правой части чертёж).
+   Страница тёмная; светлые здесь только три карточки с чертежами. Все классы страницы начинаются с dlv-. */
+
+/* ---------- Заголовок и чипы ---------- */
+.dlv-head { padding-bottom: 18px; }
+.dlv-head .lead { max-width: 60em; text-wrap: pretty; }
+.dlv-nav { position: sticky; top: var(--sticky-top); z-index: var(--z-sticky); padding: 10px 0; background: var(--bg); border-bottom: 1px solid transparent; transition: border-color .2s; }
+.dlv-nav.is-stuck { border-bottom-color: var(--line); }
+.dlv-nav__list { flex-wrap: nowrap; }
+.dlv-nav__list > li { flex: none; }
+
+/* ---------- Разделы ---------- */
+.dlv { padding-top: 14px; }
+.dlv-sec {
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 8fr); gap: 32px clamp(32px, 4.4vw, 88px); align-items: stretch;
+  padding-block: clamp(36px, 3.6vw, 60px); border-top: 1px solid var(--line);
+  scroll-margin-top: 52px; /* сверх scroll-padding-top страницы: высота строки чипов */
+}
+.dlv-sec:first-child { border-top-color: var(--line-strong); }
+.dlv-sec:last-child { padding-bottom: 0; }
+.dlv-sec__main { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
+.dlv-sec__title { margin-bottom: clamp(18px, 1.8vw, 28px); }
+.dlv-sec__text { display: grid; align-content: start; gap: .9em; max-width: 34em; font-size: 16px; line-height: 1.55; color: var(--text-2); text-wrap: pretty; }
+.dlv-sec__foot { margin-top: auto; padding-top: 32px; }
+
+/* светлая карточка: условия слева, правая часть отдана чертежу (низ срезан краем) */
+.dlv-card { display: block; min-height: clamp(300px, 23vw, 380px); padding: clamp(24px, 2.2vw, 36px); }
+.dlv-card__list { position: relative; width: min(100%, 440px, 54%); }
+.dlv-card__list.bp-card__list, .dlv-card__list .bp-card__list { gap: 10px; font-size: 15px; }
+.dlv-card__list li { padding-bottom: 10px; }
+.dlv-card__note { margin-top: 18px; font-size: 14px; line-height: 1.45; color: var(--text-2); }
+.dlv-card .bp-card__art { right: 6%; bottom: -92px; width: clamp(280px, 38%, 400px); max-width: none; }
+.dlv-sec--map .bp-card__art { right: 1.5%; bottom: 14px; width: clamp(320px, 45%, 520px); }
+.dlv-sec:last-child .bp-card__art { right: 4%; bottom: -84px; width: clamp(290px, 40%, 420px); }
+
+/* ---------- Куда дальше ---------- */
+.dlv-more { padding-top: clamp(72px, 6vw, 104px); }
+.dlv-more__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
+.dlv-more__grid > li { display: flex; min-width: 0; }
+.dlv-more .link-card { flex: 1; }
+.dlv-more .link-card__arrow .icon { transition: transform .3s var(--ease); }
+.dlv-more .link-card:hover .link-card__arrow .icon { transform: translate(2px, -2px); }
+
+/* ---------- Адаптив ---------- */
+/* узкая карточка: условия занимают половину, чертёж меньше и срезан правым краем, со строками не пересекается */
+@media (max-width: 1280px) {
+  .dlv-sec { grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); column-gap: 40px; }
+  .dlv-card__list { width: min(100%, 400px, 52%); }
+  .dlv-card .bp-card__art, .dlv-sec:last-child .bp-card__art { right: -4%; width: clamp(240px, 40%, 360px); }
+  .dlv-sec--map .bp-card__art { right: -6%; width: clamp(280px, 48%, 420px); }
+}
+/* планшет: текст над карточкой, ссылка под ней */
+@media (max-width: 1023px) {
+  .dlv-sec { grid-template-columns: minmax(0, 1fr); row-gap: 0; padding-block: 44px; }
+  .dlv-sec__main { display: contents; }
+  .dlv-sec__title { order: 1; margin-bottom: 16px; }
+  .dlv-sec__text { order: 2; margin-bottom: 28px; }
+  .dlv-card { order: 3; min-height: 300px; }
+  .dlv-sec__foot { order: 4; margin-top: 0; padding-top: 20px; }
+  .dlv-more { padding-top: 64px; }
+}
+@media (max-width: 767px) {
+  .dlv-head { padding-bottom: 10px; }
+  .dlv-nav { padding: 8px 0; }
+  .dlv-nav__list { margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
+  .dlv-nav__list::-webkit-scrollbar { display: none; }
+  .dlv { padding-top: 8px; }
+  .dlv-sec { padding-block: 36px; scroll-margin-top: 48px; }
+  .dlv-sec__title { margin-bottom: 14px; }
+  .dlv-sec__text { margin-bottom: 22px; font-size: 15px; }
+  /* условия во всю ширину карточки, чертёж стоит под ними */
+  .dlv-card { min-height: 0; padding: 20px 20px 172px; }
+  .dlv-card__list { width: 100%; }
+  .dlv-card__list.bp-card__list, .dlv-card__list .bp-card__list { font-size: 14.5px; }
+  .dlv-card .bp-card__art, .dlv-sec:last-child .bp-card__art { right: -24px; bottom: -104px; width: 250px; }
+  .dlv-sec--map .bp-card__art { right: -110px; bottom: -30px; width: 400px; }
+  .dlv-sec__foot .btn { width: 100%; }
+  .dlv-more { padding-top: 52px; }
+  .dlv-more__grid { grid-template-columns: minmax(0, 1fr); }
+  .dlv-more .link-card { justify-content: center; min-height: 0; padding: 16px 76px 16px 18px; }
+  .dlv-more .link-card__arrow { left: auto; right: 18px; top: 50%; bottom: auto; margin-top: -22px; }
+}

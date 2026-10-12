@@ -1,0 +1,184 @@
+/* cart: страница корзины /cart/ (бриф, раздел 7а). Порядок как на странице: заголовок · список товаров · прилипающая сводка
+   (итог, порог бесплатной доставки, способы получения, форма) · пустое состояние · «Заявка принята» · ряд плиток ·
+   нижняя панель на телефоне. Страница тёмная: рендеры стоят прямо на ней, сводка на --surface. Все классы начинаются с cart-. */
+.page-cart {
+  --cart-media: clamp(120px, 10.4vw, 196px);  /* ширина рендера в строке */
+  --cart-qty: 128px;
+  --cart-total: clamp(120px, 10vw, 168px);
+  --cart-gap: clamp(16px, 2vw, 36px);
+}
+.cart { min-height: 46vh; padding-bottom: var(--section); }
+.cart-head { padding-bottom: 28px; }
+
+/* ---------- Раскладка: список и сводка ----------
+   Список не растягивается шире 1280 px: на 2560 сводка стоит рядом с ним, а не у дальнего края окна. */
+.cart__in { display: grid; grid-template-columns: minmax(0, 1280px) clamp(380px, 30vw, 480px); grid-template-rows: auto 1fr; justify-content: space-between; column-gap: clamp(32px, 4.4vw, 88px); align-items: start; }
+.cart-head, .cart__main { grid-column: 1; min-width: 0; }
+.cart__main { container: cart-main / inline-size; }
+.cart-sum { grid-column: 2; grid-row: 1 / span 2; margin-top: 20px; }
+.cart-empty, .cart-done, .cart-noscript { grid-column: 1 / -1; }
+
+/* подписи колонок: те же колонки, что у строки товара */
+.cart-cols, .cart-item { display: grid; grid-template-columns: var(--cart-media) minmax(0, 1fr) var(--cart-qty) var(--cart-total) 44px; column-gap: var(--cart-gap); }
+.cart-cols { padding-bottom: 14px; border-bottom: 1px solid var(--line-strong); }
+.cart-cols__name { grid-column: 1 / 3; }
+.cart-cols__sum { text-align: right; }
+
+/* ---------- Строка товара ---------- */
+.cart-item { align-items: center; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.cart-item.is-new { animation: cart-in .35s var(--ease) both; }
+@keyframes cart-in { from { opacity: 0; transform: translateY(8px); } }
+.cart-item__media { align-self: stretch; }
+.cart-item__media .tile__link { --mx: 12%; --mt: 8%; --mb: 8%; }
+.cart-item__media .tile__img { transition: transform .6s var(--ease); }
+.cart-item:hover .cart-item__media .tile__img { transform: scale(1.04); }
+.cart-item__info { display: grid; gap: 8px; min-width: 0; padding-block: 10px; }
+.cart-item__name { justify-self: start; padding-block: 2px; font-size: clamp(18px, 1.45vw, 22px); font-weight: 600; line-height: 1.2; letter-spacing: -.02em; text-wrap: balance; transition: color .2s; }
+.cart-item__name:hover { color: var(--accent); }
+.cart-item__specs { font-size: 14.5px; line-height: 1.4; color: var(--text-2); }
+.cart-item__unit { display: flex; align-items: baseline; flex-wrap: wrap; gap: 2px 10px; margin-top: 6px; font-size: 15px; font-weight: 500; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cart-item__buy { display: contents; }
+.cart-item .qty__btn { width: 44px; } /* зона касания 44 px */
+.cart-item__sum { display: grid; justify-items: end; gap: 4px; text-align: right; }
+.cart-item__sum b { font-size: clamp(20px, 1.6vw, 24px); font-weight: 600; line-height: 1.1; letter-spacing: -.02em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cart-item__each { font-size: 13px; line-height: 1.3; color: var(--text-3); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cart-item__each[hidden] { display: none; }
+.cart-item__remove { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; color: var(--text-2); transition: background-color .2s, color .2s; }
+.cart-item__remove:hover { background: var(--surface-2); color: var(--text); }
+.cart-item__remove .icon { width: 19px; height: 19px; }
+.cart__back { margin-top: 14px; }
+.cart__back-link:hover .icon { transform: translateX(-3px); }
+
+/* узкий список (телефон и окно 1024–1190 px рядом со сводкой): строка в два яруса: рендер слева, справа название и цифры,
+   под ними количество и сумма; удаление в правом верхнем углу. Подписи колонок не нужны */
+@container cart-main (max-width: 699px) {
+  .cart-cols { display: none; }
+  .cart-list { border-top: 1px solid var(--line-strong); }
+  .cart-item { grid-template-columns: clamp(72px, 24cqw, 132px) minmax(0, 1fr) 44px; grid-template-areas: "media info remove" "media buy buy"; column-gap: clamp(10px, 3.4cqw, 20px); row-gap: 12px; align-items: start; padding: 16px 0 18px; }
+  .cart-item__media { grid-area: media; align-self: start; }
+  .cart-item__info { grid-area: info; gap: 6px; padding-block: 2px 0; }
+  .cart-item__name { font-size: 16.5px; line-height: 1.25; }
+  .cart-item__specs { font-size: 13.5px; }
+  .cart-item__unit { margin-top: 2px; font-size: 14px; }
+  .cart-item__buy { grid-area: buy; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .cart-item__sum b { font-size: 20px; }
+  .cart-item__remove { grid-area: remove; margin: -8px -10px 0 0; }
+}
+@container cart-main (min-width: 480px) and (max-width: 699px) {
+  .cart-item__name { font-size: 18px; }
+}
+
+/* ---------- Сводка ----------
+   Прилипает под шапкой, пока помещается в окно по высоте (класс .is-sticky ставит cart.js): высокая панель в низком окне
+   остаётся в потоке, иначе до кнопки «Оформить заказ» было бы не докрутить. */
+.cart-sum { min-width: 0; container: cart-sum / inline-size; background: var(--surface); border-radius: var(--r); box-shadow: inset 0 0 0 1px var(--line); }
+.cart-sum.is-sticky { position: sticky; top: calc(var(--sticky-top) + 20px); }
+.cart-sum__block { padding: 20px clamp(20px, 2vw, 28px); }
+.cart-sum__block + .cart-sum__block { border-top: 1px solid var(--line); }
+.cart-sum__head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+.cart-sum__count { font-size: 14.5px; color: var(--text-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cart-sum__total { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-top: 12px; }
+.cart-sum__total-label { font-size: 16px; font-weight: 500; }
+.cart-sum__price { font-size: clamp(30px, 2.4vw, 36px); font-weight: 600; line-height: 1; letter-spacing: -.03em; }
+.cart-sum__label { margin-bottom: 12px; }
+
+/* порог бесплатной доставки: дорожка заполняется до 15 000 ₽ */
+.cart-free { margin-top: 20px; }
+.cart-free__track { position: relative; height: 4px; border-radius: 2px; background: var(--line-strong); overflow: hidden; }
+.cart-free__fill { position: absolute; inset: 0; background: var(--accent); transform: scaleX(var(--fill, 0)); transform-origin: left center; transition: transform .4s var(--ease); }
+.cart-free__text { display: flex; align-items: flex-start; gap: 8px; margin-top: 12px; font-size: 14px; line-height: 1.4; color: var(--text-2); text-wrap: pretty; }
+.cart-free__text b { color: var(--text); font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.cart-free__text .icon { width: 18px; height: 18px; margin-top: 1px; color: var(--accent); stroke-width: 2; }
+.cart-free.is-free .cart-free__text { color: var(--text); }
+
+/* способы получения: название и цена строкой, как в списке на странице доставки */
+.cart-sum__head--ways { align-items: center; margin-bottom: 6px; }
+.cart-sum__more { position: relative; display: inline-flex; align-items: center; gap: 4px; font-size: 13.5px; color: var(--text-2); transition: color .2s; }
+.cart-sum__more::after { content: ""; position: absolute; inset: -13px -8px; } /* зона касания 44 px */
+.cart-sum__more:hover { color: var(--text); }
+.cart-sum__more .icon { width: 15px; height: 15px; transition: transform .25s var(--ease); }
+.cart-sum__more:hover .icon { transform: translate(2px, -2px); }
+.cart-ways { display: grid; font-size: 14.5px; line-height: 1.35; }
+.cart-ways li { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 16px; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.cart-ways li:last-child { padding-bottom: 0; border-bottom: 0; }
+.cart-ways__price { font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.cart-ways__price [data-cart-way-free] { color: var(--accent); }
+
+/* форма оформления: имя и телефон в ряд, когда панель шире 410 px */
+.cart-form .form__main { gap: 10px; }
+.cart-form .cart-sum__label { margin-bottom: 2px; }
+.cart-form__row { grid-template-columns: minmax(0, 1fr); gap: 10px; align-items: start; }
+@container cart-sum (min-width: 410px) {
+  .cart-form__row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.cart-form .input, .cart-form .textarea { padding-inline: 16px; }
+.cart-form__comment { min-height: 68px; padding-block: 12px; }
+.cart-form .check { margin-top: 2px; padding-block: 4px; }
+.cart-form__btn { margin-top: 6px; }
+.cart-form__hint { font-size: 13px; line-height: 1.4; color: var(--text-3); text-align: center; }
+
+/* ---------- Пусто и «Заявка принята» ---------- */
+.cart-empty, .cart-done { display: grid; justify-items: start; gap: 14px; padding: 8px 0 12px; }
+.cart-empty__icon, .cart-done__icon { display: grid; place-items: center; width: 56px; height: 56px; margin-bottom: 10px; border-radius: 50%; background: var(--surface-2); color: var(--text-2); }
+.cart-empty__icon .icon, .cart-done__icon .icon { width: 24px; height: 24px; }
+.cart-done__icon { background: var(--accent); color: var(--on-accent); }
+.cart-done__icon .icon { stroke-width: 2; }
+.cart-done__title:focus-visible { outline: none; }
+.cart-empty__btn { margin-top: 14px; }
+.cart-done__order { font-size: 15px; color: var(--text-2); font-variant-numeric: tabular-nums; }
+.cart-done__order b { color: var(--text); font-weight: 600; white-space: nowrap; }
+.cart-done__actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.cart-noscript { max-width: 44em; font-size: 15px; color: var(--text-2); }
+
+/* ---------- Ряд плиток ---------- */
+.cart-more[hidden] { display: none; }
+/* очень широкое окно: шесть колонок, плитка не вырастает выше экрана; до 2000 px показаны первые четыре */
+.cart-more .product-grid > li:nth-child(n + 5) { display: none; }
+@media (min-width: 2000px) {
+  .cart-more .product-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .cart-more .product-grid > li:nth-child(n + 5) { display: block; }
+}
+
+/* ---------- Нижняя панель (телефон и планшет) ---------- */
+.cart-bar { display: none; }
+
+/* ---------- Адаптив ---------- */
+/* очень широкое окно: сводка стоит рядом со списком, а не у дальнего края */
+@media (min-width: 2000px) {
+  .cart__in { justify-content: start; }
+}
+@media (max-width: 1279px) {
+  .page-cart { --cart-qty: 120px; --cart-gap: 16px; }
+  .cart__in { grid-template-columns: minmax(0, 1fr) 380px; column-gap: 32px; }
+}
+/* планшет и телефон: сводка и форма под списком, внизу липкая панель «Итого + Оформить» */
+@media (max-width: 1023px) {
+  .cart__in { grid-template-columns: minmax(0, 1fr); }
+  .cart-sum, .cart-sum.is-sticky { position: static; grid-column: 1; grid-row: auto; margin-top: 40px; }
+  .cart-form { scroll-margin-top: 8px; }
+  .cart-bar {
+    position: fixed; inset: auto 0 0; z-index: var(--z-sticky); display: block;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background: var(--surface); border-top: 1px solid var(--line-strong); box-shadow: var(--shadow-bar);
+    transform: translateY(100%); visibility: hidden;
+    transition: transform .3s var(--ease), visibility 0s linear .3s;
+  }
+  .cart-bar.is-open { transform: none; visibility: visible; transition-delay: 0s; }
+  .cart-bar__in { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 68px; padding-block: 10px; }
+  .cart-bar__total { display: grid; gap: 2px; min-width: 0; }
+  .cart-bar__price { font-size: 20px; line-height: 1.15; letter-spacing: -.02em; }
+  .cart-bar__btn { flex: none; min-width: 168px; min-height: 48px; }
+}
+@media (max-width: 767px) {
+  .cart-head { padding-bottom: 16px; }
+  .cart__back { margin-top: 8px; }
+  .cart-sum__block { padding: 20px 16px; }
+  .cart-sum__price { font-size: 30px; }
+  .cart-empty, .cart-done { gap: 12px; }
+  .cart-empty__btn { width: 100%; }
+  .cart-done__actions { width: 100%; }
+  .cart-done__actions .btn { flex: 1 1 100%; }
+}
+@media (max-width: 359px) {
+  .cart-bar__btn { min-width: 132px; }
+}
