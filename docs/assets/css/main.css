@@ -948,3 +948,32 @@ dialog.is-closing::backdrop { animation: fade-out .25s both; }
 /* прежние «тёмный лист на светлой странице» и «текст на тёмном»: теперь это обычная тёмная полоса */
 .dark-sheet { background: var(--dark-2); color: var(--on-dark); }
 .on-dark { color: var(--on-dark); }
+
+/* ---------- Появления и выезды ----------
+   Первый экран и шапки страниц: чистый CSS при загрузке (без JS, без мигания).
+   Остальные блоки: классы .rv / .rv-o ставит initReveal() в main.js только тем элементам,
+   которые в момент загрузки ниже экрана; после появления классы снимаются. */
+@keyframes rise { from { opacity: 0; transform: translate3d(0, 20px, 0); } }
+@keyframes slide-from-right { from { opacity: 0; transform: translate3d(56px, 0, 0); } }
+@keyframes slide-from-left { from { opacity: 0; transform: translate3d(-56px, 0, 0); } }
+@media (prefers-reduced-motion: no-preference) {
+  .hero__copy > *, .page-head > *, .pdp__head > *, .stub__head > * { animation: rise .7s var(--ease) both; }
+  .hero__copy > :nth-child(2), .page-head > :nth-child(2), .pdp__head > :nth-child(2), .stub__head > :nth-child(2) { animation-delay: .08s; }
+  .hero__copy > :nth-child(3), .page-head > :nth-child(3), .pdp__head > :nth-child(3) { animation-delay: .16s; }
+  .hero__copy > :nth-child(4), .page-head > :nth-child(4), .pdp__head > :nth-child(4) { animation-delay: .24s; }
+  .hero__copy > :nth-child(n+5), .page-head > :nth-child(n+5), .pdp__head > :nth-child(n+5) { animation-delay: .32s; }
+  .hero__product { animation: slide-from-right .9s var(--ease) .12s both; }
+  .hero__stats > li { animation: rise .6s var(--ease) both; }
+  .hero__stats > li:nth-child(1) { animation-delay: .38s; }
+  .hero__stats > li:nth-child(2) { animation-delay: .46s; }
+  .hero__stats > li:nth-child(3) { animation-delay: .54s; }
+  .hero__stats > li:nth-child(4) { animation-delay: .62s; }
+  .pdp-gallery { animation: slide-from-left .8s var(--ease) both; }
+
+  .rv, .rv-o { opacity: 0; }
+  .rv { transform: translate3d(0, 24px, 0); }
+  .rv--left { transform: translate3d(-48px, 0, 0); }
+  .rv--right { transform: translate3d(48px, 0, 0); }
+  .rv.is-in { opacity: 1; transform: none; transition: opacity .6s var(--ease) var(--rv-d, 0ms), transform .75s var(--ease) var(--rv-d, 0ms); }
+  .rv-o.is-in { opacity: 1; transition: opacity .6s var(--ease) var(--rv-d, 0ms); }
+}

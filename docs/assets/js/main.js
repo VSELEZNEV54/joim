@@ -671,6 +671,84 @@
     });
   }
 
+
+  /* ---------- Появления при прокрутке ----------
+     Скрываем только то, что при загрузке лежит ниже экрана, поэтому ничего не мигает.
+     Первый экран анимируется чистым CSS (см. конец main.css). */
+  function initReveal() {
+    const main = $('main');
+    if (!main || !('IntersectionObserver' in window)) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const STICKY = '.pdp__side, .pdp-bar, .faq__side, .cart-sum, .dlv-nav, .pdp-nav';
+    const GROUPS = '.product-pairs, .product-grid, .product-rows, .mosaic, [class*="__grid"], .stats, .steps, .pdp-steps, '
+      + '.accordion, .service-strip__list, .home-docs, .home-action__list, .rev-wall__list, .rev-action__list, .hub-list, .cmp-fit__list';
+    const SKIP = 'dialog, .slider__track, .hero, .page-head, .pdp__head, .stub__head, [hidden], [data-no-reveal]';
+    const fold = window.innerHeight * 0.92;
+    const picked = [];
+    const pick = (el, kind, order) => {
+      if (!el || el.classList.contains('rv') || el.classList.contains('rv-o') || el.closest(SKIP)) return;
+      if (el.closest('.rv, .rv-o')) return;                       // родитель уже анимируется целиком
+      const cs = getComputedStyle(el);
+      if (cs.display === 'none' || cs.position === 'fixed' || cs.position === 'sticky') return;
+      // внутри липких и закреплённых панелей (нижняя панель покупки, шапка сравнения) ничего не прячем
+      for (let p = el.parentElement; p && p !== main; p = p.parentElement) {
+        const pos = getComputedStyle(p).position;
+        if (pos === 'fixed' || pos === 'sticky') return;
+      }
+      if (el.getBoundingClientRect().top < fold) return;         // уже на экране: не трогаем
+      const plain = cs.transform !== 'none' || el.matches(STICKY) || el.querySelector(STICKY);
+      el.classList.add(plain ? 'rv-o' : 'rv');
+      if (!plain && (kind === 'left' || kind === 'right')) el.classList.add('rv--' + kind);
+      if (order) el.style.setProperty('--rv-d', Math.min(order, 6) * 70 + 'ms');
+      picked.push(el);
+    };
+
+    // строки каталога: рендер выезжает с одной стороны, описание с другой
+    $$('.product-card--row', main).forEach((card) => {
+      const flip = card.classList.contains('product-card--flip');
+      pick($('.product-card__media', card), flip ? 'right' : 'left');
+      pick($('.product-card__body', card), flip ? 'left' : 'right', 1);
+    });
+    // комплект в карточке товара: картинка и список навстречу друг другу
+    pick($('.pdp-kit__media', main), 'left');
+    pick($('.pdp-kit__body', main), 'right', 1);
+    // карточки с уголками выезжают со своей стороны экрана
+    $$('.bracket-card', main).forEach((el) => {
+      const r = el.getBoundingClientRect();
+      pick(el, r.left + r.width / 2 > window.innerWidth / 2 ? 'right' : 'left');
+    });
+    // сетки и списки: элементы появляются по очереди
+    $$(GROUPS, main).forEach((group) => {
+      if (group.closest('.slider__track')) return;
+      // горизонтальная лента (на телефоне): элементы за краем экрана не дождутся прокрутки, показываем ленту целиком
+      if (group.scrollWidth > group.clientWidth + 8) { pick(group, 'up'); return; }
+      Array.from(group.children).forEach((child, i) => pick(child, 'up', i % 6));
+    });
+    $$('.section-head', main).forEach((el) => pick(el, 'up'));
+    // всё остальное: крупные блоки секций целиком
+    $$('.container > *', main).forEach((el) => {
+      if (el.querySelector('.rv, .rv-o')) return;                 // внутри уже есть свои появления
+      pick(el, 'up');
+    });
+
+    if (!picked.length) return;
+    const done = (el) => {
+      el.classList.remove('rv', 'rv-o', 'rv--left', 'rv--right', 'is-in');
+      el.style.removeProperty('--rv-d');
+    };
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        io.unobserve(el);
+        el.classList.add('is-in');
+        const delay = parseFloat(el.style.getPropertyValue('--rv-d')) || 0;
+        window.setTimeout(() => done(el), delay + 900);
+      });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0 });
+    picked.forEach((el) => io.observe(el));
+  }
+
   /* ---------- Запуск ---------- */
   function init() {
     initHeader();
@@ -680,6 +758,7 @@
     initSliders();
     markActiveNav();
     $$('.range').forEach(setRangeFill);
+    initReveal();
   }
   if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', init);
   else init();

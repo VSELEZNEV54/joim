@@ -28,7 +28,7 @@
   const moreSection = $('[data-cart-more-section]');
   const bar = $('[data-cart-bar]');
   const footer = $('.footer');
-  const NB = ' ';
+  const NB = '\u00A0'; // неразрывный пробел
   const MORE_MAX = 6; // до 2000 px показаны первые четыре плитки, шире — шесть (cart.css)
   const GOODS = ['товар', 'товара', 'товаров'];
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
