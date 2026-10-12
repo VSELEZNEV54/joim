@@ -1,0 +1,634 @@
+<!--template
+{
+  "css": ["pages/product.css"],
+  "js": ["pages/product.js"]
+}
+-->
+
+<!-- Страница товара: один шаблон на восемь товаров (данные: src/data/products.json).
+     Порядок: галерея и панель покупки · полоса ключевых цифр · [ES-19, PVC-1: «Что умеет»] · комплектация (светлая вставка) ·
+     характеристики · [пусковые в продаже: «Как пользоваться»; PVC-1: «Зарядка и уход»] · [в продаже: доставка и гарантия, отзывы,
+     вопросы] · «Вам может быть интересно» · тёмная сцена с формой · липкая панель покупки на телефоне.
+     У товаров «скоро» нет цены, рейтинга, отзывов, количества и кнопки «В корзину»: вместо них «Сообщить о поступлении»;
+     блоки показываются только те, для которых в справочнике есть данные. -->
+
+<!-- 1. Верх: слева галерея (рендер стоит прямо на странице) и описание, справа панель покупки, которая прилипает при прокрутке.
+     Кадры галереи:
+       тёмные (bg: dark)   кадры серии «товар на тёмной сцене»: вписаны в окно, края растворены маской (product.css);
+                           первому кадру передаются яркость и маска угла из подгонки плитки (tile.tone, tile.mod = corner),
+                           как в карточках каталога;
+       общий план сцены    (*-stage.jpg, адрес равен stage.src): стоит через общий компонент .stage, товар в центре окна.
+                           У товаров «скоро» он повторяет первый кадр, поэтому в галерею не выводится;
+       светлые (bg: light) вырезки на прозрачном фоне: стоят на странице на светлом пятне;
+       видео               постер с кнопкой, ролик грузится после клика.
+     Локальные кадры (адрес начинается с «/») лежат в /assets/img/deck/ вместе с лёгкими копиями:
+       <файл>.thumb.webp  миниатюра для ленты (короткая сторона 144 px);
+       <файл>.webp        комплект на прозрачном фоне (*-kit.png): до 1200 px, вместо PNG на 0,8–1,5 МБ.
+     Кадры с сайта клиента (https://…) идут как есть. Если лёгкой копии нет, product.js подставит исходный файл (data-full).
+     Лёгкие копии делает скрипт mkimg.mjs в корне проекта: запускать после добавления кадров в /assets/img/deck/. -->
+<section class="pdp" aria-labelledby="pdp-title">
+  <div class="container pdp__in">
+
+    <div class="pdp__main">
+      <div class="pdp-gallery" data-gallery>
+        <div class="pdp-gallery__stage">
+          <ul class="pdp-gallery__track" data-gallery-track tabindex="0" aria-label="Галерея: {{short}}">
+{{#each gallery}}{{#if src == stage.src}}{{#if inStock}}            <li class="pdp-gallery__slide pdp-gallery__slide--scene" data-gallery-slide>
+              <div class="stage pdp-gallery__scene" style="{{stageStyle}}">
+                <a class="stage__link pdp-gallery__zoom" href="{{src}}" data-lightbox data-caption="{{alt}}"><img class="stage__img" src="{{src}}" alt="{{alt}}" width="{{w}}" height="{{h}}" loading="lazy" decoding="async"></a>
+              </div>
+            </li>
+{{/if}}{{else}}            <li class="pdp-gallery__slide pdp-gallery__slide--{{bg}}{{#if isVideo}} pdp-gallery__slide--video{{/if}}{{#if first}}{{#if tileMod == "corner"}} pdp-gallery__slide--corner{{/if}}{{/if}}" data-gallery-slide style="--w: {{w}}; --h: {{h}}{{#if first}}{{#if tile.tone}}; --tone: {{tile.tone}}{{/if}}{{/if}}">
+{{#if isVideo}}              <div class="pdp-gallery__player">
+                <button class="pdp-gallery__play" type="button" data-video-play aria-label="Смотреть видео: {{short}}">
+                  <img class="pdp-gallery__poster" src="{{src}}" alt="{{alt}}" width="{{w}}" height="{{h}}" loading="lazy" decoding="async">
+                  <span class="pdp-gallery__play-icon" aria-hidden="true">{{icon play}}</span>
+                </button>
+                <video class="pdp-gallery__video" preload="none" controls playsinline poster="{{src}}" width="{{w}}" height="{{h}}" aria-label="{{alt}}" hidden><source src="{{video}}" type="video/mp4"></video>
+              </div>
+{{else}}{{#if light}}{{#if src.0 == "/"}}              <a class="pdp-gallery__zoom" href="{{src}}.webp" data-lightbox data-caption="{{alt}}">
+                <img class="pdp-gallery__img" src="{{src}}.webp" data-full="{{src}}" alt="{{alt}}" width="{{w}}" height="{{h}}" {{#if first}}fetchpriority="high"{{else}}loading="lazy"{{/if}} decoding="async">
+              </a>
+{{else}}              <a class="pdp-gallery__zoom" href="{{src}}" data-lightbox data-caption="{{alt}}">
+                <img class="pdp-gallery__img" src="{{src}}" alt="{{alt}}" width="{{w}}" height="{{h}}" {{#if first}}fetchpriority="high"{{else}}loading="lazy"{{/if}} decoding="async">
+              </a>
+{{/if}}{{else}}              <a class="pdp-gallery__zoom" href="{{src}}" data-lightbox data-caption="{{alt}}">
+                <img class="pdp-gallery__img" src="{{src}}" alt="{{alt}}" width="{{w}}" height="{{h}}" {{#if first}}fetchpriority="high"{{else}}loading="lazy"{{/if}} decoding="async">
+              </a>
+{{/if}}{{/if}}            </li>
+{{/if}}{{/each}}          </ul>
+          <p class="pdp-gallery__count" aria-hidden="true"><b data-gallery-current>01</b><span class="pdp-gallery__total"></span></p>
+          <div class="pdp-gallery__arrows">
+            <button class="round-btn pdp-gallery__arrow" type="button" data-gallery-prev aria-label="Предыдущее фото" disabled>{{icon arrow-left}}</button>
+            <button class="round-btn pdp-gallery__arrow" type="button" data-gallery-next aria-label="Следующее фото">{{icon arrow-right}}</button>
+          </div>
+        </div>
+        <ul class="pdp-gallery__thumbs" data-gallery-thumbs aria-label="Все кадры: {{short}}">
+{{#each gallery}}{{#if src == stage.src}}{{#if inStock}}          <li><button class="pdp-thumb pdp-thumb--dark" type="button" data-gallery-thumb aria-label="Фото {{n}}: {{alt}}"><img src="{{src}}.thumb.webp" data-full="{{src}}" alt="" width="{{w}}" height="{{h}}" loading="lazy" decoding="async"></button></li>
+{{/if}}{{else}}          <li><button class="pdp-thumb pdp-thumb--{{bg}}{{#if first}} is-active{{/if}}" type="button" data-gallery-thumb aria-label="{{#if isVideo}}Видео{{else}}Фото {{n}}{{/if}}: {{alt}}"{{#if first}} aria-current="true"{{/if}}><img src="{{#if src.0 == "/"}}{{src}}.thumb.webp{{else}}{{src}}{{/if}}" data-full="{{src}}" alt="" width="{{w}}" height="{{h}}" loading="lazy" decoding="async">{{#if isVideo}}<span class="pdp-thumb__play" aria-hidden="true">{{icon play}}</span>{{/if}}</button></li>
+{{/if}}{{/each}}        </ul>
+      </div>
+
+      <!-- описание и «Где применяется»: стоят под галереей, пока справа держится панель покупки -->
+      <div class="pdp-about">
+        <p class="pdp-about__text">{{{about}}}</p>
+{{#if usage}}        <div class="pdp-about__usage">
+          <p class="label pdp-about__label" id="usage-label">Где применяется</p>
+          <ul class="chips pdp-about__chips" aria-labelledby="usage-label">
+{{#each usage}}            <li class="chip chip--outline">{{{this}}}</li>
+{{/each}}          </ul>
+        </div>
+{{/if}}      </div>
+    </div>
+
+    <div class="pdp__side">
+      <div class="pdp__head">
+        <p class="pdp__kicker">{{#if badge}}<span class="badge badge--{{badgeTone}}">{{badge}}</span>{{/if}}<span class="label">JOIM · модель {{model}}</span></p>
+        <h1 class="pdp__title" id="pdp-title">{{{nameHtml}}}</h1>
+        <p class="pdp__keys">{{{specsHtml}}}</p>
+{{#if hasRating}}        <a class="pdp__rating" href="#reviews">{{> stars}}<b>{{ratingFmt}}</b><span class="pdp__rating-count">{{{reviewsHtml}}}</span></a>
+{{/if}}      </div>
+
+      <div class="pdp-buy">
+        <div class="pdp-buy__price-row">
+{{#if inStock}}          <p class="price pdp-buy__price">{{{priceHtml}}}</p>
+          <p class="pdp-buy__stock">{{icon check}}В&nbsp;наличии</p>
+{{else}}          <p class="pdp-buy__price pdp-buy__price--soon">{{{priceHtml}}}</p>
+{{/if}}        </div>
+        <div class="pdp-buy__row{{#if inStock}} pdp-buy__row--qty{{/if}}" data-buy>
+{{#if inStock}}          <div class="qty pdp-buy__qty" role="group" aria-label="Количество" data-qty-box>
+            <button class="qty__btn" type="button" data-qty-dec aria-label="Уменьшить количество" disabled>{{icon minus}}</button>
+            <span class="qty__val" aria-live="polite" data-qty-val>1</span>
+            <button class="qty__btn" type="button" data-qty-inc aria-label="Увеличить количество">{{icon plus}}</button>
+          </div>
+          <button class="btn btn--accent btn--lg pdp-buy__add" type="button" data-add-to-cart="{{id}}" data-qty="1">В&nbsp;корзину</button>
+{{else}}          <button class="btn btn--outline btn--lg pdp-buy__add" type="button" data-notify="{{id}}" aria-haspopup="dialog">Сообщить о&nbsp;поступлении</button>
+{{/if}}          <button class="round-btn pdp-buy__fav" type="button" data-fav="{{id}}" aria-pressed="false" aria-label="В избранное: {{short}}">{{icon heart}}</button>
+        </div>
+        <!-- две кнопки меньше основной: магазин JOIM на Ozon и страница бренда на Wildberries (адреса из справочника) -->
+        <div class="pdp-buy__mp" role="group" aria-label="JOIM на маркетплейсах">
+          <a class="btn btn--outline btn--xs" href="{{ozonUrl}}" target="_blank" rel="nofollow noopener" aria-label="Ozon: {{short}}, откроется в новой вкладке">Ozon{{icon arrow-up-right}}</a>
+          <a class="btn btn--outline btn--xs" href="{{wbUrl}}" target="_blank" rel="nofollow noopener" aria-label="Wildberries: {{short}}, откроется в новой вкладке">Wildberries{{icon arrow-up-right}}</a>
+        </div>
+{{#if soon}}        <p class="pdp-buy__note">Оставьте контакт: напишем или позвоним, когда модель появится в&nbsp;продаже.</p>
+{{/if}}{{#if inStock}}        <ul class="pdp-buy__ship">
+          <li>{{icon clock}}<p><b>Москва:</b> курьер в&nbsp;день заказа при&nbsp;оформлении до&nbsp;15:00</p></li>
+          <li>{{icon truck}}<p><b>По&nbsp;России:</b> СДЭК 2–7&nbsp;дней, от&nbsp;390&nbsp;₽</p></li>
+          <li>{{icon shield}}<p><b>Гарантия:</b> {{{specs.warranty}}}, брак меняем без&nbsp;экспертизы</p></li>
+        </ul>
+        <a class="more-link pdp-buy__more" href="#delivery">Доставка и&nbsp;гарантия{{icon arrow-right}}</a>
+{{/if}}      </div>
+{{#if isJump}}      <ul class="pdp__links">
+{{#if steps}}        <li><a class="pdp__link" href="/compare/es19-vs-es29/">Сравнить ES-19 и&nbsp;ES-29{{icon arrow-up-right}}</a></li>
+{{/if}}        <li><a class="pdp__link" href="/podbor/">Подбор по&nbsp;машине{{icon arrow-up-right}}</a></li>
+      </ul>
+{{/if}}    </div>
+
+  </div>
+
+  <!-- Полоса ключевых цифр: тот же компонент .stats, что на первом экране главной. Числа повторяют характеристики справочника
+       (specs: current, engines, starts, lamp; у PVC-1 runtime, charge, filters, modes): в данных они лежат строкой вместе
+       с пояснением, поэтому число и единица здесь набраны отдельно. При смене характеристик в справочнике поправить и здесь.
+       У PVC-7 и PVC-8 числовых характеристик нет: полосы нет, их поля стоят в блоке «Характеристики». -->
+{{#if isJump}}  <div class="container pdp__stats">
+    <ul class="stats{{#if id == "es55"}} stats--3{{/if}} pdp-stats" aria-label="Ключевые цифры: {{short}}">
+{{#if id == "es19"}}      <li class="stat"><b class="stat__value">3&nbsp;300<span class="stat__unit">А</span></b><span class="stat__label">Пусковой ток</span></li>
+      <li class="stat"><b class="stat__value">до&nbsp;8<span class="stat__unit">л</span></b><span class="stat__label">Бензиновый мотор, дизель до&nbsp;7&nbsp;л</span></li>
+      <li class="stat"><b class="stat__value">20+</b><span class="stat__label">Запусков на&nbsp;одном заряде</span></li>
+      <li class="stat"><b class="stat__value">700<span class="stat__unit">лм</span></b><span class="stat__label">Фонарь, стробоскоп и&nbsp;SOS</span></li>
+{{/if}}{{#if id == "es29"}}      <li class="stat"><b class="stat__value">5&nbsp;000<span class="stat__unit">А</span></b><span class="stat__label">Пиковый ток</span></li>
+      <li class="stat"><b class="stat__value">от&nbsp;7<span class="stat__unit">л</span></b><span class="stat__label">Дизель, бензин от&nbsp;8&nbsp;л</span></li>
+      <li class="stat"><b class="stat__value">40+</b><span class="stat__label">Запусков на&nbsp;одном заряде</span></li>
+      <li class="stat"><b class="stat__value">1&nbsp;000<span class="stat__unit">лм</span></b><span class="stat__label">Фонарь, стробоскоп и&nbsp;SOS</span></li>
+{{/if}}{{#if id == "es2"}}      <li class="stat"><b class="stat__value">до&nbsp;3&nbsp;000<span class="stat__unit">А</span></b><span class="stat__label">Пусковой ток</span></li>
+      <li class="stat"><b class="stat__value">до&nbsp;7<span class="stat__unit">л</span></b><span class="stat__label">Бензиновый мотор, дизель до&nbsp;4&nbsp;л</span></li>
+      <li class="stat"><b class="stat__value">около&nbsp;15</b><span class="stat__label">Запусков на&nbsp;одном заряде</span></li>
+      <li class="stat"><b class="stat__value">700<span class="stat__unit">лм</span></b><span class="stat__label">Фонарь</span></li>
+{{/if}}{{#if id == "es55"}}      <li class="stat"><b class="stat__value">до&nbsp;8&nbsp;000<span class="stat__unit">А</span></b><span class="stat__label">Пусковой ток, встроенный компрессор</span></li>
+      <li class="stat"><b class="stat__value">около&nbsp;25</b><span class="stat__label">Запусков на&nbsp;одном заряде</span></li>
+      <li class="stat"><b class="stat__value">1&nbsp;000<span class="stat__unit">лм</span></b><span class="stat__label">Фонарь</span></li>
+{{/if}}{{#if id == "es99"}}      <li class="stat"><b class="stat__value">до&nbsp;5&nbsp;000<span class="stat__unit">А</span></b><span class="stat__label">Пусковой ток, встроенный компрессор</span></li>
+      <li class="stat"><b class="stat__value">до&nbsp;8<span class="stat__unit">л</span></b><span class="stat__label">Бензиновый мотор, дизель до&nbsp;7&nbsp;л</span></li>
+      <li class="stat"><b class="stat__value">20+</b><span class="stat__label">Запусков на&nbsp;одном заряде</span></li>
+      <li class="stat"><b class="stat__value">1&nbsp;000<span class="stat__unit">лм</span></b><span class="stat__label">Фонарь</span></li>
+{{/if}}    </ul>
+  </div>
+{{/if}}{{#if id == "pvc1"}}  <div class="container pdp__stats">
+    <ul class="stats pdp-stats" aria-label="Ключевые цифры: {{short}}">
+      <li class="stat"><b class="stat__value">до&nbsp;40<span class="stat__unit">мин</span></b><span class="stat__label">Работы на&nbsp;одном заряде</span></li>
+      <li class="stat"><b class="stat__value">2,5<span class="stat__unit">ч</span></b><span class="stat__label">Зарядка по&nbsp;USB Type-C</span></li>
+      <li class="stat"><b class="stat__value">HEPA</b><span class="stat__label">Циклон, фильтр грубой очистки и&nbsp;HEPA</span></li>
+      <li class="stat"><b class="stat__value">2</b><span class="stat__label">Режима: всасывание и&nbsp;обдув</span></li>
+    </ul>
+  </div>
+{{/if}}</section>
+
+{{#if id == "es19"}}<!-- 2. «Что умеет»: мозаика. Широкая плитка с фотографией и три плитки с вырезками на прозрачном фоне (стоят на тёмной плитке).
+     Тексты: содержание раздела «Описание» прежней карточки, цифры из справочника -->
+<section class="section section--alt pdp-feats" aria-labelledby="feats-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title" id="feats-title">Что умеет <span class="nowrap">{{model}}</span></h2>
+    </div>
+    <ul class="mosaic pdp-feats__grid">
+      <li class="pdp-feats__cell pdp-feats__cell--wide">
+        <article class="pdp-feat pdp-feat--photo">
+          <img class="pdp-feat__img" src="/assets/img/deck/photo-hood.jpg" alt="ES-19 с&nbsp;клеммами под&nbsp;капотом ночью" width="1672" height="940" loading="lazy" decoding="async">
+          <div class="pdp-feat__body">
+            <h3 class="pdp-feat__title">Заводит мотор с&nbsp;севшим в&nbsp;ноль аккумулятором</h3>
+            <p class="pdp-feat__text">{{model}} не&nbsp;подзаряжает аккумулятор, а&nbsp;отдаёт ток прямо на&nbsp;стартер: {{{specs.current}}} при&nbsp;{{{specs.voltage}}}. Двигатели: {{{specs.engines}}}.</p>
+          </div>
+        </article>
+      </li>
+      <li class="pdp-feats__cell">
+        <article class="pdp-feat pdp-feat--cut">
+          <div class="pdp-feat__body">
+            <h3 class="pdp-feat__title">Шесть защит и&nbsp;проверка полярности</h3>
+            <p class="pdp-feat__text">На&nbsp;одной плате шесть защит: от&nbsp;короткого замыкания, перегрева, перегрузки, обратной полярности, обратного подключения и&nbsp;избыточного заряда. <span class="nowrap">MCU-чип</span> проверяет полярность до&nbsp;подачи тока: если перепутать клеммы, ток не&nbsp;пойдёт, а&nbsp;индикатор покажет ошибку.</p>
+          </div>
+          <img class="pdp-feat__img" src="https://joim.netlify.app/images/products/joim-es19-klemmy.webp" alt="ES-19 с&nbsp;клеммами: красный и&nbsp;чёрный зажимы и&nbsp;модуль защиты на&nbsp;кабеле" width="1200" height="766" loading="lazy" decoding="async">
+        </article>
+      </li>
+      <li class="pdp-feats__cell">
+        <article class="pdp-feat pdp-feat--cut">
+          <div class="pdp-feat__body">
+            <h3 class="pdp-feat__title">Фонарь {{{specs.lamp}}}</h3>
+            <p class="pdp-feat__text">Световая панель занимает торец корпуса и&nbsp;освещает подкапотное пространство, пока подключаете клеммы. Стробоскоп и&nbsp;SOS обозначат машину на&nbsp;тёмной обочине.</p>
+          </div>
+          <img class="pdp-feat__img" src="https://joim.netlify.app/images/products/joim-es19-2.webp" alt="Торец ES-19 со&nbsp;светящейся панелью фонаря" width="1200" height="973" loading="lazy" decoding="async">
+        </article>
+      </li>
+      <li class="pdp-feats__cell">
+        <article class="pdp-feat pdp-feat--cut">
+          <div class="pdp-feat__body">
+            <h3 class="pdp-feat__title">Повербанк: {{{specs.ports}}}</h3>
+            <p class="pdp-feat__text">От&nbsp;{{model}} заряжаются телефон и&nbsp;другая электроника: два порта USB и&nbsp;Type-C с&nbsp;быстрой зарядкой. Ёмкость батареи {{{specs.capacity}}}, без&nbsp;использования заряд держится несколько месяцев.</p>
+          </div>
+          <img class="pdp-feat__img" src="https://joim.netlify.app/images/products/joim-es19-3.webp" alt="Разъёмы ES-19 под&nbsp;откидной крышкой: два порта USB и&nbsp;Type-C" width="1200" height="861" loading="lazy" decoding="async">
+        </article>
+      </li>
+    </ul>
+  </div>
+</section>
+
+{{/if}}{{#if id == "pvc1"}}<!-- 2. «Что умеет» PVC-1: та же мозаика. Тексты собраны из описания и характеристик справочника, кадры из галереи товара -->
+<section class="section section--alt pdp-feats" aria-labelledby="feats-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title" id="feats-title">Что умеет <span class="nowrap">{{model}}</span></h2>
+    </div>
+    <ul class="mosaic pdp-feats__grid">
+      <li class="pdp-feats__cell pdp-feats__cell--wide">
+        <article class="pdp-feat pdp-feat--scene">
+          <img class="pdp-feat__img" src="{{stage.src}}" alt="Автопылесос JOIM PVC-1 в&nbsp;оранжевом и&nbsp;чёрном корпусе" width="{{stage.w}}" height="{{stage.h}}" loading="lazy" decoding="async">
+          <div class="pdp-feat__body">
+            <h3 class="pdp-feat__title">Беспроводной, с&nbsp;бесщёточным двигателем</h3>
+            <p class="pdp-feat__text">На&nbsp;одном заряде работает {{{specs.runtime}}}, заряжается {{{specs.charge}}}.</p>
+          </div>
+        </article>
+      </li>
+      <li class="pdp-feats__cell">
+        <article class="pdp-feat pdp-feat--cut">
+          <div class="pdp-feat__body">
+            <h3 class="pdp-feat__title">Циклон, фильтр грубой очистки и&nbsp;HEPA</h3>
+            <p class="pdp-feat__text">В&nbsp;циклонной схеме тяжёлая фракция уходит в&nbsp;контейнер, не&nbsp;забивая фильтр. Фильтры моются под&nbsp;краном и&nbsp;ставятся обратно: расходников нет.</p>
+          </div>
+          <img class="pdp-feat__img" src="https://joim.netlify.app/images/products/joim-pvc1-cyclone.webp" alt="PVC-1 в&nbsp;разборе: контейнер и&nbsp;фильтры" width="1200" height="1040" loading="lazy" decoding="async">
+        </article>
+      </li>
+      <li class="pdp-feats__cell">
+        <article class="pdp-feat pdp-feat--shot">
+          <div class="pdp-feat__body">
+            <h3 class="pdp-feat__title">Два режима: {{{specs.modes}}}</h3>
+            <p class="pdp-feat__text">Три сопла продувают дефлекторы и&nbsp;накачивают матрас, мяч или круг.</p>
+          </div>
+          <img class="pdp-feat__img" src="/assets/img/deck/pvc1-detail-3.jpg" alt="Насадки PVC-1: щётка, щелевая насадка и&nbsp;три сопла" width="656" height="875" loading="lazy" decoding="async">
+        </article>
+      </li>
+      <li class="pdp-feats__cell">
+        <article class="pdp-feat pdp-feat--shot">
+          <div class="pdp-feat__body">
+            <h3 class="pdp-feat__title">Корпус из&nbsp;алюминия, два цвета</h3>
+            <p class="pdp-feat__text">Чёрный и&nbsp;оранжевый. Длина {{{specs.length}}}, гибкий шланг {{{specs.hose}}}.</p>
+          </div>
+          <img class="pdp-feat__img" src="/assets/img/deck/pvc1-detail-1.jpg" alt="PVC-1: сопло и&nbsp;корпус крупным планом" width="656" height="875" loading="lazy" decoding="async">
+        </article>
+      </li>
+    </ul>
+  </div>
+</section>
+
+{{/if}}<!-- 3. Комплектация: светлая вставка. Слева крупно комплект, справа список.
+     Кадр комплекта берётся из галереи товара:
+       локальный светлый кадр (*-kit.png на прозрачном фоне): ES-19, ES-29, ES-2, ES-55, стоит на светлой карточке;
+       у PVC-1 это вырезка с сайта клиента (joim-pvc1-kit-flat.webp);
+       у ES-99, PVC-7 и PVC-8 комплект снят на тёмной сцене (второй кадр галереи): кадр стоит на странице слева,
+       светлой остаётся только карточка со списком (модификатор pdp-kit__card--dark). -->
+<section class="section pdp-kit" aria-labelledby="kit-title">
+  <div class="container">
+    <div class="pdp-kit__card{{#if soon}}{{#each gallery}}{{#if n == 2}}{{#if dark}} pdp-kit__card--dark{{/if}}{{/if}}{{/each}}{{/if}}">
+      <div class="pdp-kit__media">
+{{#each gallery}}{{#if light}}{{#if src.0 == "/"}}        <img class="pdp-kit__img" src="{{src}}.webp" alt="{{alt}}" width="{{w}}" height="{{h}}" loading="lazy" decoding="async">
+{{/if}}{{/if}}{{#if src == "https://joim.netlify.app/images/products/joim-pvc1-kit-flat.webp"}}        <img class="pdp-kit__img pdp-kit__img--tall" src="{{src}}" alt="{{alt}}" width="{{w}}" height="{{h}}" loading="lazy" decoding="async">
+{{/if}}{{#if soon}}{{#if n == 2}}{{#if dark}}        <img class="pdp-kit__img pdp-kit__img--dark" src="{{src}}" alt="{{alt}}" width="{{w}}" height="{{h}}" loading="lazy" decoding="async">
+{{/if}}{{/if}}{{/if}}{{/each}}      </div>
+      <div class="paper pdp-kit__body">
+        <h2 class="section-title" id="kit-title">Комплектация</h2>
+        <ol class="pdp-kit__list">
+{{#each kit}}          <li>{{{this}}}</li>
+{{/each}}        </ol>
+{{#if id == "es19"}}        <p class="pdp-kit__note">Всё лежит в&nbsp;жёстком кейсе на&nbsp;молнии. Инструкция на&nbsp;русском.</p>
+{{/if}}      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Характеристики: таблица на тёмном, группы. Строка попадает в группу по ключу характеристики (specs[].key);
+     группа выводится, если у товара есть её опорная характеристика. У PVC-7 и PVC-8 три строки без групп. -->
+<section class="section section--alt pdp-specs" aria-labelledby="specs-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title" id="specs-title">Характеристики</h2>
+    </div>
+{{#if isJump}}    <div class="pdp-specs__grid">
+      <div class="pdp-specs__group">
+        <h3 class="pdp-specs__name">Запуск</h3>
+        <dl class="specs">
+{{#each specList}}{{#if key == "current"}}          <div class="specs__row"><dt>{{{name}}}</dt><dd>{{{value}}}</dd></div>
+{{/if}}{{#if key == "voltage"}}          <div class="specs__row"><dt>{{{name}}}</dt><dd>{{{value}}}</dd></div>
+{{/if}}{{#if key == "compressor"}}          <div class="specs__row"><dt>{{{name}}}</dt><dd>{{{value}}}</dd></div>
+{{/if}}{{#if key == "engines"}}          <div class="specs__row"><dt>{{{name}}}</dt><dd>{{{value}}}</dd></div>
+{{/if}}{{#if key == "starts"}}          <div class="specs__row"><dt>{{{name}}}</dt><dd>{{{value}}}</dd></div>
+{{/if}}{{/each}}        </dl>
+      </div>
+{{#if specs.capacity}}      <div class="pdp-specs__group">
+        <h3 class="pdp-specs__name">Батарея</h3>
+        <dl class="specs">
+{{#each specList}}{{#if key == "capacity"}}          <div class="specs__row"><dt>{{{name}}}</dt><dd>{{{value}}}</dd></div>
+{{/if}}{{#if key == "battery"}}          <div class="specs__row"><dt>{{{name}}}</dt><dd>{{{value}}}</dd></div>
+{{/if}}{{#if key == "temp"}}          <div class="specs__row"><dt>{{{name}}}</dt><dd>{{{value}}}</dd></div>
+{{/if}}{{/each}}        </dl>
+      </div>
+{{/if}}      <div class="pdp-specs__group">
+        <h3 class="pdp-specs__name">Свет и&nbsp;зарядка</h3>
+        <dl class="specs">
+{{#each specList}}{{#if key == "lamp"}}          <div class="specs__row"><dt>{{{name}}}</dt><dd>{{{value}}}</dd></div>
+{{/if}}{{#if key == "ports"}}          <div class="specs__row"><dt>{{{name}}}</dt><dd>{{{value}}}</dd></div>
+{{/if}}{{#if key == "adapter"}}          <div class="specs__row"><dt>{{{name}}}</dt><dd>{{{value}}}</dd></div>
+{{/if}}{{#if key == "display"}}          <div class="specs__row"><dt>{{{name}}}</dt><dd>{{{value}}}</dd></div>
+{{/if}}{{/each}}        </dl>
+      </div>
+{{#if specs.size}}      <div class="pdp-specs__group">
+        <h3 class="pdp-specs__name">Размеры и&nbsp;гарантия</h3>
+        <dl class="specs">
+{{#each specList}}{{#if key == "size"}}          <div class="specs__row"><dt>{{{name}}}</dt><dd>{{{value}}}</dd></div>
+{{/if}}{{#if key == "caseSize"}}          <div class="specs__row"><dt>{{{name}}}</dt><dd>{{{value}}}</dd></div>
+{{/if}}{{#if key == "clamps"}}          <div class="specs__row"><dt>{{{name}}}</dt><dd>{{{value}}}</dd></div>
+{{/if}}{{#if key == "warranty"}}          <div class="specs__row"><dt>{{{name}}}</dt><dd>{{{value}}}</dd></div>
+{{/if}}{{/each}}        </dl>
+      </div>
+{{/if}}    </div>
+{{else}}{{#if specs.motor}}    <div class="pdp-specs__grid">
+      <div class="pdp-specs__group">
+        <h3 class="pdp-specs__name">Двигатель и&nbsp;питание</h3>
+        <dl class="specs">
+{{#each specList}}{{#if key == "motor"}}          <div class="specs__row"><dt>{{{name}}}</dt><dd>{{{value}}}</dd></div>
+{{/if}}{{#if key == "runtime"}}          <div class="specs__row"><dt>{{{name}}}</dt><dd>{{{value}}}</dd></div>
+{{/if}}{{#if key == "charge"}}          <div class="specs__row"><dt>{{{name}}}</dt><dd>{{{value}}}</dd></div>
+{{/if}}{{/each}}        </dl>
+      </div>
+      <div class="pdp-specs__group">
+        <h3 class="pdp-specs__name">Уборка</h3>
+        <dl class="specs">
+{{#each specList}}{{#if key == "filters"}}          <div class="specs__row"><dt>{{{name}}}</dt><dd>{{{value}}}</dd></div>
+{{/if}}{{#if key == "modes"}}          <div class="specs__row"><dt>{{{name}}}</dt><dd>{{{value}}}</dd></div>
+{{/if}}{{/each}}        </dl>
+      </div>
+      <div class="pdp-specs__group">
+        <h3 class="pdp-specs__name">Корпус</h3>
+        <dl class="specs">
+{{#each specList}}{{#if key == "body"}}          <div class="specs__row"><dt>{{{name}}}</dt><dd>{{{value}}}</dd></div>
+{{/if}}{{#if key == "length"}}          <div class="specs__row"><dt>{{{name}}}</dt><dd>{{{value}}}</dd></div>
+{{/if}}{{#if key == "hose"}}          <div class="specs__row"><dt>{{{name}}}</dt><dd>{{{value}}}</dd></div>
+{{/if}}{{/each}}        </dl>
+      </div>
+      <div class="pdp-specs__group">
+        <h3 class="pdp-specs__name">Гарантия</h3>
+        <dl class="specs">
+{{#each specList}}{{#if key == "warranty"}}          <div class="specs__row"><dt>{{{name}}}</dt><dd>{{{value}}}</dd></div>
+{{/if}}{{/each}}        </dl>
+      </div>
+    </div>
+{{else}}    <div class="pdp-specs__grid pdp-specs__grid--flat">
+      <div class="pdp-specs__group">
+        <dl class="specs">
+{{#each specList}}          <div class="specs__row"><dt>{{{name}}}</dt><dd>{{{value}}}</dd></div>
+{{/each}}        </dl>
+      </div>
+    </div>
+{{/if}}{{/if}}  </div>
+</section>
+
+{{#if steps}}<!-- 5. Как пользоваться: пять шагов в ряд с крупными номерами (только пусковые в продаже) -->
+<section class="section pdp-howto" aria-labelledby="howto-title">
+  <div class="container">
+    <div class="section-head pdp-howto__head">
+      <h2 class="section-title" id="howto-title">Как пользоваться</h2>
+      <p class="pdp-howto__lead">Пять шагов из&nbsp;инструкции. Если перепутать зажимы, устройство не&nbsp;подаст ток и&nbsp;покажет ошибку на&nbsp;индикаторе.</p>
+    </div>
+    <ol class="pdp-steps">
+{{#each steps}}      <li class="pdp-step"><span class="pdp-step__num" aria-hidden="true">0{{number}}</span><p class="pdp-step__text">{{{this}}}</p></li>
+{{/each}}    </ol>
+    <div class="pdp-howto__foot">
+      <p class="pdp-note">{{icon info}}<span>На&nbsp;сильном морозе держите устройство в&nbsp;салоне, а&nbsp;не&nbsp;в&nbsp;багажнике.</span></p>
+      <a class="btn btn--soft btn--sm" href="/instructions/">Инструкции к&nbsp;устройствам JOIM{{icon arrow-up-right icon--move}}</a>
+    </div>
+  </div>
+</section>
+
+{{/if}}{{#if id == "pvc1"}}<!-- 5. Зарядка и уход (PVC-1): тот же ряд, вместо номеров подписи -->
+<section class="section pdp-howto" aria-labelledby="howto-title">
+  <div class="container">
+    <div class="section-head pdp-howto__head">
+      <h2 class="section-title" id="howto-title">Зарядка и&nbsp;уход</h2>
+    </div>
+    <ul class="pdp-steps pdp-steps--2">
+      <li class="pdp-step"><span class="label pdp-step__label">Зарядка</span><p class="pdp-step__text">Заряжается {{{specs.charge}}}. На&nbsp;одном заряде работает {{{specs.runtime}}}.</p></li>
+      <li class="pdp-step"><span class="label pdp-step__label">Уход</span><p class="pdp-step__text">Фильтры моются под&nbsp;краном и&nbsp;ставятся обратно: расходников нет.</p></li>
+    </ul>
+    <div class="pdp-howto__foot">
+      <a class="btn btn--soft btn--sm" href="/instructions/">Инструкции к&nbsp;устройствам JOIM{{icon arrow-up-right icon--move}}</a>
+    </div>
+  </div>
+</section>
+
+{{/if}}{{#if inStock}}<!-- 6. Доставка и гарантия: полные условия (короткие строки стоят в панели покупки и ведут сюда) -->
+<section class="section section--line pdp-ship" id="delivery" aria-labelledby="ship-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title" id="ship-title">Доставка и&nbsp;гарантия</h2>
+      <div class="section-head__side pdp-ship__more">
+        <a class="btn btn--soft btn--sm" href="/delivery/">Доставка и&nbsp;оплата{{icon arrow-up-right icon--move}}</a>
+        <a class="btn btn--soft btn--sm" href="/warranty/">Гарантия и&nbsp;возврат{{icon arrow-up-right icon--move}}</a>
+      </div>
+    </div>
+    <ul class="pdp-ship__list">
+      <li class="pdp-ship__item">{{icon clock}}<h3 class="label">Москва</h3><p>Курьер в&nbsp;день заказа при&nbsp;оформлении до&nbsp;15:00, 490&nbsp;₽</p></li>
+      <li class="pdp-ship__item">{{icon pin}}<h3 class="label">Самовывоз</h3><p>Бесплатно, ул.&nbsp;Автозаводская, 23к2, ежедневно <span class="nowrap">09:00–21:00</span></p></li>
+      <li class="pdp-ship__item">{{icon truck}}<h3 class="label">По&nbsp;России</h3><p>СДЭК 2–7&nbsp;дней, от&nbsp;390&nbsp;₽. От&nbsp;15&nbsp;000&nbsp;₽ курьер и&nbsp;СДЭК бесплатно</p></li>
+      <li class="pdp-ship__item">{{icon shield}}<h3 class="label">Гарантия</h3><p>{{{specs.warranty}}}, брак меняем без&nbsp;экспертизы, обратную отправку оплачиваем сами</p></li>
+      <li class="pdp-ship__item">{{icon return}}<h3 class="label">Возврат</h3><p>В&nbsp;течение 14&nbsp;дней</p></li>
+    </ul>
+  </div>
+</section>
+
+{{/if}}{{#if reviewItems}}<!-- 7. Отзывы: слева сводка рейтинга, справа лента светлых карточек. Тексты дословно из справочника -->
+<section class="section section--alt pdp-reviews" id="reviews" aria-labelledby="reviews-title" data-slider>
+  <div class="pdp-reviews__in">
+    <div class="pdp-reviews__head">
+      <h2 class="section-title" id="reviews-title"><span class="nowrap">{{model}}</span>: отзывы покупателей</h2>
+      <p class="pdp-reviews__score"><b class="pdp-reviews__num">{{ratingFmt}}</b><span class="pdp-reviews__meta">{{> stars}}<span>{{{reviewsHtml}}}</span></span></p>
+      <div class="pdp-reviews__nav">
+        <a class="btn btn--outline btn--sm" href="/reviews/">Все отзывы</a>
+        <button class="round-btn" type="button" data-slider-prev aria-label="Предыдущие отзывы">{{icon arrow-left}}</button>
+        <button class="round-btn" type="button" data-slider-next aria-label="Следующие отзывы">{{icon arrow-right}}</button>
+      </div>
+    </div>
+    <div class="pdp-reviews__rail">
+      <ul class="slider__track pdp-reviews__track" data-slider-track tabindex="0" aria-label="Отзывы: {{short}}">
+{{#each reviewItems}}        <li>
+          <article class="review-card">
+            <h3 class="review-card__name">{{name}}</h3>
+            {{> stars}}
+            <p class="review-card__text">{{text}}</p>
+            <p class="review-card__date"><time datetime="{{dateIso}}">{{dateFmt}}</time></p>
+          </article>
+        </li>
+{{#if number == 2}}{{#each site.reviewsExtra}}{{#if product == id}}        <li>
+          <article class="review-card">
+            <h3 class="review-card__name">{{name}}</h3>
+            {{> stars}}
+            <p class="review-card__text">{{text}}</p>
+            <p class="review-card__date"><time datetime="{{dateIso}}">{{dateFmt}}</time></p>
+          </article>
+        </li>
+{{/if}}{{/each}}{{/if}}{{/each}}      </ul>
+    </div>
+  </div>
+</section>
+
+{{/if}}{{#if inStock}}<!-- 8. Вопросы и ответы: заголовок и ссылки слева, аккордеон справа (как на главной) -->
+<section class="section pdp-faq" aria-labelledby="faq-title">
+  <div class="container pdp-faq__in">
+    <h2 class="section-title pdp-faq__title" id="faq-title">Вопросы и&nbsp;ответы</h2>
+    <div class="accordion pdp-faq__list" data-accordion="single">
+{{#if isJump}}      <div class="accordion__item is-open">
+        <h3 class="accordion__head"><button class="accordion__btn" type="button">Заведёт, если аккумулятор сел полностью?</button></h3>
+        <div class="accordion__panel"><div class="accordion__body"><p>Да. Устройство не&nbsp;подзаряжает аккумулятор, а&nbsp;отдаёт ток прямо на&nbsp;стартер.</p></div></div>
+      </div>
+      <div class="accordion__item">
+        <h3 class="accordion__head"><button class="accordion__btn" type="button">Что будет, если перепутать клеммы?</button></h3>
+        <div class="accordion__panel"><div class="accordion__body"><p>Ничего. <span class="nowrap">MCU-чип</span> проверяет полярность до&nbsp;подачи тока и&nbsp;не&nbsp;запустит процесс, индикатор покажет ошибку.</p></div></div>
+      </div>
+      <div class="accordion__item">
+        <h3 class="accordion__head"><button class="accordion__btn" type="button">Сколько держит заряд без&nbsp;использования?</button></h3>
+        <div class="accordion__panel"><div class="accordion__body"><p>Несколько месяцев в&nbsp;режиме ожидания. Подзаряжать стоит раз в&nbsp;3–4&nbsp;месяца, индикатор 0–100&nbsp;% покажет остаток.</p></div></div>
+      </div>
+      <div class="accordion__item">
+        <h3 class="accordion__head"><button class="accordion__btn" type="button">Работает на&nbsp;морозе?</button></h3>
+        <div class="accordion__panel"><div class="accordion__body"><p>Да. Встроенный датчик температуры следит за&nbsp;нагревом батареи и&nbsp;корректирует отдачу. На&nbsp;сильном морозе устройство лучше держать в&nbsp;салоне, а&nbsp;не&nbsp;в&nbsp;багажнике: любой литий на&nbsp;холоде отдаёт меньше.</p></div></div>
+      </div>
+      <div class="accordion__item">
+        <h3 class="accordion__head"><button class="accordion__btn" type="button">Чем ES-19 отличается от&nbsp;ES-29?</button></h3>
+        <div class="accordion__panel"><div class="accordion__body"><p>Запасом и&nbsp;моторами. ES-19: {{products.es19.specs.currentType}} ток {{{products.es19.specs.current}}}, {{{products.es19.specs.capacity}}}, {{{products.es19.specs.starts}}} запусков, {{{products.es19.specs.engines}}}, фонарь {{{products.es19.specs.lamp}}}. ES-29: {{products.es29.specs.currentType}} ток {{{products.es29.specs.current}}}, {{{products.es29.specs.capacity}}}, {{{products.es29.specs.starts}}} запусков, {{{products.es29.specs.engines}}}, фонарь {{{products.es29.specs.lamp}}}, в&nbsp;комплекте адаптер {{{products.es29.specs.adapter}}}. Подробнее в&nbsp;<a href="/compare/es19-vs-es29/">сравнении ES-19 и&nbsp;ES-29</a>.</p></div></div>
+      </div>
+      <div class="accordion__item">
+        <h3 class="accordion__head"><button class="accordion__btn" type="button">Пусковое и&nbsp;пуско-зарядное устройство: в&nbsp;чём разница?</button></h3>
+        <div class="accordion__panel"><div class="accordion__body"><p>Пуско-зарядное работает от&nbsp;розетки и&nbsp;стоит в&nbsp;гараже. Пусковое (бустер) работает от&nbsp;своей батареи и&nbsp;лежит в&nbsp;машине: заводит мотор там, где сел аккумулятор.</p></div></div>
+      </div>
+{{else}}      <div class="accordion__item is-open">
+        <h3 class="accordion__head"><button class="accordion__btn" type="button">Пылесос справится с&nbsp;песком и&nbsp;шерстью?</button></h3>
+        <div class="accordion__panel"><div class="accordion__body"><p>Да. В&nbsp;циклонной схеме тяжёлая фракция уходит в&nbsp;контейнер, не&nbsp;забивая фильтр. Фильтры промываются под&nbsp;водой и&nbsp;ставятся обратно.</p></div></div>
+      </div>
+{{/if}}      <div class="accordion__item">
+        <h3 class="accordion__head"><button class="accordion__btn" type="button">Что с&nbsp;гарантией и&nbsp;возвратом?</button></h3>
+        <div class="accordion__panel"><div class="accordion__body"><p>12&nbsp;месяцев гарантии от&nbsp;производителя. Брак меняем без&nbsp;экспертизы. Подробные условия на&nbsp;странице <a href="/warranty/">«Гарантия и&nbsp;возврат»</a>.</p></div></div>
+      </div>
+    </div>
+    <div class="pdp-faq__more">
+      <p>Если ответа здесь нет, спросите поддержку JOIM: она своя, без&nbsp;колл-центра подрядчика.</p>
+      <ul class="pdp-faq__links">
+        <li><a class="btn btn--soft btn--sm" href="/faq/">Все вопросы и&nbsp;ответы{{icon arrow-up-right icon--move}}</a></li>
+        <li><a class="btn btn--soft btn--sm" href="https://t.me/joim_support_bot" rel="noopener">Telegram-бот поддержки{{icon arrow-up-right icon--move}}</a></li>
+        <li><a class="btn btn--soft btn--sm" href="tel:+74951201140">+7&nbsp;495&nbsp;120-11-40</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+{{/if}}<!-- 9. Вам может быть интересно: четыре компактные плитки. Порядок: сначала товары в продаже (своего типа, потом другого),
+     за ними «скоро» своего типа. Список идёт по порядку каталога; показываются первые четыре, пятая карточка, если она есть, скрыта стилями
+     (в шаблоне нет счётчика: правильное место для отбора это related в build.mjs) -->
+<section class="section section--line pdp-related" aria-labelledby="related-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title" id="related-title">Вам может быть интересно</h2>
+      <a class="btn btn--soft btn--sm" href="{{catPath}}">{{{catName}}}{{icon arrow-up-right icon--move}}</a>
+    </div>
+    <ul class="product-grid pdp-related__grid">
+{{#each productList}}{{#if id != p.id}}{{#if inStock}}{{#if type == p.type}}      <li>{{> product-card}}</li>
+{{/if}}{{/if}}{{/if}}{{/each}}{{#each productList}}{{#if id != p.id}}{{#if inStock}}{{#if type != p.type}}      <li>{{> product-card}}</li>
+{{/if}}{{/if}}{{/if}}{{/each}}{{#each productList}}{{#if id != p.id}}{{#if soon}}{{#if type == p.type}}      <li>{{> product-card}}</li>
+{{/if}}{{/if}}{{/if}}{{/each}}    </ul>
+  </div>
+</section>
+
+<!-- 10. Тёмная сцена с товаром (общий компонент .stage) и светлая карточка-форма с уголками: вопрос о товаре или «Сообщить о поступлении» -->
+<section class="pdp-ask" aria-labelledby="ask-title">
+  <div class="gridlines" aria-hidden="true"></div>
+  <div class="container pdp-ask__in">
+    <div class="stage pdp-ask__stage" style="{{stageStyle}}">
+      <span class="stage__link"><img class="stage__img" src="{{stage.src}}" alt="{{short}} на&nbsp;тёмной сцене" width="{{stage.w}}" height="{{stage.h}}" loading="lazy" decoding="async"></span>
+    </div>
+    <div class="bracket-card pdp-ask__card">
+      <form class="form" data-form novalidate>
+        <div class="form__main">
+{{#if inStock}}          <h2 class="section-title" id="ask-title">Остались вопросы?</h2>
+          <p class="pdp-ask__lead">Спросите про&nbsp;<span class="nowrap">{{model}}</span>: отвечаем сами, без&nbsp;колл-центра подрядчика.</p>
+          <p class="pdp-ask__tel">Или позвоните: <a href="tel:+74951201140">+7&nbsp;495&nbsp;120-11-40</a></p>
+{{else}}          <h2 class="section-title" id="ask-title"><span class="nowrap">{{model}}</span> скоро в&nbsp;продаже</h2>
+          <p class="pdp-ask__lead pdp-ask__lead--gap">Оставьте контакт: напишем или позвоним, когда <span class="nowrap">{{model}}</span> появится в&nbsp;продаже.</p>
+{{/if}}          <input type="hidden" name="product" value="{{id}}">
+          <div class="field">
+            <label class="visually-hidden" for="pdp-ask-name">Ваше имя</label>
+            <input class="input" id="pdp-ask-name" type="text" name="name" placeholder="Ваше имя" autocomplete="name" required data-error="Напишите, как к вам обращаться">
+          </div>
+          <div class="field">
+            <label class="visually-hidden" for="pdp-ask-contact">Телефон или e-mail</label>
+            <input class="input" id="pdp-ask-contact" type="text" name="contact" placeholder="Телефон или e-mail" required data-contact data-error="Оставьте телефон или e-mail">
+          </div>
+{{#if inStock}}          <div class="field">
+            <label class="visually-hidden" for="pdp-ask-msg">Ваш вопрос</label>
+            <textarea class="textarea" id="pdp-ask-msg" name="message" placeholder="Ваш вопрос" required data-error="Напишите вопрос"></textarea>
+          </div>
+{{/if}}          <label class="check">
+            <input class="check__input" type="checkbox" name="agree" required data-error="Нужно согласие на обработку данных">
+            <span class="check__box" aria-hidden="true">{{icon check}}</span>
+            <span class="check__text">Согласен с&nbsp;<a href="/privacy/">политикой конфиденциальности</a> и&nbsp;обработкой персональных данных</span>
+          </label>
+          <button class="btn btn--accent btn--lg btn--block" type="submit">{{#if inStock}}Отправить вопрос{{else}}Сообщить о&nbsp;поступлении{{/if}}</button>
+        </div>
+        <div class="form__success" data-form-success hidden>
+{{#if inStock}}          <h2 class="section-title">Вопрос отправлен</h2>
+          <p class="pdp-ask__lead">Ответим по&nbsp;указанному контакту.</p>
+          <a class="btn btn--soft" href="/faq/">Все вопросы и&nbsp;ответы{{icon arrow-up-right icon--move}}</a>
+{{else}}          <h2 class="section-title">Записали</h2>
+          <p class="pdp-ask__lead">Сообщим, как только <span class="nowrap">{{model}}</span> появится в&nbsp;продаже.</p>
+          <a class="btn btn--soft" href="/catalog/">Весь каталог{{icon arrow-up-right icon--move}}</a>
+{{/if}}        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Липкая нижняя панель покупки: только узкие экраны, появляется, когда основной кнопки нет на экране -->
+<div class="pdp-bar" role="region" aria-label="Покупка: {{short}}" data-buy-bar>
+  <div class="container pdp-bar__in">
+    <p class="pdp-bar__info">
+      <span class="pdp-bar__name">{{short}}</span>
+{{#if inStock}}      <span class="price pdp-bar__price">{{{priceHtml}}}</span>
+{{else}}      <span class="pdp-bar__price pdp-bar__price--soon">{{{priceHtml}}}</span>
+{{/if}}    </p>
+{{#if inStock}}    <button class="btn btn--accent pdp-bar__btn" type="button" data-add-to-cart="{{id}}" data-qty="1">В&nbsp;корзину</button>
+{{else}}    <button class="btn btn--outline pdp-bar__btn" type="button" data-notify="{{id}}" aria-haspopup="dialog"><span>Сообщить<span class="pdp-bar__btn-more"> о&nbsp;поступлении</span></span></button>
+{{/if}}  </div>
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "https://joim-store.ru{{url}}#product",
+  "name": {{json name}},
+  "description": {{json aboutText}},
+  "category": {{json catName}},
+  "model": {{json model}},
+  "url": "https://joim-store.ru{{url}}",
+  "image": ["https://joim-store.ru{{img}}"{{#if cutImg}}, {{json cutImg}}{{/if}}],
+  "brand": { "@type": "Brand", "name": "JOIM" },
+  "additionalProperty": [
+{{#each specList}}    { "@type": "PropertyValue", "name": {{json name}}, "value": {{json value}} }{{#if !last}},{{/if}}
+{{/each}}  ]{{#if inStock}},
+  "offers": {
+    "@type": "Offer",
+    "price": {{json price}},
+    "priceCurrency": "RUB",
+    "availability": "https://schema.org/InStock",
+    "itemCondition": "https://schema.org/NewCondition",
+    "url": "https://joim-store.ru{{url}}",
+    "seller": { "@type": "Organization", "name": "JOIM" }
+  }{{/if}}{{#if hasRating}},
+  "aggregateRating": { "@type": "AggregateRating", "ratingValue": {{json rating}}, "bestRating": 5, "reviewCount": {{json reviews}} }{{/if}}{{#if reviewItems}},
+  "review": [
+{{#each reviewItems}}    { "@type": "Review", "author": { "@type": "Person", "name": {{json name}} }, "datePublished": {{json dateIso}}, "reviewBody": {{json text}}, "reviewRating": { "@type": "Rating", "ratingValue": 5, "bestRating": 5 } }{{#if !last}},{{/if}}
+{{/each}}{{#each site.reviewsExtra}}{{#if product == id}}    ,{ "@type": "Review", "author": { "@type": "Person", "name": {{json name}} }, "datePublished": {{json dateIso}}, "reviewBody": {{json text}}, "reviewRating": { "@type": "Rating", "ratingValue": 5, "bestRating": 5 } }
+{{/if}}{{/each}}  ]{{/if}}
+}
+</script>
+{{#if inStock}}<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{{#if isJump}}    { "@type": "Question", "name": "Заведёт, если аккумулятор сел полностью?", "acceptedAnswer": { "@type": "Answer", "text": "Да. Устройство не подзаряжает аккумулятор, а отдаёт ток прямо на стартер." } },
+    { "@type": "Question", "name": "Что будет, если перепутать клеммы?", "acceptedAnswer": { "@type": "Answer", "text": "Ничего. MCU-чип проверяет полярность до подачи тока и не запустит процесс, индикатор покажет ошибку." } },
+    { "@type": "Question", "name": "Сколько держит заряд без использования?", "acceptedAnswer": { "@type": "Answer", "text": "Несколько месяцев в режиме ожидания. Подзаряжать стоит раз в 3–4 месяца, индикатор 0–100 % покажет остаток." } },
+    { "@type": "Question", "name": "Работает на морозе?", "acceptedAnswer": { "@type": "Answer", "text": "Да. Встроенный датчик температуры следит за нагревом батареи и корректирует отдачу. На сильном морозе устройство лучше держать в салоне, а не в багажнике: любой литий на холоде отдаёт меньше." } },
+    { "@type": "Question", "name": "Чем ES-19 отличается от ES-29?", "acceptedAnswer": { "@type": "Answer", "text": "Запасом и моторами. ES-19: {{products.es19.specs.currentType}} ток {{{products.es19.specs.current}}}, {{{products.es19.specs.capacity}}}, {{{products.es19.specs.starts}}} запусков, {{{products.es19.specs.engines}}}, фонарь {{{products.es19.specs.lamp}}}. ES-29: {{products.es29.specs.currentType}} ток {{{products.es29.specs.current}}}, {{{products.es29.specs.capacity}}}, {{{products.es29.specs.starts}}} запусков, {{{products.es29.specs.engines}}}, фонарь {{{products.es29.specs.lamp}}}, в комплекте адаптер {{{products.es29.specs.adapter}}}." } },
+    { "@type": "Question", "name": "Пусковое и пуско-зарядное устройство: в чём разница?", "acceptedAnswer": { "@type": "Answer", "text": "Пуско-зарядное работает от розетки и стоит в гараже. Пусковое (бустер) работает от своей батареи и лежит в машине: заводит мотор там, где сел аккумулятор." } },
+{{else}}    { "@type": "Question", "name": "Пылесос справится с песком и шерстью?", "acceptedAnswer": { "@type": "Answer", "text": "Да. В циклонной схеме тяжёлая фракция уходит в контейнер, не забивая фильтр. Фильтры промываются под водой и ставятся обратно." } },
+{{/if}}    { "@type": "Question", "name": "Что с гарантией и возвратом?", "acceptedAnswer": { "@type": "Answer", "text": "12 месяцев гарантии от производителя. Брак меняем без экспертизы. Подробные условия на странице «Гарантия и возврат»." } }
+  ]
+}
+</script>
+{{/if}}

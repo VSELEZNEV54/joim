@@ -1,0 +1,308 @@
+<!--template
+{
+  "css": ["pages/category.css"],
+  "js": ["pages/category.js"]
+}
+-->
+
+<!-- Шаблон каталога: один файл на пять адресов (категории из src/data/products.json).
+     Сверху вниз: заголовок · чипы категорий · панель (счётчик, «В продаже», поиск по списку, порядок) · товары карточками-строками
+     на всю ширину · полоса-ссылка под списком · на хабе пусковых: «Какую модель выбрать» · тёмная панель с чертежом (описание
+     раздела) · на хабе пусковых: вопросы и ответы · блок с формой вопроса. Сортировку и поиск делает pages/category.js. -->
+
+<!-- 1. Заголовок, чипы, панель и строки товаров -->
+<section class="cat" aria-labelledby="cat-title">
+  <div class="container">
+    <div class="page-head cat-head">
+      <h1 class="page-title" id="cat-title">{{{cat.h1}}}</h1>
+    </div>
+
+    <nav class="chips cat-chips" aria-label="Категории каталога" data-cat-chips>
+{{#each chips}}      <a class="chip" href="{{path}}"{{#if active}} aria-current="page"{{/if}}>{{{chip}}}</a>
+{{/each}}    </nav>
+
+    <div class="cat-bar{{#if cat.allSoon}} cat-bar--plain{{/if}}">
+      <p class="cat-bar__count" data-cat-count>{{cat.countFmt}}</p>
+{{#if cat.allSoon}}{{#if cat.note}}      <p class="cat-bar__note">{{icon info}}<span>{{{cat.note}}}</span></p>
+{{/if}}{{else}}      <button class="chip cat-bar__stock" type="button" aria-pressed="false" data-cat-stock>В&nbsp;продаже</button>
+{{/if}}      <form class="cat-find" role="search" data-cat-find>
+        <label class="visually-hidden" for="cat-q">Поиск по&nbsp;товарам на&nbsp;этой странице</label>
+        {{icon search cat-find__icon}}
+        <input class="cat-find__input" id="cat-q" type="search" name="q" placeholder="Поиск по&nbsp;списку" autocomplete="off" enterkeyhint="search" data-cat-q>
+        <button class="cat-find__clear" type="button" aria-label="Очистить поиск" data-cat-clear hidden>{{icon close}}</button>
+      </form>
+      <div class="cat-sort">
+        {{icon sort cat-sort__icon}}
+        <label class="cat-sort__label" for="cat-sort">Порядок:</label>
+        <select class="cat-sort__select" id="cat-sort" data-cat-sort>
+          <option value="default">по&nbsp;умолчанию</option>
+          <option value="asc">сначала дешевле</option>
+          <option value="desc">сначала дороже</option>
+        </select>
+      </div>
+    </div>
+
+    <h2 class="visually-hidden">Товары</h2>
+    <ul class="product-rows cat-rows" data-cat-grid>
+{{#each items}}      <li data-cat-item="{{id}}">{{> product-card view=row eager=head prio=first}}</li>
+{{/each}}    </ul>
+
+    <div class="cat-empty" data-cat-empty hidden>
+      <p class="cat-empty__title">Ничего не&nbsp;нашлось</p>
+      <p class="cat-empty__text" data-cat-empty-text>В&nbsp;этом разделе нет таких товаров.</p>
+      <div class="cat-empty__actions">
+        <button class="btn btn--solid" type="button" data-cat-reset>Показать все товары</button>
+{{#if !cat.isAll}}        <a class="btn btn--soft" href="/catalog/">Весь каталог{{icon arrow-up-right icon--move}}</a>
+{{/if}}      </div>
+    </div>
+
+    <!-- полоса-ссылка под списком: подбор по машине, а в разделах без пусковых в продаже ссылка на них -->
+{{#if cat.id == "kompressor"}}    <a class="cat-promo cat-promo--stage" href="/catalog/puskovye-ustroystva/">
+      <span class="cat-promo__text">
+        <span class="cat-promo__title">Уже в&nbsp;продаже: <span class="nowrap">ES-19</span> и&nbsp;<span class="nowrap">ES-29</span></span>
+        <span class="cat-promo__note">Пусковые устройства от&nbsp;{{price es19}}</span>
+      </span>
+      <span class="round-btn cat-promo__arrow" aria-hidden="true">{{icon arrow-up-right}}</span>
+      <img class="cat-promo__img" src="/assets/img/deck/es19-stage.jpg" alt="Пусковое устройство JOIM Easy Start ES-19 на&nbsp;тёмной сцене" width="1258" height="941" loading="lazy" decoding="async">
+    </a>
+{{else}}{{#if cat.id == "pylesosy"}}    <a class="cat-promo cat-promo--stage" href="/catalog/puskovye-ustroystva/">
+      <span class="cat-promo__text">
+        <span class="cat-promo__title">Пусковые устройства</span>
+        <span class="cat-promo__note">Easy&nbsp;Start, от&nbsp;{{price es19}}</span>
+      </span>
+      <span class="round-btn cat-promo__arrow" aria-hidden="true">{{icon arrow-up-right}}</span>
+      <img class="cat-promo__img" src="/assets/img/deck/es19-stage.jpg" alt="Пусковое устройство JOIM Easy Start ES-19 на&nbsp;тёмной сцене" width="1258" height="941" loading="lazy" decoding="async">
+    </a>
+{{else}}    <a class="cat-promo cat-promo--photo" href="/podbor/">
+      <span class="cat-promo__text">
+        <span class="cat-promo__title">Подбор по&nbsp;машине</span>
+        <span class="cat-promo__note">Три вопроса про&nbsp;мотор и&nbsp;ответ с&nbsp;ценой</span>
+      </span>
+      <span class="round-btn cat-promo__arrow" aria-hidden="true">{{icon arrow-up-right}}</span>
+      <img class="cat-promo__img" src="/assets/img/deck/photo-hood.jpg" alt="Пусковое устройство JOIM ES-19 с&nbsp;клеммами под&nbsp;капотом автомобиля" width="1672" height="940" loading="lazy" decoding="async">
+    </a>
+{{/if}}{{/if}}  </div>
+</section>
+
+{{#if cat.id == "puskovye"}}<!-- 2. Хаб пусковых: какую модель выбрать (две модели в продаже) -->
+<section class="section cat-choose" aria-labelledby="cat-choose-title">
+  <div class="container cat-choose__in">
+    <div class="cat-choose__text">
+      <h2 class="section-title" id="cat-choose-title">Какую модель выбрать</h2>
+      <p class="cat-choose__lead"><span class="nowrap">ES-19</span> дешевле и&nbsp;закрывает почти любую легковую. <span class="nowrap">ES-29</span> берёт мотор крупнее и&nbsp;держит вдвое больше запусков.</p>
+      <div class="cat-choose__actions">
+        <a class="btn btn--solid" href="/compare/es19-vs-es29/">Подробное сравнение</a>
+        <a class="btn btn--outline" href="/podbor/">Подобрать по&nbsp;машине</a>
+      </div>
+      <p class="cat-choose__note">В&nbsp;таблице две модели, которые уже продаются. <span class="nowrap">ES-2</span>, <span class="nowrap">ES-55</span> и&nbsp;<span class="nowrap">ES-99</span> скоро появятся в&nbsp;продаже.</p>
+    </div>
+    <div class="cat-choose__table">
+      <div class="table-wrap">
+        <table class="table">
+          <caption class="visually-hidden">Сравнение ES-19 и&nbsp;ES-29: цена, ток, двигатели, запуски, ёмкость, фонарь, гарантия</caption>
+          <thead>
+            <tr>
+              <th scope="col"><span class="visually-hidden">Параметр</span></th>
+              <th scope="col"><a class="cat-choose__model" href="{{products.es19.url}}"><span class="mini-tile"><img src="{{products.es19.img}}" alt="" width="{{products.es19.w}}" height="{{products.es19.h}}" loading="lazy" decoding="async"></span><span><span class="cat-choose__series">Easy&nbsp;Start </span><span class="nowrap">{{products.es19.model}}</span></span></a></th>
+              <th scope="col"><a class="cat-choose__model" href="{{products.es29.url}}"><span class="mini-tile"><img src="{{products.es29.img}}" alt="" width="{{products.es29.w}}" height="{{products.es29.h}}" loading="lazy" decoding="async"></span><span><span class="cat-choose__series">Easy&nbsp;Start </span><span class="nowrap">{{products.es29.model}}</span></span></a></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Цена</th><td><span class="cat-choose__win"><span class="visually-hidden">лучшее значение: </span><b class="price">{{price es19}}</b></span></td><td><b class="price">{{price es29}}</b></td></tr>
+            <tr><th scope="row">Ток</th><td>{{{products.es19.specs.current}}} {{products.es19.specs.currentType}}</td><td>{{{products.es29.specs.current}}} {{products.es29.specs.currentType}}</td></tr>
+            <tr><th scope="row">Двигатели</th><td>{{{products.es19.specs.engines}}}</td><td>{{{products.es29.specs.engines}}}</td></tr>
+            <tr><th scope="row">Запусков на&nbsp;заряде</th><td>{{{products.es19.specs.starts}}}</td><td><span class="cat-choose__win"><span class="visually-hidden">лучшее значение: </span>{{{products.es29.specs.starts}}}</span></td></tr>
+            <tr><th scope="row">Ёмкость</th><td>{{{products.es19.specs.capacity}}}</td><td><span class="cat-choose__win"><span class="visually-hidden">лучшее значение: </span>{{{products.es29.specs.capacity}}}</span></td></tr>
+            <tr><th scope="row">Фонарь</th><td>{{{products.es19.specs.lamp}}}</td><td><span class="cat-choose__win"><span class="visually-hidden">лучшее значение: </span>{{{products.es29.specs.lamp}}}</span></td></tr>
+            <tr><th scope="row">Гарантия</th><td>{{{products.es19.specs.warranty}}}</td><td>{{{products.es29.specs.warranty}}}</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="cat-choose__legend"><span class="cat-choose__dot" aria-hidden="true"></span>лучшее значение в&nbsp;строке</p>
+    </div>
+  </div>
+</section>
+
+{{/if}}<!-- 3. Тёмная панель с чертежом: описание раздела и ссылки. На хабе пусковых слева заголовок, вводный абзац и чертёж, справа текст -->
+<section class="cat-about" aria-labelledby="cat-about-title">
+  <div class="container">
+    <div class="cat-about__card">
+      <div class="cat-about__body">
+        <h2 class="cat-about__title" id="cat-about-title">{{#if cat.id == "puskovye"}}Как выбрать пусковое устройство{{else}}{{#if cat.id == "kompressor"}}О&nbsp;моделях с&nbsp;компрессором{{else}}{{#if cat.id == "dizel"}}О&nbsp;моделях для&nbsp;дизеля{{else}}{{#if cat.id == "pylesosy"}}Об&nbsp;автопылесосах JOIM{{else}}О&nbsp;каталоге JOIM{{/if}}{{/if}}{{/if}}{{/if}}</h2>
+        <p class="cat-about__lead">{{{cat.intro}}}</p>
+{{#if cat.id == "puskovye"}}        <div class="cat-about__text">
+          <p>Пусковое устройство, или бустер для&nbsp;автомобиля, выбирают по&nbsp;топливу и&nbsp;объёму двигателя. Easy&nbsp;Start <span class="nowrap">ES-19</span> с&nbsp;пусковым током {{{products.es19.specs.current}}} рассчитан на&nbsp;такие моторы: {{{products.es19.specs.engines}}}. Этого хватает почти любой легковой машине. <span class="nowrap">ES-29</span> с&nbsp;пиковым током {{{products.es29.specs.current}}} берут под&nbsp;большие двигатели ({{{products.es29.specs.engines}}}), грузовую технику и&nbsp;когда в&nbsp;семье несколько машин.</p>
+          <p>Если машина зимует на&nbsp;улице, закладывайте запас по&nbsp;объёму в&nbsp;полтора раза: любой литий на&nbsp;холоде отдаёт меньше. Одна попытка запуска съедает от&nbsp;3&nbsp;до&nbsp;8&nbsp;процентов заряда. На&nbsp;одном заряде <span class="nowrap">ES-19</span> делает {{{products.es19.specs.starts}}} запусков, <span class="nowrap">ES-29</span> {{{products.es29.specs.starts}}}. Обе модели работают {{{products.es19.specs.temp}}} и&nbsp;подходят не&nbsp;только машине: ими заводят мотоциклы, лодки, гидроциклы и&nbsp;снегоходы.</p>
+          <p>Модель под&nbsp;свой мотор покажет <a href="/podbor/">подбор по&nbsp;машине</a>: три вопроса и&nbsp;ответ с&nbsp;ценой. Чем бустер отличается от&nbsp;зарядного, разбираем в&nbsp;статье <a href="/blog/vybor/">«Пусковое или <span class="nowrap">пуско-зарядное</span> устройство: в&nbsp;чём разница»</a>. Что делать на&nbsp;месте, читайте в&nbsp;статье <a href="/blog/akkumulyator/">«Сел аккумулятор: что делать и&nbsp;как завести машину без&nbsp;помощи»</a>.</p>
+        </div>
+{{/if}}        <ul class="cat-about__links">
+{{#if cat.id != "pylesosy"}}          <li><a class="btn btn--outline btn--sm" href="/podbor/">Подбор по&nbsp;машине{{icon arrow-up-right icon--move}}</a></li>
+{{/if}}{{#if cat.id != "kompressor"}}{{#if cat.id != "pylesosy"}}          <li><a class="btn btn--outline btn--sm" href="/compare/es19-vs-es29/">Сравнение ES-19 и&nbsp;ES-29{{icon arrow-up-right icon--move}}</a></li>
+{{/if}}{{/if}}{{#if cat.id == "puskovye"}}          <li><a class="btn btn--outline btn--sm" href="/instructions/">Инструкции{{icon arrow-up-right icon--move}}</a></li>
+          <li><a class="btn btn--outline btn--sm" href="/catalog/avtopylesosy/">Автомобильные пылесосы{{icon arrow-up-right icon--move}}</a></li>
+{{/if}}{{#if cat.id == "kompressor"}}          <li><a class="btn btn--outline btn--sm" href="/catalog/puskovye-ustroystva/">Все пусковые устройства{{icon arrow-up-right icon--move}}</a></li>
+{{/if}}{{#if cat.id == "dizel"}}          <li><a class="btn btn--outline btn--sm" href="/catalog/puskovye-ustroystva/">Все пусковые устройства{{icon arrow-up-right icon--move}}</a></li>
+{{/if}}{{#if cat.id == "pylesosy"}}          <li><a class="btn btn--outline btn--sm" href="/faq/">Частые вопросы{{icon arrow-up-right icon--move}}</a></li>
+{{/if}}{{#if cat.id == "all"}}          <li><a class="btn btn--outline btn--sm" href="/delivery/">Доставка и&nbsp;оплата{{icon arrow-up-right icon--move}}</a></li>
+          <li><a class="btn btn--outline btn--sm" href="/warranty/">Гарантия и&nbsp;возврат{{icon arrow-up-right icon--move}}</a></li>
+{{/if}}{{#if cat.id == "pylesosy"}}          <li><a class="btn btn--outline btn--sm" href="/warranty/">Гарантия и&nbsp;возврат{{icon arrow-up-right icon--move}}</a></li>
+          <li><a class="btn btn--outline btn--sm" href="/delivery/">Доставка и&nbsp;оплата{{icon arrow-up-right icon--move}}</a></li>
+{{/if}}        </ul>
+      </div>
+{{#if cat.id == "pylesosy"}}      <!-- чертёж автопылесоса PVC-1: вид спереди и вид сверху -->
+      <svg class="bp cat-about__art cat-about__art--vac" viewBox="0 0 330 400" width="330" height="400" aria-hidden="true" focusable="false">
+        <defs><pattern id="cat-bp-h" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path class="bp-3" d="M0 0V6"/></pattern></defs>
+        <path class="bp-axis" d="M150 4V396M30 208H322"/>
+        <circle class="bp-3 bp-dash" cx="150" cy="208" r="118"/>
+        <circle class="bp-3" cx="150" cy="208" r="150"/>
+        <rect x="110" y="30" width="80" height="50" rx="13"/>
+        <rect class="bp-2" x="115" y="35" width="70" height="40" rx="9"/>
+        <path class="bp-3" d="M124 44v22M130 44v22M136 44v22M164 44v22M170 44v22M176 44v22"/>
+        <rect x="116" y="80" width="68" height="282"/>
+        <rect class="bp-2" x="121" y="85" width="58" height="101" rx="3"/>
+        <rect x="139" y="90" width="22" height="26" rx="3"/>
+        <rect class="bp-2" x="144" y="98" width="12" height="11" rx="2"/>
+        <path d="M130 124H170L163 178H137Z" fill="url(#cat-bp-h)"/>
+        <path class="bp-2" d="M126 124H174M133 182H167"/>
+        <path d="M116 190H184"/>
+        <path class="bp-2" d="M116 195H184"/>
+        <circle class="bp-dot" cx="150" cy="204" r="2"/>
+        <g transform="translate(135 221) scale(0.3)"><g transform="translate(0 0.1) scale(0.1)"><g transform="translate(0,1003) scale(0.1,-0.1)"><path d="M7920 10000 c-63 -17 -169 -46 -235 -65 -66 -18 -147 -39 -180 -46 -33 -6 -107 -27 -164 -45 -57 -19 -138 -41 -180 -49 -42 -9 -114 -26 -161 -40 -47 -13 -125 -33 -175 -44 -49 -12 -130 -35 -180 -51 -49 -16 -130 -39 -180 -50 -49 -12 -137 -36 -195 -54 -58 -19 -148 -43 -200 -55 -52 -11 -114 -27 -137 -35 -23 -8 -95 -27 -160 -41 -65 -14 -167 -41 -228 -60 -60 -18 -164 -47 -230 -63 -66 -16 -176 -45 -245 -65 -411 -118 -512 -137 -740 -137 -353 0 -559 71 -798 273 -135 114 -214 214 -372 469 -129 210 -140 212 -501 87 -145 -51 -375 -129 -512 -175 -439 -148 -501 -198 -427 -345 478 -944 1046 -1456 1880 -1695 398 -115 1021 -110 1470 11 113 31 252 67 310 81 58 14 177 48 265 75 88 27 201 57 250 68 50 11 126 31 171 45 44 13 107 29 140 36 32 6 102 24 154 40 52 16 139 38 193 50 54 12 117 28 140 36 40 15 156 47 557 153 102 27 211 59 242 70 31 11 97 27 145 36 48 9 122 27 163 40 76 24 318 88 492 131 53 13 152 41 221 64 68 22 167 49 218 60 52 11 139 33 194 50 55 16 127 37 159 45 98 27 135 84 105 162 -13 36 -970 996 -1025 1029 -64 38 -113 38 -244 4z"/><path d="M1065 9174 c-68 -38 -1011 -989 -1040 -1049 -24 -51 -23 -113 2 -195 12 -36 28 -106 38 -155 9 -50 27 -124 39 -165 13 -41 52 -178 85 -305 34 -126 78 -284 98 -350 20 -66 47 -167 59 -225 13 -58 33 -139 45 -180 36 -125 97 -357 134 -506 19 -78 49 -186 66 -240 29 -91 63 -214 133 -494 15 -58 40 -150 56 -205 16 -55 36 -136 44 -180 9 -44 30 -123 46 -175 115 -373 94 -702 -64 -1025 -114 -231 -280 -396 -581 -576 -262 -156 -263 -108 5 -879 50 -146 107 -312 127 -370 90 -269 130 -278 434 -98 107 63 232 136 279 163 310 174 709 558 914 878 354 555 528 1372 401 1892 -14 61 -44 187 -65 280 -21 94 -48 197 -60 230 -24 68 -88 308 -131 495 -16 69 -43 166 -59 215 -16 50 -38 133 -49 185 -11 52 -35 145 -54 205 -19 61 -58 202 -87 315 -28 113 -69 262 -91 331 -21 69 -46 162 -54 206 -8 44 -27 118 -41 164 -13 46 -34 123 -44 171 -11 48 -33 129 -50 180 -16 51 -41 143 -55 203 -14 61 -41 157 -59 215 -19 58 -46 155 -60 215 -15 61 -46 184 -70 275 -24 91 -62 235 -84 322 -59 230 -109 285 -207 232z"/><path d="M9480 8331 c-51 -16 -383 -205 -585 -333 -599 -381 -1083 -1063 -1199 -1689 -14 -74 -33 -168 -43 -209 -32 -135 -26 -689 9 -837 15 -62 34 -154 43 -203 9 -50 31 -140 50 -201 19 -60 49 -165 65 -232 31 -124 103 -387 145 -532 12 -44 30 -118 39 -165 9 -47 29 -124 44 -170 16 -47 35 -110 42 -140 25 -112 113 -438 145 -545 19 -60 45 -158 59 -216 14 -59 40 -160 59 -225 19 -66 60 -222 92 -347 31 -126 63 -247 71 -270 9 -23 33 -114 55 -202 22 -88 51 -197 65 -242 29 -96 83 -302 130 -497 98 -399 94 -400 924 452 399 408 389 389 320 608 -22 70 -49 169 -60 220 -11 51 -31 128 -46 171 -14 43 -34 119 -45 168 -11 50 -31 126 -44 170 -13 44 -31 117 -40 163 -9 46 -28 115 -41 155 -14 40 -36 117 -49 172 -14 55 -45 174 -71 265 -25 91 -60 219 -79 285 -18 66 -41 158 -50 205 -10 47 -28 115 -41 152 -25 68 -83 287 -133 498 -15 63 -44 165 -63 225 -20 61 -44 148 -53 195 -9 47 -32 137 -50 200 -77 265 -75 437 6 685 124 384 319 609 722 836 157 88 187 143 142 269 -14 41 -44 129 -65 195 -88 276 -300 878 -319 909 -33 53 -91 75 -151 57z"/><path d="M5480 2374 c-157 -19 -377 -60 -480 -89 -47 -13 -132 -35 -190 -49 -58 -14 -139 -37 -180 -51 -41 -14 -128 -37 -193 -51 -65 -14 -130 -30 -145 -35 -15 -6 -88 -26 -162 -44 -74 -19 -155 -41 -180 -50 -25 -9 -99 -29 -165 -45 -66 -16 -163 -42 -215 -59 -52 -17 -133 -39 -180 -50 -47 -12 -122 -32 -167 -45 -45 -14 -120 -32 -166 -40 -46 -9 -124 -30 -173 -47 -49 -17 -134 -39 -189 -50 -55 -10 -140 -32 -190 -49 -107 -35 -380 -110 -530 -145 -59 -14 -148 -39 -197 -55 -49 -16 -125 -36 -170 -45 -119 -22 -634 -167 -680 -191 -151 -78 -132 -104 605 -836 389 -387 395 -389 652 -315 66 19 154 42 195 50 42 9 118 29 170 45 52 17 140 40 194 52 55 12 138 36 185 52 47 16 138 42 201 58 270 67 440 112 510 135 41 13 116 31 165 40 50 9 137 31 195 49 58 19 211 61 340 96 129 34 291 79 360 100 69 21 164 46 211 54 47 9 118 27 157 40 548 187 1018 152 1378 -102 160 -114 246 -213 402 -469 129 -210 179 -248 295 -223 62 13 524 168 657 220 52 20 174 62 270 93 346 112 350 132 108 546 -220 376 -414 637 -588 789 -611 535 -1398 802 -2110 716z"/></g></g></g>
+        <circle class="bp-3 bp-dash" cx="150" cy="236" r="25"/>
+        <rect x="137" y="272" width="26" height="58" rx="13"/>
+        <rect class="bp-2" x="141" y="276" width="18" height="50" rx="9"/>
+        <circle class="bp-2" cx="150" cy="291" r="5"/>
+        <circle class="bp-2" cx="150" cy="311" r="5"/>
+        <path d="M150 308.6v2.6M147.9 310a3.1 3.1 0 1 0 4.2 0"/>
+        <path class="bp-2" d="M138 346h24"/>
+        <rect x="120" y="362" width="60" height="16" rx="5"/>
+        <path class="bp-3" d="M128 362v16M136 362v16M144 362v16M156 362v16M164 362v16M172 362v16"/>
+        <path class="bp-2" d="M106 30H76M106 378H76M82 30V378M78 34L86 26M78 382L86 374"/>
+        <text class="bp-txt" x="78" y="214" transform="rotate(-90 78 214)">{{products.pvc1.specs.length}}</text>
+        <path class="bp-2" d="M168 150H232"/>
+        <circle class="bp-node" cx="168" cy="150" r="3.2"/>
+        <text class="bp-txt" x="238" y="153.5">HEPA</text>
+        <path class="bp-axis" d="M264 32V132M214 82H314"/>
+        <circle cx="264" cy="82" r="40"/>
+        <circle class="bp-2" cx="264" cy="82" r="34"/>
+        <circle class="bp-2" cx="264" cy="82" r="13"/>
+        <circle class="bp-3" cx="264" cy="82" r="6"/>
+        <path class="bp-3 bp-dash" d="M190 42H250M190 122H250"/>
+      </svg>
+{{else}}{{#if cat.id == "kompressor"}}      {{> bp-battery cls=cat-about__art}}
+{{else}}      {{> bp-device cls=cat-about__art}}
+{{/if}}{{/if}}    </div>
+  </div>
+</section>
+
+{{#if cat.id == "puskovye"}}<!-- 4. Хаб пусковых: вопросы и ответы (те же вопросы в разметке FAQPage): заголовок и кнопка слева, аккордеон справа -->
+<section class="section section--line cat-faq" aria-labelledby="cat-faq-title">
+  <div class="container cat-faq__in">
+    <h2 class="section-title cat-faq__title" id="cat-faq-title">Вопросы и&nbsp;ответы</h2>
+    <div class="accordion cat-faq__list" data-accordion="single">
+      <div class="accordion__item is-open">
+        <h3 class="accordion__head"><button class="accordion__btn" type="button"><span>Пусковое и&nbsp;<span class="nowrap">пуско-зарядное</span> устройство: в&nbsp;чём разница?</span></button></h3>
+        <div class="accordion__panel"><div class="accordion__body"><p>Пуско-зарядное работает от&nbsp;розетки и&nbsp;стоит в&nbsp;гараже. Пусковое (бустер) работает от&nbsp;своей батареи и&nbsp;лежит в&nbsp;машине: заводит мотор там, где сел аккумулятор.</p></div></div>
+      </div>
+      <div class="accordion__item">
+        <h3 class="accordion__head"><button class="accordion__btn" type="button">Заведёт, если аккумулятор сел полностью?</button></h3>
+        <div class="accordion__panel"><div class="accordion__body"><p>Да. Устройство не&nbsp;подзаряжает аккумулятор, а&nbsp;отдаёт ток прямо на&nbsp;стартер.</p></div></div>
+      </div>
+      <div class="accordion__item">
+        <h3 class="accordion__head"><button class="accordion__btn" type="button">Что будет, если перепутать клеммы?</button></h3>
+        <div class="accordion__panel"><div class="accordion__body"><p>Ничего. MCU-чип проверяет полярность до&nbsp;подачи тока и&nbsp;не&nbsp;запустит процесс, индикатор покажет ошибку.</p></div></div>
+      </div>
+      <div class="accordion__item">
+        <h3 class="accordion__head"><button class="accordion__btn" type="button">Работает на&nbsp;морозе?</button></h3>
+        <div class="accordion__panel"><div class="accordion__body"><p>Да. Встроенный датчик температуры следит за&nbsp;нагревом батареи и&nbsp;корректирует отдачу. На&nbsp;сильном морозе устройство лучше держать в&nbsp;салоне, а&nbsp;не&nbsp;в&nbsp;багажнике: любой литий на&nbsp;холоде отдаёт меньше.</p></div></div>
+      </div>
+      <div class="accordion__item">
+        <h3 class="accordion__head"><button class="accordion__btn" type="button">Сколько держит заряд без&nbsp;использования?</button></h3>
+        <div class="accordion__panel"><div class="accordion__body"><p>Несколько месяцев в&nbsp;режиме ожидания. Подзаряжать стоит раз в&nbsp;<span class="nowrap">3–4&nbsp;месяца</span>, индикатор <span class="nowrap">0–100&nbsp;%</span> покажет остаток.</p></div></div>
+      </div>
+      <div class="accordion__item">
+        <h3 class="accordion__head"><button class="accordion__btn" type="button"><span>Чем <span class="nowrap">ES-19</span> отличается от&nbsp;<span class="nowrap">ES-29</span>?</span></button></h3>
+        <div class="accordion__panel"><div class="accordion__body"><p>Запасом и&nbsp;моторами. <span class="nowrap">ES-19</span>: {{products.es19.specs.currentType}} ток {{{products.es19.specs.current}}}, {{{products.es19.specs.capacity}}}, {{{products.es19.specs.starts}}} запусков, {{{products.es19.specs.engines}}}. <span class="nowrap">ES-29</span>: {{products.es29.specs.currentType}} ток {{{products.es29.specs.current}}}, {{{products.es29.specs.capacity}}}, {{{products.es29.specs.starts}}} запусков, {{{products.es29.specs.engines}}}. Ещё у&nbsp;<span class="nowrap">ES-29</span> ярче фонарь и&nbsp;в&nbsp;комплекте адаптер с&nbsp;Lightning.</p></div></div>
+      </div>
+    </div>
+    <div class="cat-faq__more">
+      <p>Не&nbsp;нашли ответа на&nbsp;свой вопрос?</p>
+      <a class="btn btn--solid" href="#cat-ask">Задать вопрос</a>
+      <a class="link cat-faq__all" href="/faq/">Все вопросы и&nbsp;ответы</a>
+    </div>
+  </div>
+</section>
+
+{{/if}}<!-- 5. Вопрос по выбору: кадр из серии справа стоит прямо на странице, слева светлая карточка-форма с уголками -->
+<section class="cat-ask" id="cat-ask" aria-labelledby="cat-ask-title">
+{{#if cat.id == "all"}}  <img class="cat-ask__bg" src="/assets/img/deck/es19-stage.jpg" alt="Пусковое устройство JOIM Easy Start ES-19 на&nbsp;тёмной сцене" width="1258" height="941" loading="lazy" decoding="async">
+{{/if}}{{#if cat.id == "puskovye"}}  <img class="cat-ask__bg" src="/assets/img/deck/es29-stage.jpg" alt="Пусковое устройство JOIM Easy Start ES-29 на&nbsp;тёмной сцене" width="1258" height="941" loading="lazy" decoding="async">
+{{/if}}{{#if cat.id == "kompressor"}}  <img class="cat-ask__bg" src="/assets/img/deck/es99-stage.jpg" alt="Пусковое устройство с&nbsp;компрессором JOIM Easy Start ES-99 со&nbsp;шлангом" width="1258" height="941" loading="lazy" decoding="async">
+{{/if}}{{#if cat.id == "dizel"}}  <img class="cat-ask__bg" src="/assets/img/deck/es55-stage.jpg" alt="Пусковое устройство с&nbsp;компрессором JOIM Easy Start ES-55 со&nbsp;шлангом" width="1448" height="1082" loading="lazy" decoding="async">
+{{/if}}{{#if cat.id == "pylesosy"}}  <img class="cat-ask__bg cat-ask__bg--wide" src="/assets/img/deck/pvc1-stage.jpg" alt="Беспроводные автопылесосы JOIM PVC-1 в&nbsp;оранжевом и&nbsp;чёрном корпусе" width="1672" height="941" loading="lazy" decoding="async">
+{{/if}}  <div class="gridlines" aria-hidden="true"></div>
+  <div class="container cat-ask__in">
+    <div class="bracket-card cat-ask__card">
+      <form class="form" data-form novalidate>
+        <div class="form__main">
+          <h2 class="section-title" id="cat-ask-title">Остались вопросы?</h2>
+          <p class="cat-ask__lead">{{#if cat.id == "pylesosy"}}Расскажем про&nbsp;насадки и&nbsp;фильтры, ответим про&nbsp;доставку и&nbsp;гарантию.{{else}}Подскажем модель под&nbsp;ваш мотор, ответим про&nbsp;доставку и&nbsp;гарантию.{{/if}} Отвечаем сами, без&nbsp;<span class="nowrap">колл-центра</span> подрядчика.</p>
+          <p class="cat-ask__tel">Или позвоните: <a href="tel:+74951201140">+7&nbsp;495&nbsp;120-11-40</a></p>
+          <div class="form__row">
+            <div class="field">
+              <label class="visually-hidden" for="cat-ask-name">Ваше имя</label>
+              <input class="input" id="cat-ask-name" type="text" name="name" placeholder="Ваше имя" autocomplete="name" required data-error="Напишите, как к вам обращаться">
+            </div>
+            <div class="field">
+              <label class="visually-hidden" for="cat-ask-tel">Телефон</label>
+              <input class="input" id="cat-ask-tel" type="tel" name="phone" placeholder="+7 000 000-00-00" autocomplete="tel" inputmode="tel" required data-error="Оставьте телефон для связи">
+            </div>
+          </div>
+          <div class="field">
+            <label class="visually-hidden" for="cat-ask-msg">Ваш вопрос</label>
+            <textarea class="textarea" id="cat-ask-msg" name="message" placeholder="{{#if cat.id == "pylesosy"}}Например: что убираете и&nbsp;как часто{{else}}Например: марка машины, топливо и&nbsp;объём двигателя{{/if}}" required data-error="Напишите вопрос"></textarea>
+          </div>
+          <label class="check">
+            <input class="check__input" type="checkbox" name="agree" required data-error="Нужно согласие на обработку данных">
+            <span class="check__box" aria-hidden="true">{{icon check}}</span>
+            <span class="check__text">Согласен с&nbsp;<a href="/privacy/">политикой конфиденциальности</a> и&nbsp;обработкой персональных данных</span>
+          </label>
+          <button class="btn btn--accent btn--lg btn--block" type="submit">Задать вопрос</button>
+        </div>
+        <div class="form__success" data-form-success hidden>
+          <h2 class="section-title">Вопрос отправлен</h2>
+          <p class="cat-ask__lead">Перезвоним по&nbsp;указанному номеру.</p>
+          <a class="btn btn--soft" href="/faq/">Частые вопросы{{icon arrow-up-right icon--move}}</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": {{json cat.h1}},
+  "url": "{{site.origin}}{{cat.path}}",
+  "numberOfItems": {{json cat.count}},
+  "itemListElement": [
+{{#each items}}    { "@type": "ListItem", "position": {{number}}, "item": { "@type": "Product", "name": {{json name}}, "image": "{{site.origin}}{{img}}", "description": {{json aboutText}}, "brand": { "@type": "Brand", "name": "JOIM" }, "url": "{{site.origin}}{{url}}"{{#if inStock}}, "offers": { "@type": "Offer", "price": {{json price}}, "priceCurrency": "RUB", "availability": "https://schema.org/InStock", "url": "{{site.origin}}{{url}}" }{{/if}}{{#if hasRating}}, "aggregateRating": { "@type": "AggregateRating", "ratingValue": {{json rating}}, "bestRating": 5, "reviewCount": {{json reviews}} }{{/if}} } }{{#if !last}},{{/if}}
+{{/each}}  ]
+}
+</script>
+{{#if cat.id == "puskovye"}}<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Пусковое и пуско-зарядное устройство: в чём разница?", "acceptedAnswer": { "@type": "Answer", "text": "Пуско-зарядное работает от розетки и стоит в гараже. Пусковое (бустер) работает от своей батареи и лежит в машине: заводит мотор там, где сел аккумулятор." } },
+    { "@type": "Question", "name": "Заведёт, если аккумулятор сел полностью?", "acceptedAnswer": { "@type": "Answer", "text": "Да. Устройство не подзаряжает аккумулятор, а отдаёт ток прямо на стартер." } },
+    { "@type": "Question", "name": "Что будет, если перепутать клеммы?", "acceptedAnswer": { "@type": "Answer", "text": "Ничего. MCU-чип проверяет полярность до подачи тока и не запустит процесс, индикатор покажет ошибку." } },
+    { "@type": "Question", "name": "Работает на морозе?", "acceptedAnswer": { "@type": "Answer", "text": "Да. Встроенный датчик температуры следит за нагревом батареи и корректирует отдачу. На сильном морозе устройство лучше держать в салоне, а не в багажнике: любой литий на холоде отдаёт меньше." } },
+    { "@type": "Question", "name": "Сколько держит заряд без использования?", "acceptedAnswer": { "@type": "Answer", "text": "Несколько месяцев в режиме ожидания. Подзаряжать стоит раз в 3–4 месяца, индикатор 0–100 % покажет остаток." } },
+    { "@type": "Question", "name": "Чем ES-19 отличается от ES-29?", "acceptedAnswer": { "@type": "Answer", "text": "Запасом и моторами. ES-19: {{products.es19.specs.currentType}} ток {{{products.es19.specs.current}}}, {{{products.es19.specs.capacity}}}, {{{products.es19.specs.starts}}} запусков, {{{products.es19.specs.engines}}}. ES-29: {{products.es29.specs.currentType}} ток {{{products.es29.specs.current}}}, {{{products.es29.specs.capacity}}}, {{{products.es29.specs.starts}}} запусков, {{{products.es29.specs.engines}}}. Ещё у ES-29 ярче фонарь и в комплекте адаптер с Lightning." } }
+  ]
+}
+</script>
+{{/if}}

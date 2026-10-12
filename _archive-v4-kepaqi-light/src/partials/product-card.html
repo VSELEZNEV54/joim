@@ -1,0 +1,13 @@
+<article class="product-card{{#if soon}} is-soon{{/if}}" data-product="{{id}}" data-price="{{#if inStock}}{{price}}{{/if}}">
+  <div class="product-card__media tile"{{#if tileStyle}} style="{{tileStyle}}"{{/if}}>
+    <a class="tile__link" href="{{url}}" tabindex="-1" aria-hidden="true">
+      <img class="tile__img tile__img--{{fit}}{{#if tileMod}} tile__img--{{tileMod}}{{/if}}" src="{{img}}" alt="{{alt}}" width="{{w}}" height="{{h}}" loading="{{#if eager}}eager{{else}}lazy{{/if}}"{{#if prio}} fetchpriority="high"{{/if}} decoding="async">
+    </a>
+    {{#if badge}}<span class="badge badge--{{badgeTone}} product-card__badge">{{badge}}</span>{{/if}}
+    <button class="fav-btn" type="button" data-fav="{{id}}" aria-pressed="false" aria-label="В избранное: {{short}}">{{icon heart}}</button>
+  </div>
+  <h3 class="product-card__title"><a href="{{url}}">{{{nameHtml}}}</a></h3>
+  {{#if hasRating}}<p class="product-card__rating">{{icon star}}<span class="visually-hidden">Оценка </span>{{ratingFmt}} <span aria-hidden="true">•</span> {{{reviewsHtml}}}</p>{{/if}}
+  <p class="product-card__price{{#if soon}} product-card__price--soon{{/if}}">{{{priceHtml}}}</p>
+  {{#if inStock}}<button class="btn btn--accent btn--block product-card__btn" type="button" data-add-to-cart="{{id}}" aria-label="В корзину: {{short}}">В&nbsp;корзину</button>{{else}}<button class="btn btn--outline btn--block product-card__btn" type="button" data-notify="{{id}}" aria-haspopup="dialog" aria-label="Сообщить о поступлении: {{short}}"><span>Сообщить<span class="product-card__btn-more"> о&nbsp;поступлении</span></span></button>{{/if}}
+</article>

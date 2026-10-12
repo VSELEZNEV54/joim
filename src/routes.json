@@ -1,0 +1,349 @@
+{
+  "origin": "https://joim-store.ru",
+  "ogImage": "/assets/img/deck/photo-hood.jpg",
+  "marketplaces": {
+    "ozon": "https://www.ozon.ru/seller/gruppa-brendov-joim-gfy-goods-for-you/",
+    "wb": "https://www.wildberries.ru/brands/19841883-joim"
+  },
+  "navKeys": {
+    "catalog": "/catalog/",
+    "podbor": "/podbor/",
+    "delivery": "/delivery/",
+    "reviews": "/reviews/",
+    "faq": "/faq/",
+    "about": "/about/",
+    "contacts": "/contacts/",
+    "compare": "/compare/es19-vs-es29/",
+    "gifts": "/gifts/",
+    "blog": "/blog/"
+  },
+  "linkCards": {
+    "/catalog/": { "name": "Каталог", "text": "Пусковые устройства и&nbsp;автомобильные пылесосы: восемь моделей" },
+    "/catalog/puskovye-ustroystva/": { "name": "Пусковые устройства", "text": "<span class='nowrap'>ES-19</span> за&nbsp;{{price es19}}, <span class='nowrap'>ES-29</span> за&nbsp;{{price es29}} и&nbsp;три новинки" },
+    "/catalog/puskovye-ustroystva/dlya-dizelya/": { "name": "Для&nbsp;дизеля и&nbsp;больших моторов", "text": "<span class='nowrap'>ES-29</span>: дизель от&nbsp;7&nbsp;л, бензин от&nbsp;8&nbsp;л" },
+    "/catalog/avtopylesosy/": { "name": "Автомобильные пылесосы", "text": "Беспроводной <span class='nowrap'>PVC-1</span> за&nbsp;{{price pvc1}}, <span class='nowrap'>PVC-7</span> и&nbsp;<span class='nowrap'>PVC-8</span>" },
+    "/catalog/aksessuary/": { "name": "Аксессуары", "text": "Для пусковых устройств и&nbsp;автопылесоса <span class='nowrap'>PVC-1</span>" },
+    "/product/joim-easy-start-es19/": { "name": "Easy Start <span class='nowrap'>ES-19</span>", "text": "Хит продаж: 3&nbsp;300&nbsp;А, более 20&nbsp;запусков на&nbsp;заряде" },
+    "/podbor/": { "name": "Подбор по&nbsp;машине", "text": "Три вопроса про мотор и&nbsp;ответ с&nbsp;ценой" },
+    "/compare/es19-vs-es29/": { "name": "Сравнение <span class='nowrap'>ES-19</span> и&nbsp;<span class='nowrap'>ES-29</span>", "text": "Таблица отличий и&nbsp;кому какая модель" },
+    "/compare/joim-vs-baseus/": { "name": "JOIM и&nbsp;Baseus", "text": "Сравнение пусковых устройств" },
+    "/compare/joim-vs-70mai/": { "name": "JOIM и&nbsp;70mai", "text": "Сравнение пусковых устройств" },
+    "/compare/joim-vs-carku/": { "name": "JOIM и&nbsp;Carku", "text": "Сравнение пусковых устройств" },
+    "/compare/pvc1-vs-xiaomi/": { "name": "<span class='nowrap'>PVC-1</span> и&nbsp;Xiaomi", "text": "Сравнение беспроводных автопылесосов" },
+    "/reviews/": { "name": "Отзывы покупателей", "text": "25&nbsp;отзывов, средняя оценка 5,0" },
+    "/zima/": { "name": "Зима", "text": "Сел аккумулятор на&nbsp;морозе: что делать" },
+    "/gifts/": { "name": "Подарок автомобилисту", "text": "Приезжает в&nbsp;жёстком кейсе, заряжено с&nbsp;завода" },
+    "/corporate/": { "name": "Компаниям", "text": "Опт и&nbsp;корпоративные подарки" },
+    "/delivery/": { "name": "Доставка и&nbsp;оплата", "text": "Москва в&nbsp;день заказа, по&nbsp;России <span class='nowrap'>2–7&nbsp;дней</span>" },
+    "/warranty/": { "name": "Гарантия и&nbsp;возврат", "text": "12&nbsp;месяцев, брак меняем без экспертизы" },
+    "/blog/akkumulyator/": { "name": "Аккумулятор и&nbsp;запуск двигателя", "text": "Сел аккумулятор: что делать и&nbsp;как завести машину" },
+    "/blog/vybor/": { "name": "Как выбрать пусковое устройство", "text": "Пусковое или пуско-зарядное, ток и&nbsp;ёмкость под мотор" },
+    "/blog/salon/": { "name": "Уход за&nbsp;салоном", "text": "Песок, шерсть и&nbsp;труднодоступные места" },
+    "/instructions/": { "name": "Инструкции", "text": "Запуск двигателя за&nbsp;пять шагов" },
+    "/faq/": { "name": "Вопросы и&nbsp;ответы", "text": "Севший аккумулятор, клеммы, мороз, заряд" },
+    "/contacts/": { "name": "Контакты", "text": "Телефон, почта и&nbsp;адрес самовывоза" },
+    "/catalog/puskovye-ustroystva/s-kompressorom/": { "name": "Пусковые с&nbsp;компрессором", "text": "<span class='nowrap'>ES-55</span> и&nbsp;<span class='nowrap'>ES-99</span>: скоро в&nbsp;продаже" },
+    "/product/joim-easy-start-es29/": { "name": "Easy Start <span class='nowrap'>ES-29</span>", "text": "Для&nbsp;больших моторов: 5&nbsp;000&nbsp;А, более 40&nbsp;запусков" },
+    "/product/joim-pvc1/": { "name": "Автопылесос <span class='nowrap'>PVC-1</span>", "text": "До&nbsp;40&nbsp;минут работы, циклон и&nbsp;HEPA" },
+    "/favorites/": { "name": "Избранное", "text": "Товары, которые вы отметили сердечком" }
+  },
+  "reviewsExtra": [
+    {
+      "product": "es19",
+      "name": "Наталья",
+      "dateIso": "2026-06-02",
+      "dateFmt": "2\u00a0июня 2026",
+      "text": "Пришёл в комплекте. Заряжали телефон и даже сразу 2. Аккумулятор заводили до приобретения таким же соседским. Спасибо."
+    }
+  ],
+  "stubLinks": [
+    "/catalog/",
+    "/podbor/",
+    "/compare/es19-vs-es29/",
+    "/delivery/"
+  ],
+  "stubs": [
+    {
+      "path": "/catalog/aksessuary/",
+      "lead": "Аксессуары появятся позже. <span class='nowrap'>Пока можно посмотреть:</span>",
+      "bodyClass": "stub-art-device",
+      "h1": "Аксессуары",
+      "title": "Аксессуары JOIM для пусковых устройств и автопылесосов",
+      "description": "Аксессуары JOIM для пусковых устройств и автопылесоса PVC-1. Доставка по России 2–7 дней.",
+      "parents": [
+        {
+          "name": "Каталог",
+          "path": "/catalog/"
+        }
+      ],
+      "nav": "catalog"
+    },
+    {
+      "path": "/zima/",
+      "bodyClass": "stub-art-battery",
+      "lead": "Заводят мотор и&nbsp;в&nbsp;мороз до&nbsp;−30&nbsp;°C<span class='stub__note'>Пусковые устройства JOIM заводят мотор с&nbsp;полностью севшим аккумулятором и&nbsp;работают до&nbsp;−30&nbsp;°C. На&nbsp;сильном морозе устройство лучше держать в&nbsp;салоне, а&nbsp;не&nbsp;в&nbsp;багажнике.</span>",
+      "h1": "Сел аккумулятор на&nbsp;морозе",
+      "crumb": "Зима",
+      "links": [
+        "/catalog/puskovye-ustroystva/",
+        "/podbor/",
+        "/blog/akkumulyator/"
+      ],
+      "title": "Сел аккумулятор на морозе: что делать и что возить зимой",
+      "description": "Что делать, если аккумулятор сел на морозе, и что возить в машине зимой. Пусковые устройства JOIM работают до −30 °C, цена от 5 837 ₽."
+    },
+    {
+      "path": "/gifts/",
+      "bodyClass": "stub-art-device",
+      "lead": "Приезжает в&nbsp;жёстком кейсе, заряжено с&nbsp;завода<span class='stub__note'>Пусковое устройство приезжает в&nbsp;жёстком кейсе, заряжено с&nbsp;завода, инструкция на&nbsp;русском. Машина одна и&nbsp;городская: <span class='nowrap'>ES-19</span>. Дизель, внедорожник или несколько машин в&nbsp;семье: <span class='nowrap'>ES-29</span>. Возит собаку и&nbsp;детей: <span class='nowrap'>PVC-1</span>.</span>",
+      "h1": "Подарок автомобилисту",
+      "crumb": "Подарки",
+      "nav": "gifts",
+      "links": [
+        "/catalog/puskovye-ustroystva/",
+        "/catalog/avtopylesosy/",
+        "/corporate/"
+      ],
+      "title": "Подарок автомобилисту: пусковое устройство или автопылесос JOIM",
+      "description": "Что подарить водителю: пусковое устройство JOIM в жёстком кейсе или беспроводной автопылесос. Заряжено с завода, инструкция на русском."
+    },
+    {
+      "path": "/corporate/",
+      "lead": "Опт и&nbsp;корпоративные подарки от&nbsp;производителя<span class='stub__note'>Оптовые поставки и&nbsp;корпоративные подарки от&nbsp;производителя. Заявку можно оставить в&nbsp;форме на&nbsp;главной или по&nbsp;телефону <a href='tel:+74951201140'>+7&nbsp;495&nbsp;120-11-40</a>.</span>",
+      "h1": "Компаниям: опт и&nbsp;корпоративные подарки",
+      "crumb": "Компаниям",
+      "links": [
+        "/contacts/",
+        "/gifts/",
+        "/catalog/puskovye-ustroystva/"
+      ],
+      "title": "JOIM для компаний: опт и корпоративные подарки",
+      "description": "Пусковые устройства и автопылесосы JOIM оптом и на корпоративные подарки. Запросите коммерческое предложение."
+    },
+    {
+      "path": "/warranty/",
+      "bodyClass": "stub-art-seal",
+      "lead": "12&nbsp;месяцев гарантии, брак меняем без&nbsp;экспертизы<span class='stub__note'>Гарантия производителя 12&nbsp;месяцев. Брак меняем без&nbsp;экспертизы, обратную отправку оплачиваем сами. Возврат в&nbsp;течение 14&nbsp;дней.</span>",
+      "h1": "Гарантия и&nbsp;возврат",
+      "links": [
+        "/catalog/puskovye-ustroystva/",
+        "/delivery/",
+        "/instructions/"
+      ],
+      "title": "Гарантия и возврат JOIM: 12 месяцев, замена без экспертизы",
+      "description": "Гарантия производителя 12 месяцев: брак меняем без экспертизы, обратную отправку оплачиваем сами. Возврат в течение 14 дней."
+    },
+    {
+      "path": "/oplata-chastyami/",
+      "bodyClass": "stub-art-card",
+      "lead": "Рассрочка на&nbsp;6&nbsp;месяцев без&nbsp;переплаты<span class='stub__note'>Рассрочка на&nbsp;6&nbsp;месяцев без&nbsp;переплаты при&nbsp;заказе от&nbsp;20&nbsp;000&nbsp;₽. Ещё можно оплатить картой на&nbsp;сайте, при&nbsp;получении в&nbsp;Москве или по&nbsp;счёту для&nbsp;юрлиц.</span>",
+      "h1": "Оплата частями",
+      "links": [
+        "/delivery/",
+        "/catalog/puskovye-ustroystva/",
+        "/catalog/avtopylesosy/"
+      ],
+      "title": "Оплата частями и рассрочка в магазине JOIM",
+      "description": "Рассрочка на 6 месяцев без переплаты при заказе от 20 000 ₽. Оплата картой на сайте, при получении в Москве, безнал для юрлиц."
+    },
+    {
+      "path": "/blog/",
+      "lead": "Статьи появятся позже. <span class='nowrap'>Пока можно посмотреть:</span>",
+      "h1": "Блог JOIM",
+      "crumb": "Блог",
+      "nav": "blog",
+      "links": [
+        "/blog/akkumulyator/",
+        "/blog/vybor/",
+        "/blog/salon/"
+      ],
+      "title": "Блог JOIM: аккумулятор, запуск двигателя, уход за салоном",
+      "description": "Статьи о том, как завести машину с севшим аккумулятором, как выбрать пусковое устройство и как ухаживать за салоном."
+    },
+    {
+      "path": "/blog/akkumulyator/",
+      "lead": "Статьи появятся позже. <span class='nowrap'>Пока можно посмотреть:</span>",
+      "bodyClass": "stub-art-battery",
+      "h1": "Аккумулятор и&nbsp;запуск двигателя",
+      "nav": "blog",
+      "parents": [
+        {
+          "name": "Блог",
+          "path": "/blog/"
+        }
+      ],
+      "links": [
+        "/zima/",
+        "/blog/vybor/",
+        "/blog/salon/"
+      ],
+      "title": "Аккумулятор и запуск двигателя: статьи блога JOIM",
+      "description": "Сел аккумулятор: что делать, как прикурить машину и чем пусковое устройство безопаснее проводов."
+    },
+    {
+      "path": "/blog/vybor/",
+      "lead": "Статьи появятся позже. <span class='nowrap'>Пока можно посмотреть:</span>",
+      "bodyClass": "stub-art-device",
+      "h1": "Как выбрать пусковое устройство",
+      "crumb": "Выбор пускового устройства",
+      "nav": "blog",
+      "parents": [
+        {
+          "name": "Блог",
+          "path": "/blog/"
+        }
+      ],
+      "links": [
+        "/podbor/",
+        "/compare/es19-vs-es29/",
+        "/compare/joim-vs-baseus/"
+      ],
+      "title": "Как выбрать пусковое устройство: статьи блога JOIM",
+      "description": "Пусковое или пуско-зарядное устройство, какой ток и ёмкость нужны под объём мотора, что такое бустер для автомобиля."
+    },
+    {
+      "path": "/blog/salon/",
+      "lead": "Статьи появятся позже. <span class='nowrap'>Пока можно посмотреть:</span>",
+      "h1": "Уход за&nbsp;салоном автомобиля",
+      "crumb": "Уход за&nbsp;салоном",
+      "nav": "blog",
+      "parents": [
+        {
+          "name": "Блог",
+          "path": "/blog/"
+        }
+      ],
+      "links": [
+        "/catalog/avtopylesosy/",
+        "/blog/akkumulyator/",
+        "/blog/vybor/"
+      ],
+      "title": "Уход за салоном автомобиля: статьи блога JOIM",
+      "description": "Как убирать салон автомобиля: песок, шерсть, дефлекторы и труднодоступные места."
+    },
+    {
+      "path": "/instructions/",
+      "bodyClass": "stub-art-device",
+      "lead": "Запуск двигателя за&nbsp;пять шагов<span class='stub__note'>Запуск двигателя за&nbsp;пять шагов: подключить кабель с&nbsp;клеммами к&nbsp;устройству, красный зажим на&nbsp;плюс аккумулятора, чёрный на&nbsp;минус, включить устройство, подождать десять секунд и&nbsp;повернуть ключ. Потом выключить, вынуть кабель и&nbsp;снять зажимы: сначала чёрный, потом красный.</span>",
+      "h1": "Инструкции",
+      "links": [
+        "/product/joim-easy-start-es19/",
+        "/faq/",
+        "/warranty/"
+      ],
+      "title": "Инструкции JOIM: как пользоваться пусковым устройством",
+      "description": "Как пользоваться пусковым устройством JOIM Easy Start: подключение клемм, запуск двигателя за пять шагов, хранение и подзарядка."
+    },
+    {
+      "path": "/about/",
+      "bodyClass": "stub-art-device",
+      "lead": "Российский бренд со&nbsp;своим производством<span class='stub__note'>JOIM: российский бренд автомобильной электроники со&nbsp;своим сертифицированным производством. Разработка, плата, сборка, тесты и&nbsp;упаковка свои. Товарный знак №&nbsp;967852.</span>",
+      "h1": "О&nbsp;бренде JOIM",
+      "crumb": "О&nbsp;бренде",
+      "links": [
+        "/contacts/",
+        "/warranty/",
+        "/reviews/"
+      ],
+      "title": "О бренде JOIM: своё производство автомобильной электроники",
+      "description": "JOIM: российский бренд автомобильной электроники со своим сертифицированным производством. Товарный знак № 967852.",
+      "nav": "about"
+    },
+    {
+      "path": "/contacts/",
+      "bodyClass": "stub-art-map",
+      "lead": "Телефон, почта и&nbsp;самовывоз в&nbsp;Москве<span class='stub__note'>Телефон <a href='tel:+74951201140'>+7&nbsp;495&nbsp;120-11-40</a>, почта <a href='mailto:hello@joim-store.ru'>hello@joim-store.ru</a>. Самовывоз в&nbsp;Москве: ул.&nbsp;Автозаводская, 23к2, ежедневно <span class='nowrap'>09:00–21:00</span>.</span>",
+      "h1": "Контакты",
+      "links": [
+        "/delivery/",
+        "/warranty/",
+        "/corporate/"
+      ],
+      "title": "Контакты магазина JOIM",
+      "description": "Телефон +7 495 120-11-40, почта hello@joim-store.ru. Самовывоз в Москве: ул. Автозаводская, 23к2, ежедневно 09:00–21:00.",
+      "nav": "contacts"
+    },
+    {
+      "path": "/compare/joim-vs-baseus/",
+      "lead": "Сравнение появится позже. <span class='nowrap'>Пока можно посмотреть:</span>",
+      "bodyClass": "stub-art-device",
+      "h1": "Сравнение пусковых устройств JOIM и&nbsp;Baseus",
+      "crumb": "JOIM и&nbsp;Baseus",
+      "nav": "compare",
+      "links": [
+        "/compare/es19-vs-es29/",
+        "/compare/joim-vs-70mai/",
+        "/catalog/puskovye-ustroystva/"
+      ],
+      "title": "Пусковые устройства JOIM и Baseus: сравнение",
+      "description": "Сравнение пусковых устройств JOIM Easy Start и Baseus."
+    },
+    {
+      "path": "/compare/joim-vs-70mai/",
+      "lead": "Сравнение появится позже. <span class='nowrap'>Пока можно посмотреть:</span>",
+      "bodyClass": "stub-art-device",
+      "h1": "Сравнение пусковых устройств JOIM и&nbsp;70mai",
+      "crumb": "JOIM и&nbsp;70mai",
+      "nav": "compare",
+      "links": [
+        "/compare/es19-vs-es29/",
+        "/compare/joim-vs-carku/",
+        "/catalog/puskovye-ustroystva/"
+      ],
+      "title": "Пусковые устройства JOIM и 70mai: сравнение",
+      "description": "Сравнение пусковых устройств JOIM Easy Start и 70mai."
+    },
+    {
+      "path": "/compare/joim-vs-carku/",
+      "lead": "Сравнение появится позже. <span class='nowrap'>Пока можно посмотреть:</span>",
+      "bodyClass": "stub-art-device",
+      "h1": "Сравнение пусковых устройств JOIM и&nbsp;Carku",
+      "crumb": "JOIM и&nbsp;Carku",
+      "nav": "compare",
+      "links": [
+        "/compare/es19-vs-es29/",
+        "/compare/pvc1-vs-xiaomi/",
+        "/catalog/puskovye-ustroystva/"
+      ],
+      "title": "Пусковые устройства JOIM и Carku: сравнение",
+      "description": "Сравнение пусковых устройств JOIM Easy Start и Carku."
+    },
+    {
+      "path": "/compare/pvc1-vs-xiaomi/",
+      "lead": "Сравнение появится позже. <span class='nowrap'>Пока можно посмотреть:</span>",
+      "h1": "Сравнение автопылесосов JOIM PVC-1 и&nbsp;Xiaomi",
+      "crumb": "PVC-1 и&nbsp;Xiaomi",
+      "nav": "compare",
+      "links": [
+        "/catalog/avtopylesosy/",
+        "/compare/joim-vs-baseus/",
+        "/reviews/"
+      ],
+      "title": "Автопылесосы JOIM PVC-1 и Xiaomi: сравнение",
+      "description": "Сравнение беспроводных автопылесосов JOIM PVC-1 и Xiaomi."
+    },
+    {
+      "path": "/privacy/",
+      "lead": "Текст документа появится позже. <span class='nowrap'>Пока можно посмотреть:</span>",
+      "h1": "Политика конфиденциальности",
+      "title": "Политика конфиденциальности магазина JOIM",
+      "description": "Политика конфиденциальности интернет-магазина JOIM."
+    },
+    {
+      "path": "/offer/",
+      "lead": "Текст документа появится позже. <span class='nowrap'>Пока можно посмотреть:</span>",
+      "h1": "Публичная оферта",
+      "title": "Публичная оферта магазина JOIM",
+      "description": "Публичная оферта интернет-магазина JOIM."
+    },
+    {
+      "path": "/404.html",
+      "h1": "Страница не&nbsp;найдена",
+      "crumbs": false,
+      "canonical": false,
+      "lead": "Такого адреса на&nbsp;сайте&nbsp;нет. Проверьте ссылку или откройте один из&nbsp;разделов:",
+      "title": "Страница не найдена: магазин JOIM",
+      "description": "Такой страницы на сайте JOIM нет."
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+<dialog class="search" id="search" aria-label="Поиск по товарам">
+  <div class="container search__in">
+    <form class="search__form" role="search" data-search-form>
+      {{icon search search__icon}}
+      <input class="search__input" type="search" name="q" placeholder="Модель или категория, например ES-19" autocomplete="off" aria-label="Поиск по товарам" aria-controls="search-results" data-search-input>
+      <button class="round-btn" type="button" data-dialog-close aria-label="Закрыть поиск">{{icon close}}</button>
+    </form>
+    <p class="search__hint" data-search-hint>Популярное</p>
+    <ul class="search__results" id="search-results" data-search-results></ul>
+    <p class="search__empty" data-search-empty hidden>Ничего не&nbsp;нашли. Попробуйте «пусковое», «пылесос» или номер модели. <a href="/catalog/">Весь каталог</a></p>
+  </div>
+</dialog>
+<dialog class="modal" id="notify" aria-labelledby="notify-title">
+  <button class="round-btn modal__close" type="button" data-dialog-close aria-label="Закрыть окно">{{icon close}}</button>
+  <form class="form" data-form novalidate>
+    <div class="form__main">
+      <h2 class="modal__title" id="notify-title">Сообщить о&nbsp;поступлении</h2>
+      <p class="modal__text">Оставьте контакт: напишем или позвоним, когда <b data-notify-name>товар</b> появится в&nbsp;продаже.</p>
+      <input type="hidden" name="product" value="" data-notify-id>
+      <div class="field">
+        <label class="visually-hidden" for="notify-name">Ваше имя</label>
+        <input class="input" id="notify-name" type="text" name="name" placeholder="Ваше имя" autocomplete="name" required data-error="Напишите, как к вам обращаться">
+      </div>
+      <div class="field">
+        <label class="visually-hidden" for="notify-contact">Телефон или e-mail</label>
+        <input class="input" id="notify-contact" type="text" name="contact" placeholder="Телефон или e-mail" autocomplete="email" inputmode="email" required data-contact data-error="Оставьте телефон или e-mail">
+      </div>
+      <label class="check">
+        <input class="check__input" type="checkbox" name="agree" required data-error="Нужно согласие на обработку данных">
+        <span class="check__box" aria-hidden="true">{{icon check}}</span>
+        <span class="check__text">Согласен с&nbsp;<a href="/privacy/">политикой конфиденциальности</a></span>
+      </label>
+      <button class="btn btn--accent btn--lg btn--block" type="submit">Сообщить о&nbsp;поступлении</button>
+    </div>
+    <div class="form__success" data-form-success hidden>
+      <h2 class="modal__title">Записали</h2>
+      <p class="modal__text">Сообщим, как только <b data-notify-name>товар</b> появится в&nbsp;продаже.</p>
+      <button class="btn btn--dark btn--block" type="button" data-dialog-close>Хорошо</button>
+    </div>
+  </form>
+</dialog>
+<dialog class="modal modal--media" id="lightbox" aria-label="Просмотр изображения">
+  <button class="round-btn modal__close" type="button" data-dialog-close aria-label="Закрыть окно">{{icon close}}</button>
+  <figure class="lightbox">
+    <img class="lightbox__img" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" width="1" height="1" data-lightbox-img>
+    <figcaption class="lightbox__caption" data-lightbox-caption></figcaption>
+  </figure>
+</dialog>

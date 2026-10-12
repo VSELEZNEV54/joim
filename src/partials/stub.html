@@ -1,0 +1,42 @@
+<!-- Короткая страница раздела: заголовок, светлая карточка с чертежом (строка по делу и факты из src/routes.json), три ссылки на тёмных
+     карточках, ряд товаров (на окнах от 2000 px в ряду шесть плиток: к четырём из cards добавляются следующие по каталогу).
+     Доставка, отзывы и вопросы стали настоящими страницами (src/pages/delivery.html, reviews.html, faq.html).
+     Чертёж выбирается классом на body (поле bodyClass в src/routes.json): stub-art-map | seal | card | device | battery; без класса шестерня. -->
+<section class="stub" aria-labelledby="stub-title">
+  <div class="container">
+    <div class="page-head stub__head">
+      <h1 class="page-title" id="stub-title">{{{h1}}}</h1>
+    </div>
+    <div class="stub__top">
+      <div class="bp-card stub__panel">
+        <p class="stub__text">{{{lead}}}</p>
+        <a class="btn btn--sm bp-card__more stub__home" href="/">На&nbsp;главную{{icon arrow-up-right icon--move}}</a>
+        <div class="stub__arts" aria-hidden="true">
+          <span class="stub__art stub__art--gear">{{> bp-gear}}</span>
+          <span class="stub__art stub__art--map">{{> bp-map}}</span>
+          <span class="stub__art stub__art--seal">{{> bp-seal}}</span>
+          <span class="stub__art stub__art--card">{{> bp-card}}</span>
+          <span class="stub__art stub__art--device">{{> bp-device}}</span>
+          <span class="stub__art stub__art--battery">{{> bp-battery}}</span>
+        </div>
+      </div>
+      <ul class="stub__links">
+{{#each links}}        <li>
+          <a class="link-card" href="{{path}}">
+            <span class="link-card__title">{{{name}}}</span>
+            <span class="link-card__text">{{{text}}}</span>
+            <span class="round-btn link-card__arrow" aria-hidden="true">{{icon arrow-up-right}}</span>
+          </a>
+        </li>
+{{/each}}      </ul>
+    </div>
+    <div class="section-head stub__subhead">
+      <h2 class="section-title">Товары JOIM</h2>
+      <a class="btn btn--soft btn--sm" href="/catalog/">Все товары{{icon arrow-up-right icon--move}}</a>
+    </div>
+    <ul class="product-grid">
+{{#each cards}}      <li>{{> product-card}}</li>
+{{/each}}{{#each productList}}{{#if id == cards.0.id}}{{else}}{{#if id == cards.1.id}}{{else}}{{#if id == cards.2.id}}{{else}}{{#if id == cards.3.id}}{{else}}      <li class="stub__extra">{{> product-card}}</li>
+{{/if}}{{/if}}{{/if}}{{/if}}{{/each}}    </ul>
+  </div>
+</section>

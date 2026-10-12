@@ -1,0 +1,261 @@
+/* Главная: первый экран-сцена, разделы каталога разворотами, помощь в выборе, отзывы, промо, полоса о магазине.
+   Все классы страницы начинаются с home-. Свет, сцена и разворот общие: .stage и .split в main.css. */
+
+/* ---------- Первый экран: тёмная сцена ----------
+   Секция сама является сценой (.stage): линия горизонта идёт под товарами и уходит за правый край экрана.
+   --floor: от основания товаров до низа секции; в этой зоне лежат отражения и подписи с ценой. */
+.home-hero {
+  --hero-h: 664px;                 /* вместе с шапкой сайта, которая лежит поверх */
+  --cell: 204px;                   /* ячейка товара */
+  --cap-gap: 38px;                 /* от основания товара до подписи: место под отражение */
+  --cap-h: 48px;                   /* название 20 px и цена 28 px */
+  --cap-pad: 44px;                 /* под ценой */
+  --floor: calc(var(--cap-gap) + var(--cap-h) + var(--cap-pad));
+  --stage-sink: 14px;
+  --stage-floor: calc(var(--floor) + var(--stage-sink));
+  --stage-x: calc(50% + min(50vw, 640px) - var(--gutter) - var(--cell) * 1.5);
+  --stage-w: 72%;
+  padding-top: var(--header-h);
+}
+.home-hero__in {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 40px;
+  min-height: calc(var(--hero-h) - var(--header-h));
+}
+.home-hero__text { align-self: center; max-width: 620px; padding-block: 28px 72px; }
+.home-hero__title { font-size: var(--fs-hero); line-height: 1.06; }
+.home-hero__lead { max-width: 31em; margin-top: 18px; color: var(--on-dark-2); text-wrap: balance; }
+.home-hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+.home-hero__pick .icon { display: none; }
+.home-hero__rating { margin-top: 14px; }
+
+/* три товара стоят на одной линии; у каждого название и цена */
+.home-hero__products { display: grid; grid-template-columns: repeat(3, var(--cell)); align-items: end; }
+.home-hero__products > li { display: flex; min-width: 0; }
+.home-hero__product {
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-end; flex: 1; min-width: 0;
+  padding-bottom: var(--cap-pad); text-align: center;
+}
+.home-hero__product:focus-visible { outline-offset: -3px; }
+.home-hero__shot { margin-bottom: var(--cap-gap); }
+.home-hero__product--es19 { --h: 372px; }
+.home-hero__product--es29 { --h: 322px; }
+.home-hero__product--pvc1 { --h: 356px; }
+.home-hero__name {
+  position: relative; font-size: 14px; font-weight: 600; line-height: 20px; color: var(--on-dark-2); white-space: nowrap;
+  transition: color var(--t-fast) var(--ease);
+}
+.home-hero__name b { font-weight: inherit; }
+.home-hero__price {
+  position: relative; font-size: 20px; font-weight: 700; line-height: 28px; letter-spacing: -.015em;
+  color: var(--on-dark); font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+@media (hover: hover) {
+  .home-hero__product:hover .home-hero__name { color: var(--on-dark); }
+  .home-hero__product:hover .home-hero__price { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+}
+.home-hero__product:active { opacity: .8; }
+
+/* товар появляется один раз; подписи и цены стоят на месте */
+@media (prefers-reduced-motion: no-preference) {
+  .home-hero__shot { animation: home-hero-in 500ms var(--ease) both; }
+  .home-hero__product--es29 .home-hero__shot { animation-delay: 70ms; }
+  .home-hero__product--pvc1 .home-hero__shot { animation-delay: 140ms; }
+}
+@keyframes home-hero-in { from { opacity: 0; transform: translateY(12px); } }
+
+@media (min-width: 1680px) {
+  .home-hero { --hero-h: 680px; }
+}
+@media (max-width: 1279px) {
+  .home-hero { --hero-h: 620px; --cell: 172px; }
+  .home-hero__in { gap: 32px; }
+  .home-hero__product--es19 { --h: 328px; }
+  .home-hero__product--es29 { --h: 284px; }
+  .home-hero__product--pvc1 { --h: 314px; }
+  .home-hero__actions .btn { --btn-h: 48px; padding-inline: 22px; font-size: 15px; }
+}
+@media (max-width: 1139px) {
+  .home-hero { --hero-h: 560px; --cell: 148px; --cap-h: 68px; --cap-pad: 36px; --stage-w: 58%; }
+  .home-hero__product--es19 { --h: 280px; }
+  .home-hero__product--es29 { --h: 242px; }
+  .home-hero__product--pvc1 { --h: 268px; }
+  .home-hero__text { padding-block: 20px 56px; }
+  .home-hero__actions { flex-direction: column; align-items: stretch; width: fit-content; }
+  .home-hero__name b { display: block; }
+}
+@media (max-width: 1023px) {
+  .home-hero { --fs-hero: 35px; }
+}
+@media (max-width: 899px) {
+  /* планшет: текст и сцена остаются рядом */
+  .home-hero { --hero-h: 500px; --cell: 112px; --cap-gap: 30px; --cap-h: 62px; --cap-pad: 30px; --stage-w: 60%; --fs-hero: 34px; }
+  .home-hero__in { gap: 20px; }
+  .home-hero__lead { margin-top: 12px; font-size: 16px; }
+  .home-hero__actions { margin-top: 20px; }
+  .home-hero__rating { margin-top: 8px; }
+  .home-hero__text { padding-block: 16px 40px; }
+  .home-hero__product--es19 { --h: 226px; }
+  .home-hero__product--es29 { --h: 196px; }
+  .home-hero__product--pvc1 { --h: 216px; }
+  .home-hero__name { font-size: 13px; line-height: 18px; }
+  .home-hero__price { font-size: 17px; line-height: 26px; }
+}
+@media (max-width: 719px) {
+  /* телефон: заголовок, строка, кнопка, рейтинг и подбор одной строкой; внизу экрана товары на линии света с ценами */
+  .home-hero { --hero-h: 0px; --cell: minmax(0, 1fr); --cap-gap: 28px; --cap-h: 60px; --cap-pad: 22px; --stage-x: 50%; --stage-w: 124%; --stage-sink: 10px; --fs-hero: 31px; }
+  .home-hero__in {
+    grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: 0 12px; min-height: 0; padding-top: 22px;
+    grid-template-areas: "title title" "lead lead" "cta cta" "rating pick" "case case";
+  }
+  .home-hero__text, .home-hero__actions { display: contents; }
+  .home-hero__title { grid-area: title; }
+  .home-hero__lead { grid-area: lead; max-width: none; margin-top: 10px; font-size: 15px; line-height: 1.45; text-wrap: pretty; }
+  .home-hero__cta { grid-area: cta; margin-top: 18px; }
+  .home-hero__rating { grid-area: rating; justify-self: start; margin-top: 4px; }
+  .home-hero__rating .stars .icon:nth-child(n+2) { display: none; }
+  /* вторая кнопка на телефоне становится текстовой ссылкой со стрелкой */
+  .home-hero__actions .home-hero__pick {
+    grid-area: pick; justify-self: end; --btn-h: 44px; gap: 2px; margin-top: 4px; padding: 0;
+    border: 0; font-size: 15px;
+  }
+  .home-hero__actions .home-hero__pick:hover, .home-hero__actions .home-hero__pick:active { background: none; color: var(--on-dark); }
+  .home-hero__actions .home-hero__pick:active { opacity: .7; }
+  .home-hero__pick .icon { display: block; width: 18px; height: 18px; }
+  .home-hero__products { grid-area: case; margin-top: 18px; }
+  .home-hero__product--es19 { --h: 208px; }
+  .home-hero__product--es29 { --h: 180px; }
+  .home-hero__product--pvc1 { --h: 198px; }
+  .home-hero__price { font-size: 16px; line-height: 24px; }
+}
+@media (max-width: 599px) {
+  .home-hero__lead-more { display: none; }
+}
+@media (max-width: 389px) {
+  .home-hero__actions .home-hero__pick { font-size: 14px; }
+  .home-hero__product--es19 { --h: 184px; }
+  .home-hero__product--es29 { --h: 160px; }
+  .home-hero__product--pvc1 { --h: 176px; }
+}
+@media (max-width: 359px) {
+  /* совсем узкий экран: ссылка и рейтинг встают друг под другом */
+  .home-hero { --fs-hero: 27px; }
+  .home-hero__in { grid-template-areas: "title title" "lead lead" "cta cta" "pick pick" "rating rating" "case case"; }
+  .home-hero__actions .home-hero__pick { justify-self: start; }
+  .home-hero__rating { margin-top: -4px; }
+  .home-hero__product--es19 { --h: 164px; }
+  .home-hero__product--es29 { --h: 142px; }
+  .home-hero__product--pvc1 { --h: 156px; }
+}
+
+/* ---------- Каталог: разделы двумя разворотами под товарами ---------- */
+.home-cats { display: grid; gap: var(--gap); margin-top: 56px; }
+.home-cats > li { min-width: 0; }
+.home-cat { min-height: 352px; }
+/* сцена разворота: лежащий товар крупно, линия горизонта проходит за ним */
+.home-cat__stage {
+  --stage-floor: 104px; --stage-sink: 62px; --stage-w: 96%;
+  display: flex; align-items: flex-end; justify-content: center; padding: 40px 24px calc(var(--stage-floor) - var(--stage-sink));
+}
+.home-cat__stage .stage__shot { width: var(--w); max-width: 100%; }
+.home-cat__stage .stage__shot > img { width: 100%; height: auto; max-width: none; transition: scale 220ms var(--ease); }
+.home-cat__stage--boost { --w: 452px; }
+/* кадр пылесоса обрезан справа: он выходит из-за правого края сцены */
+.home-cat__stage--vac { --w: 548px; --stage-sink: 56px; --stage-x: 56%; justify-content: flex-end; padding-right: 0; }
+.home-cat .split__meta { color: var(--text-2); }
+@media (hover: hover) {
+  .home-cat:hover .stage__shot > img { scale: 1.03; }
+}
+@media (max-width: 1139px) {
+  .home-cat { min-height: 312px; }
+  .home-cat__stage { --stage-floor: 92px; --stage-sink: 54px; }
+  .home-cat__stage--boost { --w: 372px; }
+  .home-cat__stage--vac { --w: 440px; --stage-sink: 46px; }
+}
+@media (max-width: 767px) {
+  .home-cats { margin-top: 32px; }
+  .home-cat { min-height: 0; }
+  .home-cat__stage { --stage-floor: 64px; --stage-sink: 40px; height: 208px; padding-top: 20px; }
+  .home-cat__stage--boost { --w: 268px; }
+  .home-cat__stage--vac { --w: 318px; --stage-sink: 34px; }
+  .home-cat .btn { width: 100%; }
+}
+
+/* ---------- Помощь в выборе: две карточки-ссылки, та же сетка, что на странице подбора ---------- */
+.home-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap); }
+.home-links > li { min-width: 0; }
+@media (max-width: 767px) {
+  .home-links { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+}
+
+/* ---------- Отзывы ---------- */
+.home-reviews { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gap); align-items: start; }
+.home-reviews__summary { grid-column: span 3; padding-right: 8px; }
+.home-reviews__list { grid-column: span 9; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); align-items: stretch; }
+.home-reviews__list > li { min-width: 0; }
+@media (max-width: 1023px) {
+  .home-reviews__summary, .home-reviews__list { grid-column: 1 / -1; }
+  .home-reviews__summary { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 4px 24px; padding-right: 0; }
+  .home-reviews__summary .rating-summary__title { grid-column: 1 / -1; margin-bottom: 8px; }
+  .home-reviews__summary .rating-summary__models { display: none; }
+  .home-reviews__summary .rating-summary__count { grid-column: 1; }
+  .home-reviews__summary .more-link { grid-column: 2; grid-row: 2 / span 2; }
+}
+@media (max-width: 767px) {
+  /* на телефоне отзывы листаются вбок пальцем: страница не растягивается, автопрокрутки нет */
+  .home-reviews__list {
+    display: flex; gap: 12px; margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter);
+    overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+  .home-reviews__list::-webkit-scrollbar { display: none; }
+  .home-reviews__list > li { flex: 0 0 84%; scroll-snap-align: start; }
+  .home-reviews .review { padding: 20px; }
+}
+
+/* ---------- Промо: два компактных разворота в ряд (фото + белая панель) ---------- */
+.home-promos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap); }
+/* плитки в ряду равны по высоте */
+.home-promos > li { display: grid; min-width: 0; }
+.home-promo { grid-template-columns: minmax(0, 52fr) minmax(0, 48fr); min-height: 312px; }
+.home-promo__img { object-position: 62% 50%; }
+.home-promo--gift .home-promo__img { object-position: 60% 50%; }
+.home-promo .split__panel { justify-content: flex-end; }
+@media (max-width: 1139px) {
+  /* планшет и телефон: фото сверху, панель под ним (в узкой колонке текст не помещается) */
+  .home-promo { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; min-height: 0; }
+  .home-promo .split__media { height: 200px; }
+  .home-promo .split__panel { justify-content: flex-start; }
+  .home-promo .split__panel > .btn { margin-top: auto; }
+  .home-promo .split__text { margin-bottom: 20px; }
+}
+@media (max-width: 767px) {
+  .home-promos { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .home-promo .split__media { height: 176px; }
+}
+
+/* ---------- О магазине и «Полезное» ---------- */
+.home-about {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 32px var(--gap);
+  margin-top: 64px; padding-top: 48px; border-top: 1px solid var(--line-strong);
+}
+.home-about__text { grid-column: span 7; max-width: none; font-size: 15px; line-height: 1.6; }
+.home-about__links { grid-column: 9 / span 4; }
+.home-about__title { margin-bottom: 14px; font-size: var(--fs-h3); line-height: 1.3; letter-spacing: -.015em; }
+.home-about__text .home-about__title { margin-bottom: 0; }
+.home-articles { border-top: 1px solid var(--line-strong); }
+.home-articles li { border-bottom: 1px solid var(--line-strong); }
+.home-articles a {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; padding: 12px 0;
+  font-size: 15px; font-weight: 700; line-height: 1.4;
+}
+.home-articles .icon { width: 18px; height: 18px; color: var(--text-3); transition: translate var(--t) var(--ease), color var(--t-fast) var(--ease); }
+@media (hover: hover) {
+  .home-articles a:hover .icon { translate: 3px 0; color: var(--text); }
+}
+.home-articles a:active { color: var(--text-2); }
+@media (max-width: 899px) {
+  .home-about__text, .home-about__links { grid-column: 1 / -1; }
+}
+@media (max-width: 767px) {
+  .home-about { margin-top: 40px; padding-top: 32px; }
+}

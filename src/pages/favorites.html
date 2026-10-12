@@ -1,0 +1,72 @@
+<!--page
+{
+  "path": "/favorites/",
+  "title": "Избранное: магазин JOIM",
+  "description": "Избранные товары магазина JOIM: пусковые устройства Easy Start и автомобильные пылесосы, которые вы отметили сердечком. Список хранится в вашем браузере.",
+  "h1": "Избранное",
+  "robots": "noindex, follow",
+  "css": ["pages/favorites.css"],
+  "js": ["pages/favorites.js"]
+}
+-->
+
+<!-- Избранное: список хранится в localStorage (JOIM.fav). Сетку собирает /assets/js/pages/favorites.js из готовых плиток (JOIM.cardHtml).
+     Пустое состояние: светлая карточка с чертежом и ссылками в каталог и подбор. Ниже ряд товаров, которых в избранном ещё нет
+     (без скрипта: четыре популярных). -->
+<section class="fav" aria-labelledby="fav-title">
+  <div class="container">
+    <div class="page-head fav-head">
+      <div class="fav-head__main">
+        <h1 class="page-title" id="fav-title">Избранное</h1>
+        <p class="lead fav-head__count" data-fav-summary></p>
+      </div>
+      <button class="btn btn--soft btn--sm fav-head__clear" type="button" data-fav-clear hidden>{{icon trash}}Очистить список</button>
+    </div>
+
+    <h2 class="visually-hidden">Товары в&nbsp;избранном</h2>
+    <ul class="product-grid fav-grid" data-fav-grid hidden></ul>
+
+    <div class="bp-card fav-empty" data-fav-empty hidden>
+      <p class="bp-card__title fav-empty__title">В&nbsp;избранном пока пусто</p>
+      <p class="bp-card__text">Нажмите на&nbsp;сердечко на&nbsp;плитке товара: он&nbsp;появится здесь. Список хранится в&nbsp;вашем браузере, регистрация не&nbsp;нужна.</p>
+      <div class="fav-empty__actions">
+        <a class="btn btn--solid" href="/catalog/">Перейти в&nbsp;каталог</a>
+        <a class="btn btn--outline" href="/podbor/">Подбор по&nbsp;машине{{icon arrow-up-right icon--move}}</a>
+      </div>
+      <!-- чертёж сердца: две окружности и касательные, двойной контур со штриховкой -->
+      <svg class="bp bp-card__art fav-empty__art" viewBox="0 0 340 300" width="340" height="300" aria-hidden="true" focusable="false">
+        <defs><pattern id="bp-h-heart" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path class="bp-3" d="M0 0V6"/></pattern></defs>
+        <path class="bp-axis" d="M170 6V294M14 128H326"/>
+        <circle class="bp-3" cx="170" cy="150" r="146"/>
+        <circle class="bp-3 bp-dash" cx="128" cy="128" r="60"/>
+        <circle class="bp-3 bp-dash" cx="212" cy="128" r="60"/>
+        <path class="bp-3" d="M87.43 172.2L47 135.1M252.57 172.2L293 135.1M170 248L196 271.9M170 248L144 271.9"/>
+        <path d="M170 85.15A60 60 0 1 0 87.43 172.2L170 248L252.57 172.2A60 60 0 1 0 170 85.15ZM170 97.34A52 52 0 1 1 247.16 166.31L170 237.14L92.84 166.31A52 52 0 1 1 170 97.34Z" fill="url(#bp-h-heart)" fill-rule="evenodd" stroke="none"/>
+        <path d="M170 85.15A60 60 0 1 0 87.43 172.2L170 248L252.57 172.2A60 60 0 1 0 170 85.15Z"/>
+        <path class="bp-2" d="M170 97.34A52 52 0 1 0 92.84 166.31L170 237.14L247.16 166.31A52 52 0 1 0 170 97.34Z"/>
+        <path class="bp-2" d="M128 128L87.43 172.2M212 128L252.57 172.2M128 128V68M212 128V68"/>
+        <path class="bp-3" d="M68 40H272M68 34V46M272 34V46M68 52V120M272 52V120M128 62v-10M212 62v-10M128 56H212"/>
+        <circle class="bp-node" cx="128" cy="128" r="3.2"/><circle class="bp-node" cx="212" cy="128" r="3.2"/>
+        <circle class="bp-node" cx="87.43" cy="172.2" r="3.2"/><circle class="bp-node" cx="252.57" cy="172.2" r="3.2"/>
+        <circle class="bp-node" cx="170" cy="248" r="3.2"/><circle class="bp-node" cx="170" cy="85.15" r="3.2"/>
+        <circle class="bp-node" cx="128" cy="68" r="3.2"/><circle class="bp-node" cx="212" cy="68" r="3.2"/>
+      </svg>
+    </div>
+    <noscript><p class="fav-noscript">Список избранного хранится в&nbsp;браузере: включите JavaScript, чтобы его увидеть. Товары можно посмотреть в&nbsp;<a class="link" href="/catalog/">каталоге</a>.</p></noscript>
+  </div>
+</section>
+
+<section class="section fav-more" aria-labelledby="fav-more-title" data-fav-more-section>
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title" id="fav-more-title">Вам может быть интересно</h2>
+      <a class="btn btn--soft btn--sm" href="/catalog/">Все товары{{icon arrow-up-right icon--move}}</a>
+    </div>
+    <ul class="product-grid" data-fav-more>
+      <li>{{> product-card es19}}</li>
+      <li>{{> product-card es29}}</li>
+      <li>{{> product-card pvc1}}</li>
+      <li>{{> product-card es2}}</li>
+    </ul>
+  </div>
+</section>

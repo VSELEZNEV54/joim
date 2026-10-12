@@ -1,0 +1,301 @@
+<!--page
+{
+  "path": "/catalog/puskovye-ustroystva/",
+  "title": "Пусковые устройства для автомобиля: купить бустер JOIM",
+  "description": "Пусковые устройства JOIM Easy Start для автомобиля: ES-19 за 5 837 ₽ и ES-29 за 7 604 ₽. Заводят мотор с севшим аккумулятором. Гарантия 12 месяцев.",
+  "h1": "Пусковые устройства для&nbsp;автомобиля",
+  "crumb": "Пусковые устройства",
+  "parents": [],
+  "crumbsTone": "soft",
+  "nav": "puskovye",
+  "css": ["pages/hub.css"],
+  "js": ["pages/hub.js"],
+  "preloadImage": "https://joim.netlify.app/images/products/joim-es19-card.webp",
+  "ogImage": "https://joim.netlify.app/images/products/joim-es19-klemmy.webp"
+}
+-->
+
+<!-- 1–2. Шапка категории: заголовок, описание, теги-ссылки; справа группа вырезок (на телефоне не грузится) -->
+<div class="page-head page-head--soft hub-head">
+  <div class="container hub-head__in">
+    <div class="hub-head__text">
+      <h1>Пусковые устройства для&nbsp;автомобиля</h1>
+      <p class="page-head__lead hub-head__lead">Заводят двигатель с&nbsp;севшим аккумулятором<span class="hub-head__lead-more">: отдают ток прямо на&nbsp;стартер</span>. Работают как&nbsp;повербанк и&nbsp;фонарь.</p>
+    </div>
+    <nav class="tags hub-head__tags" aria-label="Подборки и&nbsp;помощь в&nbsp;выборе">
+      <a class="tag" href="/catalog/puskovye-ustroystva/dlya-dizelya/">Для дизеля и&nbsp;больших моторов</a>
+      <a class="tag" href="/compare/es19-vs-es29/">Сравнение ES-19 и&nbsp;ES-29</a>
+      <a class="tag" href="/podbor/">Подбор по&nbsp;машине</a>
+      <a class="tag" href="/instructions/">Инструкции</a>
+    </nav>
+    <div class="hub-head__pics">
+      <picture>
+        <source media="(max-width: 767px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        <img class="hub-head__pic hub-head__pic--es29" src="{{products.es29.img}}" alt="Пусковое устройство JOIM Easy Start ES-29" width="{{products.es29.w}}" height="{{products.es29.h}}" decoding="async">
+      </picture>
+      <picture>
+        <source media="(max-width: 767px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        <img class="hub-head__pic hub-head__pic--es19" src="https://joim.netlify.app/images/products/joim-es19-klemmy.webp" alt="Пусковое устройство JOIM Easy Start ES-19 с подключёнными клеммами" width="1200" height="766" fetchpriority="high" decoding="async">
+      </picture>
+    </div>
+  </div>
+</div>
+
+<!-- 3. Список товаров: две горизонтальные карточки -->
+<section class="hub-models" aria-labelledby="models-title">
+  <div class="container">
+    <h2 class="hub-models__count" id="models-title"><span class="visually-hidden">Пусковые устройства JOIM Easy&nbsp;Start: </span>2&nbsp;модели</h2>
+    <ul class="hub-list">
+      <li>
+        <article class="hub-item" data-product="es19">
+          <a class="hub-item__media plate plate--auto" href="{{products.es19.url}}" tabindex="-1" aria-hidden="true">
+            <img src="{{products.es19.img}}" alt="{{products.es19.alt}}" width="{{products.es19.w}}" height="{{products.es19.h}}" fetchpriority="high" decoding="async">
+          </a>
+          <div class="hub-item__main">
+            <div class="hub-item__head">
+              <span class="badge">{{products.es19.badge}}</span>
+              <h3 class="hub-item__title"><a href="{{products.es19.url}}">{{products.es19.name}}</a></h3>
+              <p class="rating hub-item__rating">{{> stars}} <b>{{products.es19.ratingFmt}}</b> <span>{{{products.es19.reviewsHtml}}}</span></p>
+            </div>
+            <dl class="kv hub-item__specs">
+              <dt>Ток</dt><dd>{{{products.es19.specs.current}}} {{products.es19.specs.currentType}}</dd>
+              <dt>Двигатели</dt><dd>{{{products.es19.specs.engines}}}</dd>
+              <dt>Запусков на&nbsp;заряде</dt><dd>{{{products.es19.specs.starts}}}</dd>
+              <dt>Ёмкость</dt><dd>{{{products.es19.specs.capacity}}}</dd>
+              <dt>Фонарь</dt><dd>{{{products.es19.specs.lamp}}}</dd>
+            </dl>
+          </div>
+          <div class="hub-item__buy">
+            <div class="hub-item__offer">
+              <p class="price price--lg">{{price es19}}</p>
+              <p class="stock">{{icon check}}В&nbsp;наличии</p>
+            </div>
+            <button class="btn btn--lime hub-item__btn" type="button" data-add-to-cart="es19" aria-label="В&nbsp;корзину: {{products.es19.short}}">В&nbsp;корзину</button>
+            <div class="hub-item__more">
+              <a class="more-link hub-item__compare" href="/compare/es19-vs-es29/">Сравнить с&nbsp;ES-29{{icon chevron-right}}</a>
+              <button class="hub-item__incart" type="button" data-dialog-open="cart" data-hub-incart="es19" aria-haspopup="dialog" hidden>В&nbsp;корзине</button>
+            </div>
+          </div>
+        </article>
+      </li>
+      <li>
+        <article class="hub-item" data-product="es29">
+          <a class="hub-item__media plate plate--auto" href="{{products.es29.url}}" tabindex="-1" aria-hidden="true">
+            <img src="{{products.es29.img}}" alt="{{products.es29.alt}}" width="{{products.es29.w}}" height="{{products.es29.h}}" loading="lazy" decoding="async">
+          </a>
+          <div class="hub-item__main">
+            <div class="hub-item__head">
+              <h3 class="hub-item__title"><a href="{{products.es29.url}}">{{products.es29.name}}</a></h3>
+              <p class="rating hub-item__rating">{{> stars}} <b>{{products.es29.ratingFmt}}</b> <span>{{{products.es29.reviewsHtml}}}</span></p>
+            </div>
+            <dl class="kv hub-item__specs">
+              <dt>Ток</dt><dd>{{{products.es29.specs.current}}} {{products.es29.specs.currentType}}</dd>
+              <dt>Двигатели</dt><dd>{{{products.es29.specs.engines}}}</dd>
+              <dt>Запусков на&nbsp;заряде</dt><dd>{{{products.es29.specs.starts}}}</dd>
+              <dt>Ёмкость</dt><dd>{{{products.es29.specs.capacity}}}</dd>
+              <dt>Фонарь</dt><dd>{{{products.es29.specs.lamp}}}</dd>
+            </dl>
+          </div>
+          <div class="hub-item__buy">
+            <div class="hub-item__offer">
+              <p class="price price--lg">{{price es29}}</p>
+              <p class="stock">{{icon check}}В&nbsp;наличии</p>
+            </div>
+            <button class="btn btn--lime hub-item__btn" type="button" data-add-to-cart="es29" aria-label="В&nbsp;корзину: {{products.es29.short}}">В&nbsp;корзину</button>
+            <div class="hub-item__more">
+              <a class="more-link hub-item__compare" href="/compare/es19-vs-es29/">Сравнить с&nbsp;ES-19{{icon chevron-right}}</a>
+              <button class="hub-item__incart" type="button" data-dialog-open="cart" data-hub-incart="es29" aria-haspopup="dialog" hidden>В&nbsp;корзине</button>
+            </div>
+          </div>
+        </article>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- 4. Какую модель выбрать: вывод и кнопки слева, таблица справа -->
+<section class="section section--soft hub-choose" aria-labelledby="choose-title">
+  <div class="container hub-choose__in">
+    <div class="hub-choose__text">
+      <h2 id="choose-title">Какую модель выбрать</h2>
+      <p class="hub-choose__lead">ES-19 дешевле и&nbsp;закрывает почти любую легковую. ES-29 берёт мотор крупнее и&nbsp;держит вдвое больше запусков.</p>
+    </div>
+    <div class="hub-choose__table">
+      <table class="table" role="table">
+        <caption class="visually-hidden">Сравнение ES-19 и&nbsp;ES-29: цена, двигатели, запуски, ёмкость, фонарь</caption>
+        <thead role="rowgroup">
+          <tr role="row">
+            <th scope="col" role="columnheader"><span class="visually-hidden">Параметр</span></th>
+            <th scope="col" role="columnheader"><a href="{{products.es19.url}}"><span class="hub-choose__series">Easy&nbsp;Start&nbsp;</span>{{products.es19.model}}</a></th>
+            <th scope="col" role="columnheader"><a href="{{products.es29.url}}"><span class="hub-choose__series">Easy&nbsp;Start&nbsp;</span>{{products.es29.model}}</a></th>
+          </tr>
+        </thead>
+        <tbody role="rowgroup">
+          <tr role="row"><th scope="row" role="rowheader">Цена</th><td role="cell" class="is-win"><span class="visually-hidden">лучшее значение: </span>{{price es19}}</td><td role="cell">{{price es29}}</td></tr>
+          <tr role="row"><th scope="row" role="rowheader">Двигатели</th><td role="cell">{{{products.es19.specs.engines}}}</td><td role="cell">{{{products.es29.specs.engines}}}</td></tr>
+          <tr role="row"><th scope="row" role="rowheader">Запусков на&nbsp;заряде</th><td role="cell">{{{products.es19.specs.starts}}}</td><td role="cell" class="is-win"><span class="visually-hidden">лучшее значение: </span>{{{products.es29.specs.starts}}}</td></tr>
+          <tr role="row"><th scope="row" role="rowheader">Ёмкость</th><td role="cell">{{{products.es19.specs.capacity}}}</td><td role="cell" class="is-win"><span class="visually-hidden">лучшее значение: </span>{{{products.es29.specs.capacity}}}</td></tr>
+          <tr role="row"><th scope="row" role="rowheader">Фонарь</th><td role="cell">{{{products.es19.specs.lamp}}}</td><td role="cell" class="is-win"><span class="visually-hidden">лучшее значение: </span>{{{products.es29.specs.lamp}}}</td></tr>
+        </tbody>
+      </table>
+      <p class="hub-choose__legend">Цветом отмечено лучшее значение в&nbsp;строке</p>
+    </div>
+    <div class="hub-choose__actions">
+      <a class="btn btn--dark" href="/compare/es19-vs-es29/">Подробное сравнение</a>
+      <a class="btn btn--outline" href="/podbor/">Подобрать по&nbsp;машине</a>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Условия: доставка, гарантия, возврат -->
+<section class="hub-terms" aria-label="Условия покупки">
+  <div class="container">
+    <div class="service-strip service-strip--boxed">
+      <ul class="service-strip__list service-strip__list--3">
+        <li class="service-strip__item">
+          {{icon truck}}
+          <a class="service-strip__text" href="/delivery/"><b>Доставка по&nbsp;России <span class="nowrap">2–7&nbsp;дней</span></b> <span>СДЭК от&nbsp;390&nbsp;₽, в&nbsp;Москве курьер в&nbsp;день заказа</span></a>
+        </li>
+        <li class="service-strip__item">
+          {{icon shield}}
+          <a class="service-strip__text" href="/warranty/"><b>Гарантия {{{products.es19.specs.warranty}}}</b> <span>брак меняем без&nbsp;экспертизы</span></a>
+        </li>
+        <li class="service-strip__item">
+          {{icon return}}
+          <a class="service-strip__text" href="/warranty/"><b>Возврат 14&nbsp;дней</b> <span>условия на&nbsp;странице гарантии</span></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Вопросы и ответы -->
+<section class="hub-faq" aria-labelledby="faq-title">
+  <div class="container hub-faq__in">
+    <div class="hub-faq__head">
+      <h2 id="faq-title">Вопросы и&nbsp;ответы</h2>
+      <a class="more-link" href="/faq/">Все вопросы{{icon chevron-right}}</a>
+    </div>
+    <div class="accordion hub-faq__list" data-accordion="single">
+      <div class="accordion__item is-open">
+        <h3 class="accordion__head"><button class="accordion__btn" type="button"><span>Пусковое и&nbsp;<span class="nowrap">пуско-зарядное</span> устройство: в&nbsp;чём разница?</span>{{icon plus}}</button></h3>
+        <div class="accordion__panel"><div class="accordion__body"><p>Пуско-зарядное работает от&nbsp;розетки и&nbsp;стоит в&nbsp;гараже. Пусковое (бустер) работает от&nbsp;своей батареи и&nbsp;лежит в&nbsp;машине: заводит мотор там, где сел аккумулятор.</p></div></div>
+      </div>
+      <div class="accordion__item">
+        <h3 class="accordion__head"><button class="accordion__btn" type="button">Заведёт, если аккумулятор сел полностью?{{icon plus}}</button></h3>
+        <div class="accordion__panel"><div class="accordion__body"><p>Да. Устройство не&nbsp;подзаряжает аккумулятор, а&nbsp;отдаёт ток прямо на&nbsp;стартер.</p></div></div>
+      </div>
+      <div class="accordion__item">
+        <h3 class="accordion__head"><button class="accordion__btn" type="button">Что будет, если перепутать клеммы?{{icon plus}}</button></h3>
+        <div class="accordion__panel"><div class="accordion__body"><p>Ничего. MCU-чип проверяет полярность до&nbsp;подачи тока и&nbsp;не&nbsp;запустит процесс, индикатор покажет ошибку.</p></div></div>
+      </div>
+      <div class="accordion__item">
+        <h3 class="accordion__head"><button class="accordion__btn" type="button">Работает на&nbsp;морозе?{{icon plus}}</button></h3>
+        <div class="accordion__panel"><div class="accordion__body"><p>Да. Встроенный датчик температуры следит за&nbsp;нагревом батареи и&nbsp;корректирует отдачу. На&nbsp;сильном морозе устройство лучше держать в&nbsp;салоне, а&nbsp;не&nbsp;в&nbsp;багажнике: любой литий на&nbsp;холоде отдаёт меньше.</p></div></div>
+      </div>
+      <div class="accordion__item">
+        <h3 class="accordion__head"><button class="accordion__btn" type="button">Сколько держит заряд без&nbsp;использования?{{icon plus}}</button></h3>
+        <div class="accordion__panel"><div class="accordion__body"><p>Несколько месяцев в&nbsp;режиме ожидания. Подзаряжать стоит раз в&nbsp;<span class="nowrap">3–4&nbsp;месяца</span>, индикатор <span class="nowrap">0–100&nbsp;%</span> покажет остаток.</p></div></div>
+      </div>
+      <div class="accordion__item">
+        <h3 class="accordion__head"><button class="accordion__btn" type="button">Чем ES-19 отличается от&nbsp;ES-29?{{icon plus}}</button></h3>
+        <div class="accordion__panel"><div class="accordion__body"><p>Запасом и&nbsp;моторами. ES-19: {{products.es19.specs.currentType}} ток {{{products.es19.specs.current}}}, {{{products.es19.specs.capacity}}}, {{{products.es19.specs.starts}}} запусков, {{{products.es19.specs.engines}}}. ES-29: {{products.es29.specs.currentType}} ток {{{products.es29.specs.current}}}, {{{products.es29.specs.capacity}}}, {{{products.es29.specs.starts}}} запусков, {{{products.es29.specs.engines}}}. Ещё у&nbsp;ES-29 ярче фонарь и&nbsp;в&nbsp;комплекте адаптер с&nbsp;Lightning.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7–8. Как выбрать и «Также в каталоге» -->
+<div class="section section--soft hub-more">
+  <div class="container hub-more__in">
+    <section class="prose hub-seo" aria-labelledby="seo-title">
+      <h2 class="hub-more__title" id="seo-title">Как выбрать пусковое устройство</h2>
+      <p>Пусковое устройство, или бустер для&nbsp;автомобиля, выбирают по&nbsp;топливу и&nbsp;объёму двигателя. Easy&nbsp;Start ES-19 с&nbsp;пусковым током {{{products.es19.specs.current}}} рассчитан на&nbsp;такие моторы: {{{products.es19.specs.engines}}}. Этого хватает почти любой легковой машине. ES-29 с&nbsp;пиковым током {{{products.es29.specs.current}}} берут под большие двигатели ({{{products.es29.specs.engines}}}), грузовую технику и&nbsp;когда в&nbsp;семье несколько машин.</p>
+      <p>Если машина зимует на&nbsp;улице, закладывайте запас по&nbsp;объёму в&nbsp;полтора раза: любой литий на&nbsp;холоде отдаёт меньше. Одна попытка запуска съедает от&nbsp;3&nbsp;до&nbsp;8&nbsp;процентов заряда. На&nbsp;одном заряде ES-19 делает {{{products.es19.specs.starts}}} запусков, ES-29 {{{products.es29.specs.starts}}}. Обе модели работают {{{products.es19.specs.temp}}} и&nbsp;подходят не&nbsp;только машине: ими заводят мотоциклы, лодки, гидроциклы и&nbsp;снегоходы.</p>
+      <p>Модель под свой мотор покажет <a href="/podbor/">подбор по&nbsp;машине</a>: три вопроса и&nbsp;ответ с&nbsp;ценой. Чем бустер отличается от&nbsp;зарядного, разбираем в&nbsp;статье <a href="/blog/vybor/">«Пусковое или <span class="nowrap">пуско-зарядное</span> устройство: в&nbsp;чём разница»</a>. Что делать на&nbsp;месте, читайте в&nbsp;статье <a href="/blog/akkumulyator/">«Сел аккумулятор: что делать и&nbsp;как завести машину без&nbsp;помощи»</a>.</p>
+    </section>
+    <section class="hub-also" aria-labelledby="also-title">
+      <h2 class="hub-more__title" id="also-title">Также в&nbsp;каталоге</h2>
+      {{> product-card pvc1}}
+      <a class="more-link hub-also__link" href="/catalog/avtopylesosy/">Автомобильные пылесосы{{icon chevron-right}}</a>
+    </section>
+  </div>
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Пусковые устройства JOIM Easy Start",
+  "url": "https://joim-store.ru/catalog/puskovye-ustroystva/",
+  "numberOfItems": 2,
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@type": "Product",
+        "name": "{{{products.es19.name}}}",
+        "description": "{{{products.es19.description}}}",
+        "image": "{{{products.es19.img}}}",
+        "url": "https://joim-store.ru{{{products.es19.url}}}",
+        "brand": { "@type": "Brand", "name": "JOIM" },
+        "offers": { "@type": "Offer", "price": "{{products.es19.price}}", "priceCurrency": "RUB", "availability": "https://schema.org/InStock", "url": "https://joim-store.ru{{{products.es19.url}}}" },
+        "aggregateRating": { "@type": "AggregateRating", "ratingValue": "5.0", "reviewCount": "{{products.es19.reviews}}" }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@type": "Product",
+        "name": "{{{products.es29.name}}}",
+        "description": "{{{products.es29.description}}}",
+        "image": "{{{products.es29.img}}}",
+        "url": "https://joim-store.ru{{{products.es29.url}}}",
+        "brand": { "@type": "Brand", "name": "JOIM" },
+        "offers": { "@type": "Offer", "price": "{{products.es29.price}}", "priceCurrency": "RUB", "availability": "https://schema.org/InStock", "url": "https://joim-store.ru{{{products.es29.url}}}" },
+        "aggregateRating": { "@type": "AggregateRating", "ratingValue": "5.0", "reviewCount": "{{products.es29.reviews}}" }
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Пусковое и пуско-зарядное устройство: в чём разница?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Пуско-зарядное работает от розетки и стоит в гараже. Пусковое (бустер) работает от своей батареи и лежит в машине: заводит мотор там, где сел аккумулятор." }
+    },
+    {
+      "@type": "Question",
+      "name": "Заведёт, если аккумулятор сел полностью?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Да. Устройство не подзаряжает аккумулятор, а отдаёт ток прямо на стартер." }
+    },
+    {
+      "@type": "Question",
+      "name": "Что будет, если перепутать клеммы?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Ничего. MCU-чип проверяет полярность до подачи тока и не запустит процесс, индикатор покажет ошибку." }
+    },
+    {
+      "@type": "Question",
+      "name": "Работает на морозе?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Да. Встроенный датчик температуры следит за нагревом батареи и корректирует отдачу. На сильном морозе устройство лучше держать в салоне, а не в багажнике: любой литий на холоде отдаёт меньше." }
+    },
+    {
+      "@type": "Question",
+      "name": "Сколько держит заряд без использования?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Несколько месяцев в режиме ожидания. Подзаряжать стоит раз в 3–4 месяца, индикатор 0–100 % покажет остаток." }
+    },
+    {
+      "@type": "Question",
+      "name": "Чем ES-19 отличается от ES-29?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Запасом и моторами. ES-19: {{products.es19.specs.currentType}} ток {{{products.es19.specs.current}}}, {{{products.es19.specs.capacity}}}, {{{products.es19.specs.starts}}} запусков, {{{products.es19.specs.engines}}}. ES-29: {{products.es29.specs.currentType}} ток {{{products.es29.specs.current}}}, {{{products.es29.specs.capacity}}}, {{{products.es29.specs.starts}}} запусков, {{{products.es29.specs.engines}}}. Ещё у ES-29 ярче фонарь и в комплекте адаптер с Lightning." }
+    }
+  ]
+}
+</script>

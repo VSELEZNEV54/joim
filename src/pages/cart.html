@@ -1,0 +1,152 @@
+<!--page
+{
+  "path": "/cart/",
+  "title": "Корзина: оформление заказа в магазине JOIM",
+  "description": "Корзина магазина JOIM: проверьте состав заказа и оформите его. Курьер по Москве в день заказа, СДЭК по России за 2–7 дней, от 15 000 ₽ доставка бесплатно.",
+  "h1": "Корзина",
+  "robots": "noindex, follow",
+  "css": ["pages/cart.css"],
+  "js": ["pages/cart.js"]
+}
+-->
+
+<!-- Корзина: отдельная страница (бриф, раздел 7а). Состояние лежит в localStorage (JOIM.cart), страницу рисует /assets/js/pages/cart.js
+     и обновляет по событию cart:change. Три состояния одного блока: товары и сводка · пусто · заявка принята.
+     Кнопки количества и удаления (data-cart-inc, data-cart-dec, data-cart-remove внутри строки с data-id) обрабатывает main.js,
+     проверку формы (data-form) тоже; после успешной проверки (событие form:sent) cart.js показывает «Заявка принята» и очищает корзину.
+     Способы получения и цены: те же, что на странице «Доставка и оплата». -->
+<section class="cart" aria-labelledby="cart-title" data-cart-page>
+  <div class="container cart__in">
+    <div class="page-head cart-head">
+      <h1 class="page-title" id="cart-title">Корзина</h1>
+    </div>
+
+    <!-- 1. Товары слева, прилипающая сводка с формой справа (на десктопе сводка начинается на уровне заголовка) -->
+      <div class="cart__main" data-cart-full hidden>
+        <h2 class="visually-hidden">Товары в&nbsp;корзине</h2>
+        <div class="cart-cols" aria-hidden="true">
+          <span class="label cart-cols__name">Товар</span>
+          <span class="label cart-cols__qty">Количество</span>
+          <span class="label cart-cols__sum">Сумма</span>
+        </div>
+        <ul class="cart-list" data-cart-list></ul>
+        <p class="cart__back"><a class="more-link cart__back-link" href="/catalog/">{{icon arrow-left}}Продолжить покупки</a></p>
+      </div>
+
+      <aside class="cart-sum" aria-labelledby="cart-sum-title" data-cart-sum data-cart-full hidden>
+        <div class="cart-sum__block">
+          <div class="cart-sum__head">
+            <h2 class="label" id="cart-sum-title">Ваш заказ</h2>
+            <p class="cart-sum__count" data-cart-units></p>
+          </div>
+          <p class="cart-sum__total"><span class="cart-sum__total-label">Итого</span><b class="price cart-sum__price" data-cart-total>0&nbsp;₽</b></p>
+          <!-- порог бесплатной доставки: сколько осталось или что она уже бесплатная (JOIM.freeDeliveryFrom) -->
+          <div class="cart-free" data-cart-free>
+            <div class="cart-free__track" aria-hidden="true"><span class="cart-free__fill" data-cart-free-fill></span></div>
+            <p class="cart-free__text" data-cart-delivery>От&nbsp;15&nbsp;000&nbsp;₽ курьер и&nbsp;СДЭК бесплатно.</p>
+          </div>
+        </div>
+
+        <div class="cart-sum__block">
+          <div class="cart-sum__head cart-sum__head--ways">
+            <h3 class="label">Способы получения</h3>
+            <a class="cart-sum__more" href="/delivery/">Подробнее{{icon arrow-up-right}}</a>
+          </div>
+          <!-- у курьера и СДЭК цена меняется на «бесплатно», когда сумма дошла до порога -->
+          <ul class="cart-ways">
+            <li>
+              <span>Курьер по&nbsp;Москве в&nbsp;день заказа</span>
+              <b class="cart-ways__price"><span data-cart-way-paid>490&nbsp;₽</span><span data-cart-way-free hidden>бесплатно</span></b>
+            </li>
+            <li>
+              <span>СДЭК по&nbsp;России, 2–7&nbsp;дней</span>
+              <b class="cart-ways__price"><span data-cart-way-paid>от&nbsp;390&nbsp;₽</span><span data-cart-way-free hidden>бесплатно</span></b>
+            </li>
+            <li>
+              <span>Почта России, 5–14&nbsp;дней</span>
+              <b class="cart-ways__price">от&nbsp;320&nbsp;₽</b>
+            </li>
+            <li>
+              <span>Самовывоз в&nbsp;Москве</span>
+              <b class="cart-ways__price">бесплатно</b>
+            </li>
+          </ul>
+        </div>
+
+        <div class="cart-sum__block">
+          <form class="form cart-form" id="cart-order" data-form data-cart-form novalidate aria-labelledby="cart-form-title">
+            <div class="form__main">
+              <h3 class="label cart-sum__label" id="cart-form-title">Оформление заказа</h3>
+              <div class="form__row cart-form__row">
+                <div class="field">
+                  <label class="visually-hidden" for="cart-name">Ваше имя</label>
+                  <input class="input" id="cart-name" type="text" name="name" placeholder="Ваше имя" autocomplete="name" required data-error="Напишите, как к вам обращаться">
+                </div>
+                <div class="field">
+                  <label class="visually-hidden" for="cart-phone">Телефон</label>
+                  <input class="input" id="cart-phone" type="tel" name="phone" placeholder="+7 000 000-00-00" autocomplete="tel" inputmode="tel" required data-error="Оставьте телефон для связи">
+                </div>
+              </div>
+              <div class="field">
+                <label class="visually-hidden" for="cart-comment">Комментарий к&nbsp;заказу</label>
+                <textarea class="textarea cart-form__comment" id="cart-comment" name="comment" placeholder="Комментарий к&nbsp;заказу"></textarea>
+              </div>
+              <label class="check">
+                <input class="check__input" type="checkbox" name="agree" required data-error="Нужно согласие на обработку данных">
+                <span class="check__box" aria-hidden="true">{{icon check}}</span>
+                <span class="check__text">Согласен с&nbsp;<a href="/privacy/">политикой конфиденциальности</a> и&nbsp;обработкой персональных данных</span>
+              </label>
+              <button class="btn btn--accent btn--lg btn--block cart-form__btn" type="submit" data-cart-submit>Оформить заказ</button>
+              <p class="cart-form__hint">Менеджер перезвонит и&nbsp;подтвердит заказ.</p>
+            </div>
+          </form>
+        </div>
+      </aside>
+
+    <!-- 2. Пусто -->
+    <div class="cart-empty" data-cart-empty hidden>
+      <span class="cart-empty__icon" aria-hidden="true">{{icon cart}}</span>
+      <h2 class="section-title cart-empty__title">В&nbsp;корзине пусто</h2>
+      <p class="lead">Выберите пусковое устройство или автопылесос: товар появится здесь.</p>
+      <a class="btn btn--accent btn--lg cart-empty__btn" href="/catalog/">Перейти в&nbsp;каталог{{icon arrow-up-right icon--move}}</a>
+    </div>
+
+    <!-- 3. Заявка принята: корзина уже очищена -->
+    <div class="cart-done" data-cart-done hidden>
+      <span class="cart-done__icon" aria-hidden="true">{{icon check}}</span>
+      <h2 class="section-title cart-done__title" tabindex="-1" data-cart-done-title>Заявка принята</h2>
+      <p class="lead">Менеджер перезвонит и&nbsp;подтвердит заказ.</p>
+      <p class="cart-done__order" data-cart-done-order></p>
+      <div class="cart-done__actions">
+        <a class="btn btn--solid btn--lg" href="/catalog/">Вернуться в&nbsp;каталог</a>
+        <a class="btn btn--outline btn--lg" href="/">На&nbsp;главную</a>
+      </div>
+    </div>
+
+    <noscript><p class="cart-noscript">Корзина хранится в&nbsp;браузере: включите JavaScript, чтобы её увидеть. Товары можно посмотреть в&nbsp;<a class="link" href="/catalog/">каталоге</a>.</p></noscript>
+  </div>
+</section>
+
+<!-- Ряд компактных плиток: товары, которых в корзине нет (без скрипта: четыре первых по каталогу) -->
+<section class="section section--line cart-more" aria-labelledby="cart-more-title" data-cart-more-section>
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title" id="cart-more-title">Вам может быть интересно</h2>
+      <a class="btn btn--soft btn--sm" href="/catalog/">Все товары{{icon arrow-up-right icon--move}}</a>
+    </div>
+    <ul class="product-grid" data-cart-more>
+      <li>{{> product-card es19}}</li>
+      <li>{{> product-card es29}}</li>
+      <li>{{> product-card pvc1}}</li>
+      <li>{{> product-card es2}}</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Телефон и планшет: липкая нижняя панель «Итого + Оформить», пока кнопка формы за экраном -->
+<div class="cart-bar" data-cart-bar>
+  <div class="container cart-bar__in">
+    <p class="cart-bar__total"><span class="label">Итого</span><b class="price cart-bar__price" data-cart-total>0&nbsp;₽</b></p>
+    <a class="btn btn--accent cart-bar__btn" href="#cart-order" data-cart-go>Оформить</a>
+  </div>
+</div>

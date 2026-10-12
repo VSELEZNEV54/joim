@@ -1,0 +1,89 @@
+/* reviews: страница «Отзывы покупателей» (src/pages/reviews.html).
+   Порядок как на странице: заголовок · сводка (карточка с оценкой и три тёмные плитки моделей) · чипы-фильтр и стена отзывов ·
+   тёмный лист «JOIM в деле». Все классы страницы начинаются с rev-. Общие компоненты (bp-card, cat-tile, review-card, chips) лежат в main.css. */
+.page-reviews .main { padding-bottom: 0; }
+
+/* ---------- Заголовок ---------- */
+.rev-head { padding-bottom: 30px; }
+.rev-head .lead { max-width: 60em; text-wrap: pretty; }
+
+/* ---------- Сводка: оценка и три модели ---------- */
+.rev-top__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gap); }
+.rev-top__grid > li { display: flex; min-width: 0; }
+.rev-score { flex: 1; min-height: 264px; }
+.rev-score__title { margin-bottom: 18px; }
+.rev-score__value { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.rev-score__value b { font: 500 30px/1 var(--font-head); letter-spacing: -.01em; }
+.rev-score .stars .icon { width: 19px; height: 19px; }
+.rev-score .bp-card__text { max-width: 15em; }
+.rev-score .bp-card__art { right: -56px; bottom: -118px; width: 260px; }
+.rev-tile { flex: 1; min-height: 264px; }
+.rev-tile .cat-tile__note { color: var(--on-dark); font-size: 14px; }
+.rev-tile__title { max-width: 7.2em; }
+
+/* ---------- Стена отзывов: три колонки, карточки по высоте текста ---------- */
+.rev-wall { padding: 80px 0 var(--section); }
+.rev-wall__head { align-items: center; margin-bottom: 28px; }
+.no-js .rev-filter { display: none; }
+.rev-wall__list { columns: 3; column-gap: var(--gap); }
+.rev-wall__list > li { break-inside: avoid; margin-bottom: var(--gap); }
+.rev-wall__list > li[hidden] { display: none; }
+.rev-wall .review-card { height: auto; padding: 24px 24px 22px; }
+.rev-wall .review-card__name { margin-top: 2px; font-size: 16px; }
+.rev-wall .review-card__text { font-size: 15px; line-height: 1.55; }
+.rev-wall .review-card__date { padding-top: 6px; }
+.rev-wall .review-card__product a { position: relative; text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 3px; }
+.rev-wall .review-card__product a::after { content: ""; position: absolute; inset: -14px 0; } /* зона касания 44 px */
+
+/* ---------- JOIM в деле: тёмный лист ---------- */
+.rev-action { padding: 80px 0 calc(88px + var(--r-sheet)); border-radius: var(--r-sheet) var(--r-sheet) 0 0; }
+.rev-action__head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 12px 32px; margin-bottom: 32px; }
+.rev-action__text { font-size: 14.5px; color: var(--on-dark-2); }
+.rev-action__list { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--gap); }
+.rev-shot img { width: 100%; aspect-ratio: 9 / 14; object-fit: cover; border-radius: var(--r); background: var(--dark-2); }
+.rev-shot figcaption { margin-top: 10px; font-size: 13.5px; line-height: 1.3; color: var(--on-dark-2); }
+.rev-action__foot { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line-dark); }
+.rev-action__foot p { margin-right: auto; font: 500 18px/1.25 var(--font-head); }
+
+/* ---------- Адаптив ---------- */
+@media (max-width: 1100px) {
+  .rev-top__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rev-score, .rev-tile { min-height: 220px; }
+  .rev-wall { padding-top: 64px; }
+  .rev-wall__list { columns: 2; }
+  .rev-action { padding: 64px 0 calc(64px + var(--r-sheet)); }
+  .rev-action__list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px var(--gap); }
+}
+@media (max-width: 767px) {
+  .rev-head { padding-bottom: 22px; }
+  .rev-score, .rev-tile { min-height: 188px; }
+  .rev-score { padding: 14px 14px 16px; }
+  .rev-score__title { margin-bottom: 12px; padding-bottom: 12px; font-size: 15px; }
+  .rev-score__value { flex-wrap: wrap; gap: 6px 10px; margin-bottom: 8px; }
+  .rev-score__value b { font-size: 26px; }
+  .rev-score .stars .icon { width: 16px; height: 16px; }
+  .rev-score .bp-card__text { font-size: 13.5px; line-height: 1.4; }
+  .rev-score .bp-card__art { display: none; }
+  /* узкая плитка: название в две строки слева, товар прижат к правому краю и не уходит под подпись */
+  .rev-tile { --pos: 100% 50% !important; }
+  .rev-tile .cat-tile__title { max-width: 5.6em; }
+  .rev-tile .cat-tile__note { font-size: 13px; white-space: nowrap; }
+  .rev-tile__rate { display: block; }
+  .rev-tile__sep { display: none; }
+  .rev-wall { padding: 48px 0 60px; }
+  .rev-wall__head { margin-bottom: 20px; }
+  .rev-filter { flex-wrap: nowrap; width: calc(100% + 2 * var(--gutter)); margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
+  .rev-filter::-webkit-scrollbar { display: none; }
+  .rev-filter .chip { flex: none; }
+  .rev-wall__list { columns: 1; }
+  .rev-wall .review-card { padding: 20px 18px 18px; }
+  .rev-wall .review-card__text { font-size: 14.5px; }
+  .rev-action { padding: 48px 0 calc(48px + var(--r-sheet)); }
+  .rev-action__head { margin-bottom: 22px; }
+  .rev-action__list { display: flex; margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter); scrollbar-width: none; -ms-overflow-style: none; }
+  .rev-action__list::-webkit-scrollbar { display: none; }
+  .rev-action__list > li { flex: none; width: 46%; scroll-snap-align: start; }
+  .rev-action__foot { margin-top: 32px; padding-top: 24px; }
+  .rev-action__foot p { width: 100%; font-size: 17px; }
+  .rev-action__foot .btn { flex: 1 1 auto; }
+}

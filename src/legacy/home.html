@@ -1,0 +1,332 @@
+<!--page
+{
+  "path": "/",
+  "title": "JOIM: пусковые устройства и автопылесосы, магазин производителя",
+  "description": "Магазин производителя JOIM: пусковые устройства Easy Start ES-19 и ES-29 от 5 837 ₽, автопылесос PVC-1. Гарантия 12 месяцев, доставка по России за 2–7 дней.",
+  "h1": "Пусковые устройства и&nbsp;автопылесосы JOIM",
+  "nav": "",
+  "darkTop": true,
+  "css": ["pages/home.css"],
+  "js": [],
+  "preloadImage": "https://joim.netlify.app/images/products/joim-es19-card.webp"
+}
+-->
+
+<!-- 1. Первый экран: тёмная сцена. Слева заголовок и действия, справа три товара стоят на линии света, под каждым название и цена.
+     Свет (линия горизонта, ореол, пол) рисует общий компонент .stage; отражения товаров декоративные -->
+<section class="home-hero stage on-dark" aria-labelledby="hero-title">
+  <div class="container home-hero__in">
+    <div class="home-hero__text">
+      <h1 class="home-hero__title" id="hero-title">Пусковые устройства и&nbsp;автопылесосы JOIM</h1>
+      <p class="home-hero__lead lead">Пусковые Easy&nbsp;Start заводят мотор с&nbsp;полностью севшим аккумулятором. <span class="home-hero__lead-more">Своё производство, гарантия 12&nbsp;месяцев.</span></p>
+      <div class="home-hero__actions">
+        <a class="btn btn--lime btn--lg home-hero__cta" href="/catalog/puskovye-ustroystva/">Выбрать пусковое устройство</a>
+        <a class="btn btn--on-dark btn--lg home-hero__pick" href="/podbor/">Подобрать по&nbsp;машине{{icon chevron-right}}</a>
+      </div>
+      <a class="rating rating--link home-hero__rating" href="/reviews/">{{> stars}} <b>5,0</b> <span>25&nbsp;отзывов</span></a>
+    </div>
+    <ul class="home-hero__products">
+      <li>
+        <a class="home-hero__product home-hero__product--es19" href="/product/joim-easy-start-es19/">
+          <span class="stage__shot home-hero__shot">
+            <img src="https://joim.netlify.app/images/products/joim-es19-card.webp" alt="Пусковое устройство JOIM Easy Start ES-19" width="564" height="1200" fetchpriority="high" decoding="async">
+            <img class="stage__mirror" src="https://joim.netlify.app/images/products/joim-es19-card.webp" alt="" width="564" height="1200" decoding="async" aria-hidden="true">
+          </span>
+          <span class="home-hero__name">Easy Start <b>ES-19</b></span>
+          <span class="home-hero__price">{{price es19}}</span>
+        </a>
+      </li>
+      <li>
+        <a class="home-hero__product home-hero__product--es29" href="/product/joim-easy-start-es29/">
+          <span class="stage__shot home-hero__shot">
+            <img src="https://joim.netlify.app/images/products/joim-es29-card.webp" alt="Пусковое устройство JOIM Easy Start ES-29" width="549" height="1200" decoding="async">
+            <img class="stage__mirror" src="https://joim.netlify.app/images/products/joim-es29-card.webp" alt="" width="549" height="1200" decoding="async" aria-hidden="true">
+          </span>
+          <span class="home-hero__name">Easy Start <b>ES-29</b></span>
+          <span class="home-hero__price">{{price es29}}</span>
+        </a>
+      </li>
+      <li>
+        <a class="home-hero__product home-hero__product--pvc1" href="/product/joim-pvc1/">
+          <span class="stage__shot home-hero__shot">
+            <img src="https://joim.netlify.app/images/products/joim-pvc1-card.webp" alt="Беспроводной автопылесос JOIM PVC-1" width="225" height="1200" decoding="async">
+            <img class="stage__mirror" src="https://joim.netlify.app/images/products/joim-pvc1-card.webp" alt="" width="225" height="1200" decoding="async" aria-hidden="true">
+          </span>
+          <span class="home-hero__name">Автопылесос <b>PVC-1</b></span>
+          <span class="home-hero__price">{{price pvc1}}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- 2. Сервисная полоса -->
+<section class="service-strip" aria-label="Условия покупки">
+  <div class="container">
+    <ul class="service-strip__list">
+      <li class="service-strip__item">
+        {{icon truck}}
+        <a class="service-strip__text" href="/delivery/"><b>Доставка 2–7&nbsp;дней</b> <span>по&nbsp;России, СДЭК от&nbsp;390&nbsp;₽</span></a>
+      </li>
+      <li class="service-strip__item">
+        {{icon clock}}
+        <a class="service-strip__text" href="/delivery/"><b>В&nbsp;Москве в&nbsp;день заказа</b> <span>при оформлении до&nbsp;15:00</span></a>
+      </li>
+      <li class="service-strip__item">
+        {{icon shield}}
+        <a class="service-strip__text" href="/warranty/"><b>Гарантия 12&nbsp;месяцев</b> <span>брак меняем без&nbsp;экспертизы</span></a>
+      </li>
+      <li class="service-strip__item">
+        {{icon return}}
+        <a class="service-strip__text" href="/warranty/"><b>Возврат 14&nbsp;дней</b> <span>условия на&nbsp;странице гарантии</span></a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- 3. Каталог: сначала товары с ценой и кнопкой, под ними разделы -->
+<section class="section" aria-labelledby="catalog-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-head__title" id="catalog-title">Каталог</h2>
+      <a class="more-link" href="/catalog/">Смотреть все{{icon chevron-right}}</a>
+    </div>
+    <ul class="product-grid">
+      <li>{{> product-card es19}}</li>
+      <li>{{> product-card es29}}</li>
+      <li>{{> product-card pvc1}}</li>
+    </ul>
+    <!-- разделы каталога: два разворота «сцена + белая панель», стороны чередуются; нажимается весь разворот -->
+    <ul class="home-cats">
+      <li>
+        <a class="split home-cat" href="/catalog/puskovye-ustroystva/">
+          <span class="split__media stage home-cat__stage home-cat__stage--boost">
+            <span class="stage__shot stage__shot--lying"><img src="https://joim.netlify.app/images/products/joim-es19-klemmy.webp" alt="" width="1200" height="766" loading="lazy" decoding="async"></span>
+          </span>
+          <span class="split__panel">
+            <span class="split__title">Пусковые устройства</span>
+            <span class="split__meta">2&nbsp;модели, от&nbsp;{{price es19}}</span>
+            <span class="split__text">Easy&nbsp;Start <span class="nowrap">ES-19</span> и&nbsp;<span class="nowrap">ES-29</span> заводят мотор с&nbsp;полностью севшим аккумулятором, работают как&nbsp;повербанк и&nbsp;фонарь.</span>
+            <span class="btn btn--outline">Смотреть пусковые устройства</span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a class="split split--flip home-cat" href="/catalog/avtopylesosy/">
+          <span class="split__media stage home-cat__stage home-cat__stage--vac">
+            <span class="stage__shot stage__shot--lying"><img src="https://joim.netlify.app/images/products/joim-pvc1-body.webp" alt="" width="1200" height="689" loading="lazy" decoding="async"></span>
+          </span>
+          <span class="split__panel">
+            <span class="split__title">Автомобильные пылесосы</span>
+            <span class="split__meta">PVC-1, {{price pvc1}}</span>
+            <span class="split__text">Беспроводной <span class="nowrap">PVC-1</span> работает до&nbsp;40&nbsp;минут, фильтры моются под&nbsp;краном. Есть режим обдува.</span>
+            <span class="btn btn--outline">Смотреть автопылесосы</span>
+          </span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- 4. Помощь в выборе: две плитки-ссылки с предметной картинкой, как на странице подбора -->
+<section class="section section--flush" aria-labelledby="help-title">
+  <div class="container">
+    <h2 class="visually-hidden" id="help-title">Помощь в&nbsp;выборе</h2>
+    <ul class="home-links">
+      <li>
+        <a class="link-card" href="/podbor/">
+          <div class="link-card__body">
+            <h3 class="link-card__title">Подбор по&nbsp;машине</h3>
+            <p class="link-card__text">Три вопроса про мотор, ответ с&nbsp;ценой.</p>
+            <span class="link-card__more">Подобрать{{icon arrow-right}}</span>
+          </div>
+          <span class="link-card__media">
+            <img src="https://joim.netlify.app/images/products/joim-es19-2.webp" alt="" width="1200" height="973" loading="lazy" decoding="async">
+          </span>
+        </a>
+      </li>
+      <li>
+        <a class="link-card" href="/compare/es19-vs-es29/">
+          <div class="link-card__body">
+            <h3 class="link-card__title"><span class="nowrap">ES-19</span> или <span class="nowrap">ES-29</span>: сравнение</h3>
+            <p class="link-card__text">Ток, ёмкость, запуски и&nbsp;цена в&nbsp;одной таблице.</p>
+            <span class="link-card__more">К&nbsp;сравнению{{icon arrow-right}}</span>
+          </div>
+          <span class="link-card__media link-card__media--pair">
+            <img src="{{products.es19.img}}" alt="" width="{{products.es19.w}}" height="{{products.es19.h}}" loading="lazy" decoding="async">
+            <img src="{{products.es29.img}}" alt="" width="{{products.es29.w}}" height="{{products.es29.h}}" loading="lazy" decoding="async">
+          </span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- 5. Отзывы покупателей -->
+<section class="section section--soft" aria-labelledby="reviews-title">
+  <div class="container home-reviews">
+    <div class="rating-summary home-reviews__summary">
+      <h2 class="rating-summary__title" id="reviews-title">Отзывы покупателей</h2>
+      <p class="rating-summary__score"><b>5,0</b> {{> stars}}</p>
+      <p class="rating-summary__count">25&nbsp;отзывов</p>
+      <ul class="rating-summary__models">
+        <li><a href="/product/joim-easy-start-es19/">Easy Start ES-19</a> <span>{{{products.es19.reviewsHtml}}}</span></li>
+        <li><a href="/product/joim-easy-start-es29/">Easy Start ES-29</a> <span>{{{products.es29.reviewsHtml}}}</span></li>
+        <li><a href="/product/joim-pvc1/">Автопылесос PVC-1</a> <span>{{{products.pvc1.reviewsHtml}}}</span></li>
+      </ul>
+      <a class="more-link" href="/reviews/">Все отзывы{{icon chevron-right}}</a>
+    </div>
+    <ul class="home-reviews__list">
+      <li>
+        <article class="review">
+          <div class="review__head">{{> stars}} <a class="review__model" href="/product/joim-easy-start-es19/">ES-19</a></div>
+          <blockquote class="review__text"><p>Просто лучшая покупка за последние полгода. Машина стала как новее. Ездишь и не паришься: хоть музыку слушай хоть зарядку телефона оставь - знаешь что в багажнике лежит Джоим и в любой момент даст искру. Вещь обязательная как огнетушитель и знак аварийной остановки. Joim ES‑19 однозначно 5 баллов!</p></blockquote>
+          <footer class="review__foot"><b class="review__author">Оксана</b> <time datetime="2026-05-07">7&nbsp;мая 2026</time></footer>
+        </article>
+      </li>
+      <li>
+        <article class="review">
+          <div class="review__head">{{> stars}} <a class="review__model" href="/product/joim-easy-start-es29/">ES-29</a></div>
+          <blockquote class="review__text"><p>Отличное пусковое устройство!Муж запускал аккумулятор на машине, в сильные морозы.Я использую как зарядное устройство для часов и телефона.Пришло все упакованное. Очень красивый ,приятный чехол .Инструкция на русском языке. Мощный фонарик. Покупкой очень довольны!!!</p></blockquote>
+          <footer class="review__foot"><b class="review__author">Наталья</b> <time datetime="2026-01-28">28&nbsp;января 2026</time></footer>
+        </article>
+      </li>
+      <li>
+        <article class="review">
+          <div class="review__head">{{> stars}} <a class="review__model" href="/product/joim-pvc1/">PVC-1</a></div>
+          <blockquote class="review__text"><p>Хватает на полную уборку салона и багажника. Зарядила до полного успела пропылесосить оба ряда коврики багажник и ещё дверные карманы. В конце оставалось одно деление. 40 минут – честное время не завышенное. Для кроссовера самое то. JOIM не обманывает в характеристиках проверено на двух их устройствах.</p></blockquote>
+          <footer class="review__foot"><b class="review__author">Эля</b> <time datetime="2026-04-22">22&nbsp;апреля 2026</time></footer>
+        </article>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- 6. Промо и о магазине -->
+<section class="section" aria-labelledby="promo-title">
+  <div class="container">
+    <h2 class="visually-hidden" id="promo-title">Сезон и&nbsp;подарки</h2>
+    <ul class="home-promos">
+      <li>
+        <a class="split split--sm home-promo" href="/zima/">
+          <span class="split__media split__media--photo">
+            <img class="home-promo__img" src="https://joim.netlify.app/images/products/es19-hood.webp" alt="ES-19 стоит на аккумуляторе под открытым капотом ночью" width="1200" height="802" loading="lazy" decoding="async">
+          </span>
+          <div class="split__panel">
+            <h3 class="split__title">Зима: сел аккумулятор на&nbsp;морозе</h3>
+            <p class="split__text">Пусковые JOIM работают до&nbsp;−30&nbsp;°C. Как завести машину без&nbsp;посторонней помощи.</p>
+            <span class="btn btn--outline btn--sm">Что делать{{icon arrow-right}}</span>
+          </div>
+        </a>
+      </li>
+      <li>
+        <a class="split split--sm home-promo home-promo--gift" href="/gifts/">
+          <span class="split__media split__media--photo">
+            <img class="home-promo__img" src="https://joim.netlify.app/images/products/es19-gift.webp" alt="Жёсткий кейс JOIM в руках у открытого капота" width="1200" height="802" loading="lazy" decoding="async">
+          </span>
+          <div class="split__panel">
+            <h3 class="split__title">Подарок автомобилисту</h3>
+            <p class="split__text">Приезжает в&nbsp;жёстком кейсе, заряжено с&nbsp;завода. Чек дарить не&nbsp;обязательно.</p>
+            <span class="btn btn--outline btn--sm">Выбрать подарок{{icon arrow-right}}</span>
+          </div>
+        </a>
+      </li>
+    </ul>
+
+    <div class="home-about">
+      <div class="home-about__text prose">
+        <h2 class="home-about__title">Магазин JOIM</h2>
+        <p>JOIM&nbsp;— российский бренд автомобильной электроники со&nbsp;своим сертифицированным производством. Делаем <a href="/catalog/puskovye-ustroystva/">пусковые устройства для&nbsp;автомобиля</a> Easy&nbsp;Start и&nbsp;<a href="/catalog/avtopylesosy/">автомобильный пылесос</a> PVC-1: плату разрабатываем, собираем и&nbsp;тестируем сами.</p>
+        <p>На&nbsp;сайте действует <a href="/warranty/">гарантия 12&nbsp;месяцев</a>: брак меняем без&nbsp;экспертизы, обратную отправку оплачиваем сами. <a href="/delivery/">Доставка</a> по&nbsp;России занимает 2–7&nbsp;дней, по&nbsp;Москве привозим в&nbsp;день заказа. Перед отправкой проверяем комплектность и&nbsp;снимаем упаковку на&nbsp;видео.</p>
+      </div>
+      <div class="home-about__links">
+        <h2 class="home-about__title">Полезное</h2>
+        <ul class="home-articles">
+          <li><a href="/blog/vybor/"><span>Пусковое или <span class="nowrap">пуско-зарядное</span> устройство: в&nbsp;чём разница</span>{{icon chevron-right}}</a></li>
+          <li><a href="/blog/akkumulyator/">Сел аккумулятор: что делать и&nbsp;как&nbsp;завести машину без&nbsp;помощи{{icon chevron-right}}</a></li>
+          <li><a href="/blog/akkumulyator/">Как прикурить машину и&nbsp;чем пусковое устройство безопаснее проводов{{icon chevron-right}}</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://joim-store.ru/#organization",
+      "name": "JOIM",
+      "url": "https://joim-store.ru/",
+      "logo": "https://joim-store.ru/assets/img/joim-mark.svg",
+      "sameAs": ["https://t.me/joim_ru", "https://vk.com/joim_store"],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+7-495-120-11-40",
+        "email": "hello@joim-store.ru",
+        "contactType": "customer service",
+        "areaServed": "RU",
+        "availableLanguage": "Russian"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://joim-store.ru/#website",
+      "name": "JOIM",
+      "url": "https://joim-store.ru/",
+      "inLanguage": "ru",
+      "publisher": { "@id": "https://joim-store.ru/#organization" }
+    },
+    {
+      "@type": "ItemList",
+      "name": "Каталог JOIM",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "Product",
+            "name": "{{{products.es19.name}}}",
+            "description": "{{{products.es19.description}}}",
+            "image": "{{{products.es19.img}}}",
+            "url": "https://joim-store.ru{{{products.es19.url}}}",
+            "brand": { "@type": "Brand", "name": "JOIM" },
+            "offers": { "@type": "Offer", "price": "{{products.es19.price}}", "priceCurrency": "RUB", "availability": "https://schema.org/InStock", "url": "https://joim-store.ru{{{products.es19.url}}}" },
+            "aggregateRating": { "@type": "AggregateRating", "ratingValue": "5.0", "reviewCount": "{{products.es19.reviews}}" }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "Product",
+            "name": "{{{products.es29.name}}}",
+            "description": "{{{products.es29.description}}}",
+            "image": "{{{products.es29.img}}}",
+            "url": "https://joim-store.ru{{{products.es29.url}}}",
+            "brand": { "@type": "Brand", "name": "JOIM" },
+            "offers": { "@type": "Offer", "price": "{{products.es29.price}}", "priceCurrency": "RUB", "availability": "https://schema.org/InStock", "url": "https://joim-store.ru{{{products.es29.url}}}" },
+            "aggregateRating": { "@type": "AggregateRating", "ratingValue": "5.0", "reviewCount": "{{products.es29.reviews}}" }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@type": "Product",
+            "name": "{{{products.pvc1.name}}}",
+            "description": "{{{products.pvc1.description}}}",
+            "image": "{{{products.pvc1.img}}}",
+            "url": "https://joim-store.ru{{{products.pvc1.url}}}",
+            "brand": { "@type": "Brand", "name": "JOIM" },
+            "offers": { "@type": "Offer", "price": "{{products.pvc1.price}}", "priceCurrency": "RUB", "availability": "https://schema.org/InStock", "url": "https://joim-store.ru{{{products.pvc1.url}}}" },
+            "aggregateRating": { "@type": "AggregateRating", "ratingValue": "5.0", "reviewCount": "{{products.pvc1.reviews}}" }
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>

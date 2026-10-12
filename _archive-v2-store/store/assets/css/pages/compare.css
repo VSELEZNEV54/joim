@@ -1,0 +1,245 @@
+/* Сравнение ES-19 и ES-29: шапка страницы, таблица с карточками товаров, липкая панель, «Кому какая», ссылки.
+   Все классы страницы начинаются с cmp-. */
+
+.page-compare {
+  --cmp-c1: 28%;            /* колонка названий параметров */
+  --cmp-pad: 16px;          /* поля ячеек в колонках товаров */
+  --cmp-plate-w: 192px;     /* плитка товара в шапке таблицы */
+  --cmp-plate-h: 248px;
+  --cmp-bar-h: 72px;        /* липкая панель под шапкой сайта */
+}
+
+/* ---------- Шапка страницы ---------- */
+.cmp-head { padding-bottom: 32px; }
+.cmp-head__lead { max-width: none; }
+.cmp-head__line { display: block; }
+
+/* ---------- Таблица ---------- */
+.cmp { position: relative; }
+.cmp-table { table-layout: fixed; font-variant-numeric: tabular-nums; }
+.cmp-table__c1 { width: var(--cmp-c1); }
+
+/* шапка таблицы: угол с заголовком и переключателем, две карточки товара */
+.cmp-table thead th, .cmp-table thead td { padding: 0 0 28px; font-weight: 400; text-align: left; vertical-align: top; }
+.cmp-table thead .cmp-table__prod { padding-inline: var(--cmp-pad); }
+.cmp-table thead .cmp-table__corner { padding-right: 24px; }
+
+.cmp-tools { display: flex; flex-direction: column; align-items: flex-start; min-height: var(--cmp-plate-h); font-variant-numeric: normal; }
+.cmp-tools__title { margin-bottom: auto; }
+.cmp-tools__switch { margin-top: 20px; }
+.no-js .cmp-tools__switch, .no-js .cmp-tools__count { display: none; }
+.cmp-tools__note { display: flex; flex-wrap: wrap; gap: 2px 16px; font-size: 13px; line-height: 1.4; color: var(--text-2); }
+.cmp-tools__legend { display: inline-flex; align-items: center; gap: 6px; }
+.cmp-tools__mark { flex: none; width: 14px; height: 14px; border: 1px solid var(--line-strong); background: var(--lime-soft); }
+
+.cmp-prod { display: grid; grid-template-columns: var(--cmp-plate-w) minmax(0, 1fr); gap: 20px; }
+.cmp-prod__media { width: var(--cmp-plate-w); height: var(--cmp-plate-h); border: 1px solid var(--line); transition: border-color var(--t) var(--ease); }
+.cmp-prod__body { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
+.cmp-prod__tag { margin-bottom: 10px; }
+.cmp-prod__tag--plain { display: inline-flex; align-items: center; height: 26px; font-size: 13px; font-weight: 600; line-height: 1; color: var(--text-2); }
+.cmp-prod__name { font-size: var(--fs-h3); font-weight: 700; line-height: 1.3; letter-spacing: -.01em; color: var(--text); }
+.cmp-prod__rating { margin-top: 6px; }
+.cmp-prod__stock { margin-top: 8px; }
+.cmp-prod__price { margin-top: auto; padding-top: 12px; }
+.cmp-prod__btn { margin-top: 12px; }
+@media (hover: hover) {
+  .cmp-prod:hover .cmp-prod__media { border-color: var(--line-strong); }
+  .cmp-prod:hover .plate > img { scale: 1.03; }
+  .cmp-prod__name:hover, .cmp-bar__name:hover, .cmp-fit__title a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+}
+.cmp-prod__name:active, .cmp-bar__name:active, .cmp-fit__title a:active { color: var(--text-2); }
+@media (pointer: coarse) {
+  /* зона касания названия 44 px, раскладка не меняется */
+  .cmp-prod__name, .cmp-fit__title a { display: inline-block; margin-block: -12px; padding-block: 12px; }
+}
+
+/* строки */
+.cmp-table tbody th, .cmp-table tbody td {
+  padding: 14px var(--cmp-pad); border-bottom: 1px solid var(--line);
+  font-size: 15px; line-height: 1.45; text-align: left; vertical-align: top;
+}
+.cmp-table tbody th[scope="row"] { padding-left: 0; font-weight: 500; color: var(--text-2); }
+.cmp-table tbody td { font-size: 16px; font-weight: 600; }
+.cmp-table td.is-win { background: var(--lime-soft); }
+.cmp-table__sub { font-size: 14px; font-weight: 500; color: var(--text-2); }
+.cmp-table__mark { margin-left: 1px; font-size: .8em; line-height: 1; color: var(--text); }
+.cmp-table .cmp-table__group th {
+  padding: 30px 0 10px; border-bottom-color: var(--text);
+  font-size: 17px; font-weight: 700; line-height: 1.3; letter-spacing: -.005em; color: var(--text);
+}
+.cmp-table tbody:first-of-type .cmp-table__group th { padding-top: 4px; }
+
+/* «Только отличия»: совпадающие строки убраны, список появляется коротким переходом */
+.cmp-table--diff .cmp-table__row--same { display: none; }
+.cmp-table--swap tbody { animation: cmp-swap var(--t) var(--ease); }
+@keyframes cmp-swap { from { opacity: 0; } }
+
+.cmp-note { max-width: 76ch; margin-top: 16px; font-size: 13px; line-height: 1.45; color: var(--text-2); }
+
+/* ---------- Липкая панель: товары, цены и кнопки остаются под шапкой сайта ---------- */
+.cmp-bar {
+  position: sticky; top: var(--header-h); z-index: var(--z-sticky);
+  height: var(--cmp-bar-h); margin-bottom: calc(-1 * var(--cmp-bar-h));
+  border-bottom: 1px solid var(--line); background: var(--bg);
+  opacity: 0; visibility: hidden; transform: translateY(-6px);
+  transition: opacity var(--t) var(--ease), transform var(--t) var(--ease), visibility 0s linear var(--t);
+}
+.cmp-bar--on { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+.cmp-bar__in { display: grid; grid-template-columns: var(--cmp-c1) minmax(0, 1fr) minmax(0, 1fr); align-items: center; height: 100%; }
+/* левая ячейка: тот же тумблер «Только отличия», что в шапке таблицы (состояние синхронно), под ним счётчик */
+.cmp-bar__tools { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; min-width: 0; padding-right: 12px; }
+.cmp-bar__switch { min-height: 26px; }
+/* счётчик стоит под подписью тумблера: 44 px переключателя и 10 px зазора слева */
+.cmp-bar__count { padding-left: 54px; font-size: 13px; line-height: 1.3; color: var(--text-2); white-space: nowrap; pointer-events: none; }
+@media (pointer: coarse) {
+  /* зона касания тумблера 44 px, высота панели не меняется */
+  .cmp-bar__switch { min-height: 44px; margin-block: -9px; }
+}
+.cmp-bar__prod { display: flex; align-items: center; gap: 12px; min-width: 0; padding-inline: var(--cmp-pad); }
+.cmp-bar__thumb { display: grid; place-items: center; flex: none; width: 40px; height: 48px; border-radius: var(--r-ctl); background: var(--bg-soft); }
+.cmp-bar__thumb img { width: auto; height: 38px; }
+.cmp-bar__text { display: flex; flex-direction: column; gap: 1px; min-width: 0; margin-right: auto; }
+.cmp-bar__name { font-size: 14px; font-weight: 600; line-height: 1.3; color: var(--text); white-space: nowrap; }
+.cmp-bar__price { font-size: 17px; font-weight: 800; line-height: 1.2; letter-spacing: -.01em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cmp-bar__btn { flex: none; min-width: 152px; }
+
+/* нижняя панель покупки есть только на телефоне */
+.cmp-buy { display: none; }
+
+/* ---------- Кому какая ---------- */
+.cmp-fit { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap); }
+.cmp-fit > li { display: flex; min-width: 0; }
+.cmp-fit__card {
+  /* картинка 200 px: в колонке текста самый длинный пункт списка встаёт в одну строку, списки двух карточек равной высоты */
+  display: grid; grid-template-columns: minmax(0, 1fr) 200px; grid-template-rows: 1fr auto; gap: 24px; flex: 1; min-width: 0;
+  padding: 28px; border-radius: var(--r-card); background: var(--bg);
+}
+.cmp-fit__title { font-size: var(--fs-h3); }
+.cmp-fit__lead { margin-top: 6px; font-size: 15px; line-height: 1.45; color: var(--text-2); text-wrap: balance; }
+.cmp-fit__list { margin-top: 16px; }
+.cmp-fit__media { align-self: start; }
+.cmp-fit__buy {
+  grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px;
+  padding-top: 20px; border-top: 1px solid var(--line);
+}
+.cmp-fit__btn { min-width: 160px; }
+.cmp-fit__more { margin-left: auto; }
+
+/* ---------- Подбор, хаб, другие сравнения ---------- */
+.cmp-more__row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 32px; margin-top: 20px; }
+.cmp-brands { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; min-width: 0; }
+.cmp-brands__title { font-size: 15px; font-weight: 700; line-height: 1.3; letter-spacing: 0; }
+
+/* ---------- Узкий десктоп и планшет: карточки в шапке таблицы сжимаются ---------- */
+@media (max-width: 1279px) {
+  .page-compare { --cmp-plate-w: 168px; --cmp-plate-h: 224px; }
+  .cmp-prod { gap: 16px; }
+}
+@media (max-width: 1139px) {
+  .page-compare { --cmp-c1: 26%; --cmp-plate-w: 136px; --cmp-plate-h: 200px; }
+  .cmp-prod__name { font-size: 18px; }
+  .cmp-bar__btn { min-width: 132px; }
+  .cmp-fit__card { grid-template-columns: minmax(0, 1fr) 168px; padding: 24px; gap: 20px; }
+}
+@media (max-width: 959px) {
+  .page-compare { --cmp-pad: 12px; --cmp-plate-w: 96px; --cmp-plate-h: 176px; }
+  .cmp-prod { gap: 12px; }
+  .cmp-prod__name { font-size: 17px; }
+  .cmp-prod__stock { display: none; }
+  .cmp-prod__btn { padding-inline: 8px; }
+  .cmp-table thead .cmp-table__corner { padding-right: 12px; }
+  .cmp-tools__title { font-size: 22px; }
+  .cmp-bar__thumb { display: none; }
+  .cmp-bar__btn { min-width: 0; padding-inline: 14px; }
+  .cmp-bar__line { display: none; }
+  .cmp-table tbody td { font-size: 15px; }
+  /* карточки «Кому какая» встают друг под другом: картинке и списку хватает ширины */
+  .cmp-fit { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ---------- Телефон: параметр строкой, под ним два значения; покупка внизу экрана ---------- */
+@media (max-width: 767px) {
+  /* зазор между колонками 16 px: подложка лучшего значения выступает на 8 px и не подходит вплотную к соседней колонке */
+  .page-compare { --cmp-gap: 16px; --cmp-plate-w: 104px; --cmp-plate-h: 172px; }
+  .cmp-head { padding-bottom: 20px; }
+  .cmp-head__lead { font-size: 15px; text-wrap: pretty; }
+  .cmp-head__line { display: inline; }
+
+  .cmp-table, .cmp-table thead, .cmp-table tbody, .cmp-table tr, .cmp-table th, .cmp-table td { display: block; }
+  .cmp-table colgroup { display: none; }
+  .cmp-table thead tr, .cmp-table tbody tr { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--cmp-gap); }
+  .cmp-table--diff tbody tr.cmp-table__row--same { display: none; }
+
+  /* шапка: две карточки, под ними заголовок и переключатель */
+  .cmp-table thead .cmp-table__prod { padding: 0 0 24px; }
+  .cmp-table thead .cmp-table__corner { grid-column: 1 / -1; order: 2; padding: 0 0 4px; }
+  /* широкий телефон: плитка слева растёт до высоты текста */
+  .cmp-prod { height: 100%; }
+  .cmp-prod__media { height: auto; min-height: var(--cmp-plate-h); }
+  .cmp-prod__tag { margin-bottom: 6px; }
+  .cmp-prod__name { font-size: 16px; }
+  .cmp-prod__rating { margin-top: 4px; }
+  .cmp-prod__stock { display: inline-flex; margin-top: 6px; }
+  .cmp-prod__price { padding-top: 8px; }
+  .cmp-prod__btn { margin-top: 10px; }
+
+  .cmp-tools { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 0 12px; min-height: 0; }
+  .cmp-tools__title { grid-column: 1 / -1; margin-bottom: 4px; font-size: var(--fs-h2); }
+  .cmp-tools__switch { margin-top: 0; }
+  .cmp-tools__note { display: contents; }
+  .cmp-tools__count { justify-self: end; }
+  .cmp-tools__legend { grid-column: 1 / -1; }
+
+  /* строки */
+  .cmp-table tbody tr { row-gap: 2px; padding: 10px 0 12px; border-bottom: 1px solid var(--line); }
+  .cmp-table tbody th, .cmp-table tbody td { padding: 0; border: 0; }
+  .cmp-table tbody th[scope="row"] { grid-column: 1 / -1; font-size: 13px; line-height: 1.4; }
+  .cmp-table tbody td { padding: 3px 0; font-size: 15px; line-height: 1.4; }
+  /* подложка на 8 px шире текста с обеих сторон: значения в столбце остаются на одной вертикали,
+     а в левой и правой колонке подложка одинаково выступает за текст */
+  .cmp-table td.is-win { margin-inline: -8px; padding-inline: 8px; border-radius: var(--r-ctl); }
+  .cmp-table__sub { display: block; font-size: 13px; }
+  .cmp-table tbody tr.cmp-table__group { display: block; padding: 26px 0 8px; border-bottom-color: var(--text); }
+  .cmp-table .cmp-table__group th { padding: 0; font-size: 17px; }
+  .cmp-table tbody:first-of-type tr.cmp-table__group { padding-top: 18px; }
+  .cmp-note { margin-top: 14px; }
+
+  /* верхней липкой панели на телефоне нет: вместе с шапкой сайта и нижней панелью она закрывала пятую часть экрана.
+     Подписи колонок, цены и кнопки остаются в нижней панели */
+  .cmp-bar { display: none; }
+
+  /* нижняя панель: модель, цена и кнопка под своей колонкой */
+  .cmp-buy {
+    display: block; position: fixed; inset: auto 0 0; z-index: var(--z-sticky);
+    padding: 8px var(--gutter) calc(8px + env(safe-area-inset-bottom, 0px));
+    background: var(--bg); box-shadow: var(--shadow-bar);
+    visibility: hidden; transform: translateY(calc(100% + 32px));
+    transition: transform var(--t-slow) var(--ease), visibility 0s linear var(--t-slow);
+  }
+  .cmp-buy--on { visibility: visible; transform: none; transition-delay: 0s; }
+  .cmp-buy__in { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--cmp-gap); }
+  .cmp-buy__label { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 5px; font-size: 13px; line-height: 1.3; }
+  .cmp-buy__label span { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  /* кому какая */
+  .cmp-fit { gap: 12px; }
+  .cmp-fit__card { grid-template-columns: minmax(0, 1fr) 120px; gap: 16px; padding: 20px; }
+  .cmp-fit__buy { padding-top: 16px; }
+
+  .cmp-more__row { flex-direction: column; align-items: flex-start; gap: 4px; margin-top: 16px; }
+}
+@media (max-width: 519px) {
+  /* узкий телефон: плитка над текстом */
+  .cmp-prod { display: flex; flex-direction: column; gap: 12px; }
+  .cmp-prod__media { width: 100%; height: 172px; min-height: 0; }
+  .cmp-prod__body { flex: 1; }
+}
+@media (max-width: 479px) {
+  .cmp-fit__card { grid-template-columns: minmax(0, 1fr); }
+  .cmp-fit__media { display: none; }
+  .cmp-fit__btn { flex: 1; min-width: 152px; }
+  .cmp-fit__more { margin-left: 0; }
+}
+@media (max-width: 359px) {
+  .cmp-prod__media { height: 156px; }
+}

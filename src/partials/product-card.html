@@ -1,0 +1,34 @@
+<article class="product-card product-card--{{#if view}}{{view}}{{else}}tile{{/if}}{{#if flip}} product-card--flip{{/if}}{{#if soon}} is-soon{{/if}}" data-product="{{id}}" data-price="{{#if inStock}}{{price}}{{/if}}">
+{{#if view == "row"}}  <div class="product-card__media stage"{{#if stageStyle}} style="{{stageStyle}}"{{/if}}>
+    <a class="stage__link" href="{{url}}" tabindex="-1" aria-hidden="true">
+      <img class="stage__img" src="{{stage.src}}" alt="{{alt}}" width="{{stage.w}}" height="{{stage.h}}" loading="{{#if eager}}eager{{else}}lazy{{/if}}"{{#if prio}} fetchpriority="high"{{/if}} decoding="async">
+    </a>
+{{else}}  <div class="product-card__media tile"{{#if tileStyle}} style="{{tileStyle}}"{{/if}}>
+    <a class="tile__link" href="{{url}}" tabindex="-1" aria-hidden="true">
+      <img class="tile__img tile__img--{{fit}}{{#if tileMod}} tile__img--{{tileMod}}{{/if}}" src="{{img}}" alt="{{alt}}" width="{{w}}" height="{{h}}" loading="{{#if eager}}eager{{else}}lazy{{/if}}"{{#if prio}} fetchpriority="high"{{/if}} decoding="async">
+    </a>
+{{/if}}    {{#if badge}}<span class="badge badge--{{badgeTone}} product-card__badge">{{badge}}</span>{{/if}}
+    <button class="fav-btn" type="button" data-fav="{{id}}" aria-pressed="false" aria-label="В избранное: {{short}}">{{icon heart}}</button>
+  </div>
+  <div class="product-card__body">
+    <h3 class="product-card__title"><a href="{{url}}">{{{nameHtml}}}</a></h3>
+{{#if view}}    {{#if usageLine}}<p class="product-card__for">{{{usageLine}}}</p>{{/if}}
+    <dl class="fields product-card__fields">
+{{#each fieldList}}      <div class="fields__item"><dt class="label">{{label}}</dt><dd class="fields__value">{{{valueHtml}}}</dd></div>
+{{/each}}    </dl>
+{{/if}}    <div class="product-card__buy">
+      <div class="product-card__offer">
+        {{#if hasRating}}<p class="product-card__rating">{{icon star}}<span class="visually-hidden">Оценка </span>{{ratingFmt}} <span aria-hidden="true">·</span> {{{reviewsHtml}}}</p>{{/if}}
+        <p class="product-card__price{{#if soon}} product-card__price--soon{{/if}}">{{{priceHtml}}}</p>
+      </div>
+      <div class="product-card__actions">
+        {{#if inStock}}<button class="btn btn--accent product-card__btn" type="button" data-add-to-cart="{{id}}" aria-label="В корзину: {{short}}">В&nbsp;корзину</button>{{else}}<button class="btn btn--outline product-card__btn" type="button" data-notify="{{id}}" aria-haspopup="dialog" aria-label="Сообщить о поступлении: {{short}}"><span>Сообщить<span class="product-card__btn-more"> о&nbsp;поступлении</span></span></button>{{/if}}
+        <div class="product-card__mp">
+          <a class="btn btn--outline btn--xs" href="{{ozonUrl}}" target="_blank" rel="nofollow noopener" aria-label="Ozon: {{short}}, откроется в новой вкладке">Ozon{{icon arrow-up-right}}</a>
+          <a class="btn btn--outline btn--xs" href="{{wbUrl}}" target="_blank" rel="nofollow noopener" aria-label="Wildberries: {{short}}, откроется в новой вкладке">Wildberries{{icon arrow-up-right}}</a>
+        </div>
+      </div>
+    </div>
+{{#if view}}    <a class="more-link product-card__more" href="{{url}}">Подробнее о&nbsp;модели<span class="visually-hidden">: {{short}}</span>{{icon arrow-right}}</a>
+{{/if}}  </div>
+</article>

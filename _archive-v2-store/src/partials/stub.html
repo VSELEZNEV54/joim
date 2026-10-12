@@ -1,0 +1,23 @@
+<section class="stub" aria-labelledby="stub-title">
+  <div class="container">
+    <h1 class="stub__title" id="stub-title">{{h1}}</h1>
+    <p class="stub__text">{{{lead}}}</p>
+{{#if cartAction}}    <p class="stub__action"><button class="btn btn--lime" type="button" data-dialog-open="cart" aria-haspopup="dialog">Открыть корзину</button></p>
+{{/if}}{{#if productFirst}}    <h2 class="visually-hidden">Товары JOIM</h2>
+    {{{grid}}}
+    <h2 class="stub__subtitle">Пока можно посмотреть</h2>
+{{/if}}    <ul class="stub__links">
+{{#each links}}      <li>
+        <a class="link-card" href="{{path}}">
+          <span class="link-card__body">
+            <span class="link-card__title">{{name}}</span>
+            <span class="link-card__text">{{{text}}}</span>
+          </span>
+          {{icon arrow-right link-card__arrow}}
+        </a>
+      </li>
+{{/each}}    </ul>
+{{#if !productFirst}}    <h2 class="stub__subtitle">Товары JOIM</h2>
+    {{{grid}}}
+{{/if}}  </div>
+</section>

@@ -1,0 +1,238 @@
+/* podbor: подбор по машине. Порядок как на странице: заголовок · виджет (светлая карточка с тремя вопросами и тёмная плитка
+   с результатом) · «Как мы считаем» (карточка с чертежом и шпаргалка) · плитки-ссылки · нижняя панель покупки.
+   Все классы страницы начинаются с pick-. */
+
+/* ---------- Заголовок ---------- */
+.pick-head { padding-bottom: 32px; }
+
+/* ---------- Виджет ---------- */
+.pick { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 8fr); gap: var(--gap); }
+
+/* вопросы: светлая карточка. Вопросы стоят от верхнего края, низ карточки отдан чертежу устройства (срезан нижним краем, как в карточках bp-card) */
+.pick__form { position: relative; display: flex; flex-direction: column; justify-content: flex-start; gap: 34px; min-width: 0; padding: 36px 36px 40px; border-radius: var(--r); background: linear-gradient(165deg, #F0F3F2 0%, #F8FAF9 46%, #EBEFED 100%); overflow: hidden; isolation: isolate; }
+/* чертёж привязан к верху карточки и начинается сразу под вопросами: на любой высоте карточки он не заходит под подсказку, низ срезает край */
+.pick__art { position: absolute; right: -14px; top: 424px; z-index: -1; width: 264px; height: auto; color: var(--blueprint); opacity: .9; pointer-events: none; }
+.pick-q { min-width: 0; margin: 0; padding: 0; border: 0; }
+.pick-q__label { display: block; padding: 0; font: 500 16.5px/1.25 var(--font-head); color: var(--ink); }
+.pick-q__control { margin-top: 14px; }
+.pick-q__hint { margin-top: 12px; font-size: 13.5px; line-height: 1.45; color: var(--text-2); }
+
+/* выбор из двух: пилюли, выбранная тёмная */
+.pick-seg { display: flex; flex-wrap: wrap; gap: 8px; }
+.pick-seg__opt { position: relative; display: inline-flex; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.pick-seg__opt input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.pick-seg__label {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 24px; border-radius: var(--pill);
+  background: #fff; color: var(--ink); font: 500 14.5px/1.1 var(--font); white-space: nowrap;
+  transition: background-color .2s, color .2s;
+}
+.pick-seg__opt:hover .pick-seg__label { background: var(--accent); }
+.pick-seg__opt input:checked + .pick-seg__label { background: var(--ink); color: #fff; }
+.pick-seg__opt input:focus-visible + .pick-seg__label { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+/* объём: подпись и число с кнопками «меньше / больше», ниже ползунок со шкалой */
+.pick-volume__head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.pick-volume__stepper { flex: none; background: #fff; border-color: transparent; border-radius: var(--pill); overflow: hidden; }
+.pick-volume__stepper .qty__btn { width: 46px; }
+.pick-volume__stepper .qty__btn:hover:not(:disabled) { background: var(--accent); }
+.pick-volume__stepper .qty__val { min-width: 62px; font-size: 15px; white-space: nowrap; }
+.pick-range { display: block; width: 100%; height: 44px; margin: 6px 0 0; background: transparent; cursor: pointer; -webkit-appearance: none; appearance: none; -webkit-tap-highlight-color: transparent; }
+.pick-range::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: linear-gradient(90deg, var(--ink) var(--val, 11%), rgba(26, 29, 28, .16) var(--val, 11%)); }
+.pick-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 24px; height: 24px; margin-top: -10px; border: 2px solid var(--ink); border-radius: 50%; background: var(--accent); transition: transform .2s var(--ease); }
+.pick-range::-moz-range-track { height: 4px; border-radius: 2px; background: rgba(26, 29, 28, .16); }
+.pick-range::-moz-range-progress { height: 4px; border-radius: 2px; background: var(--ink); }
+.pick-range::-moz-range-thumb { box-sizing: border-box; width: 24px; height: 24px; border: 2px solid var(--ink); border-radius: 50%; background: var(--accent); }
+.pick-range:hover::-webkit-slider-thumb, .pick-range:active::-webkit-slider-thumb { transform: scale(1.12); }
+.pick-range:focus-visible { outline: none; }
+.pick-range:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--ink); outline-offset: 3px; }
+.pick-range:focus-visible::-moz-range-thumb { outline: 2px solid var(--ink); outline-offset: 3px; }
+.pick-scale { position: relative; height: 18px; margin: -4px 12px 0; font-size: 13px; line-height: 18px; color: var(--text-2); font-variant-numeric: tabular-nums; }
+.pick-scale span { position: absolute; top: 0; left: var(--at); transform: translateX(-50%); white-space: nowrap; }
+.pick-scale span:first-child { transform: translateX(-12px); }
+.pick-scale span:last-child { left: auto; right: -12px; transform: none; }
+
+/* результат: тёмная плитка, сцена товара во всю плитку, текст слева.
+   Плитка чуть шире кадра (кадр 1258×941): сцена вписана по ширине, товар всегда занимает правые две пятых и не заходит под текст */
+.pick-result { position: relative; display: flex; min-width: 0; aspect-ratio: 143 / 100; border-radius: var(--r); background: var(--dark); overflow: hidden; isolation: isolate; --gridline-y: 100%; }
+.pick-result__media { position: absolute; inset: 0; z-index: -2; }
+.pick-result__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 100% 50%; opacity: 0; transition: opacity .45s var(--ease); }
+.pick-result__media img.is-active { opacity: 1; }
+.pick-result__media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10, 12, 11, .82) 0, rgba(10, 12, 11, .5) 42%, transparent 66%); }
+.pick-result .gridlines { z-index: -1; }
+.pick-result .gridlines::before { left: 60.6%; }
+.pick-result__body { display: flex; flex-direction: column; justify-content: space-between; gap: 28px; width: min(58%, 480px); padding: 36px 0 36px 36px; }
+.pick-result__label { margin-bottom: 8px; font-size: 13.5px; line-height: 1.4; color: var(--on-dark-2); }
+.pick-model__name { font: 500 30px/1.15 var(--font-head); letter-spacing: -.005em; }
+.pick-model__name a { position: relative; transition: color .2s; }
+.pick-model__name a::after { content: ""; position: absolute; inset: -6px 0; } /* зона касания 44 px */
+.pick-model__name a:hover { color: var(--accent); }
+.pick-model__specs { margin-top: 10px; font-size: 14px; line-height: 1.45; color: var(--on-dark-2); }
+.pick-model.is-swap, .is-swap[data-pick-price] { animation: pick-swap .3s var(--ease); }
+@keyframes pick-swap { from { opacity: 0; transform: translateY(6px); } }
+
+/* расчёт: число против предела ES-19 и одна строка объяснения */
+.pick-why { padding: 18px 20px 18px; border-radius: var(--r); background: rgba(255, 255, 255, .07); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.pick-meter__scale { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0 12px; font-size: 13px; line-height: 1.4; color: var(--on-dark-2); font-variant-numeric: tabular-nums; }
+.pick-meter__scale b { font-size: 14.5px; font-weight: 600; color: var(--on-dark); }
+.pick-meter__track { position: relative; height: 4px; margin-top: 10px; border-radius: 2px; background: rgba(255, 255, 255, .16); overflow: hidden; }
+.pick-meter__fill { position: absolute; inset: 0; background: var(--accent); transform: scaleX(var(--fill, .2)); transform-origin: left center; transition: transform .3s var(--ease); }
+/* высота зарезервирована под самую длинную фразу: при смене ответа кнопка не прыгает */
+.pick-why__text { display: flex; align-items: center; min-height: 4.35em; min-height: 3lh; margin-top: 14px; font-size: 14.5px; line-height: 1.45; text-wrap: pretty; }
+
+.pick-buy { display: grid; gap: 18px; }
+.pick-buy__price { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 16px; }
+.pick-buy__price .price { font-size: 28px; line-height: 1.1; }
+.pick-buy__stock { display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; color: var(--on-dark-2); white-space: nowrap; }
+.pick-buy__stock .icon { width: 16px; height: 16px; color: var(--accent); stroke-width: 2; }
+.pick-buy__actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.pick-buy__btn { min-width: 184px; }
+.pick-buy__more { padding-inline: 26px; }
+
+/* ---------- Как мы считаем ---------- */
+.pick-how { padding-bottom: calc(var(--section) - 8px); }
+.pick-how__grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--gap) 56px; align-items: start; }
+.pick-how__card { min-height: 0; padding: 24px 24px 28px; }
+.pick-how__card .bp-card__text { max-width: 27em; }
+/* три числа правила: пределы ES-19 и множитель запаса */
+.pick-rule { max-width: 300px; margin-top: 24px; font-size: 14.5px; line-height: 1.4; }
+.pick-rule > div { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 9px 0; border-bottom: 1px dashed var(--line-strong); }
+.pick-rule > div:last-child { border-bottom: 0; padding-bottom: 0; }
+.pick-rule dt { color: var(--text-2); }
+.pick-rule dd { flex: none; font: 500 16.5px/1.2 var(--font-head); font-variant-numeric: tabular-nums; }
+.pick-how__card .bp-card__art { width: 260px; right: -40px; bottom: -56px; }
+.pick-sheet caption { padding-bottom: 18px; }
+.pick-sheet th, .pick-sheet td { vertical-align: middle; }
+.pick-sheet tbody th { color: var(--ink); white-space: nowrap; }
+.pick-sheet td { white-space: nowrap; }
+.pick-sheet td:nth-child(2) { color: var(--text-2); }
+.pick-sheet tbody tr:last-child > * { border-bottom: 0; }
+.pick-sheet td:nth-child(3) { font-variant-numeric: tabular-nums; }
+/* ссылка на модель: зона касания на всю высоту строки */
+.pick-sheet td .link { display: inline-flex; align-items: center; min-width: 44px; min-height: 44px; margin-block: -13px; font-weight: 500; }
+.pick-sheet__price { margin-left: 10px; color: var(--text-2); font-variant-numeric: tabular-nums; }
+.pick-sheet__where { display: none; }
+
+/* ---------- Ссылки и телефон ---------- */
+.pick-more__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
+.pick-more__grid > li { min-width: 0; }
+.pick-more .cat-tile { height: 100%; min-height: 0; aspect-ratio: 452 / 380; }
+/* плитка сравнения: два кадра рядом, края растворены */
+.pick-duo__imgs { position: absolute; inset: 0; z-index: -2; display: flex; align-items: flex-end; justify-content: flex-end; padding-right: 2%; transition: transform .7s var(--ease); }
+.pick-duo__imgs img { flex: none; width: auto; height: 72%;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 24%, #000 76%, transparent 100%), linear-gradient(180deg, transparent 0, #000 26%); mask-image: linear-gradient(90deg, transparent 0, #000 24%, #000 76%, transparent 100%), linear-gradient(180deg, transparent 0, #000 26%);
+  -webkit-mask-composite: source-in; mask-composite: intersect; }
+.pick-duo__imgs img + img { margin-left: -7%; }
+.pick-duo:hover .pick-duo__imgs { transform: scale(1.04); }
+.pick-call { height: 100%; min-height: 0; transition: background-color .2s; }
+.pick-call__title { margin-bottom: 18px; }
+.pick-call__tel { font: 500 26px/1.15 var(--font-head); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pick-call__btn { position: absolute; left: 20px; bottom: 20px; background: #fff; }
+.pick-call:hover .pick-call__btn { background: var(--accent); }
+.pick-call .bp-card__art { width: 250px; right: -40px; bottom: -84px; }
+
+/* ---------- Нижняя панель (телефон и планшет) ---------- */
+.pick-bar { display: none; }
+
+/* ---------- Адаптив ---------- */
+@media (max-width: 1280px) {
+  .pick__form { padding: 32px 28px; }
+  .pick__art { top: 408px; width: 236px; }
+  .pick-result__body { gap: 20px; padding: 28px 0 28px 28px; }
+  .pick-buy__btn { min-width: 0; flex: 1 1 150px; }
+  .pick-buy__more { padding-inline: 20px; }
+  .pick-how__grid { column-gap: 40px; }
+}
+/* планшет и телефон: вопросы, под ними результат; модель, цена и кнопка продублированы в нижней панели */
+@media (max-width: 1100px) {
+  .pick__art { display: none; }
+  .pick { grid-template-columns: minmax(0, 1fr); }
+  .pick__form { gap: 28px; padding: 28px 24px 32px; }
+  /* плитка во всю ширину: кадр вписан по высоте и прижат вправо, левый край кадра растворён */
+  .pick-result { aspect-ratio: auto; min-height: 480px; }
+  .pick-result__media img { inset: 0 0 0 auto; width: auto; max-width: none; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 38%); mask-image: linear-gradient(90deg, transparent 0, #000 38%); }
+  .pick-result .gridlines { display: none; }
+  .pick-result__body { width: min(56%, 460px); }
+  .pick-why__text { min-height: 2.9em; min-height: 2lh; }
+  .pick-how__grid { grid-template-columns: minmax(0, 1fr); row-gap: 40px; }
+  .pick-how__card { min-height: 300px; }
+  .pick-how__card .bp-card__text { max-width: 34em; }
+  .pick-how__card .bp-card__art { width: 280px; right: -20px; bottom: -70px; }
+  .pick-more__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pick-more__grid > li:last-child { grid-column: 1 / -1; }
+  .pick-call { min-height: 200px; }
+
+  .pick-bar {
+    position: fixed; inset: auto 0 0; z-index: var(--z-sticky); display: block;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background: #fff; box-shadow: var(--shadow-bar);
+    transform: translateY(100%); visibility: hidden;
+    transition: transform .3s var(--ease), visibility 0s linear .3s;
+  }
+  .pick-bar.is-open { transform: none; visibility: visible; transition-delay: 0s; }
+  .pick-bar__in { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 64px; padding-block: 10px; }
+  .pick-bar__info { display: flex; flex-direction: column; justify-content: center; gap: 2px; min-width: 0; min-height: 44px; }
+  .pick-bar__name { font-size: 13px; line-height: 1.3; color: var(--text-2); }
+  .pick-bar__name b { font: 500 14px/1.3 var(--font-head); color: var(--ink); white-space: nowrap; }
+  .pick-bar__price { font-size: 16px; line-height: 1.2; }
+  .pick-bar__info:active { opacity: .7; }
+  .pick-bar__btn { flex: none; min-width: 152px; }
+}
+
+@media (max-width: 767px) {
+  .pick-head { padding-bottom: 24px; }
+  .pick__form { gap: 26px; padding: 22px 16px 24px; }
+  .pick-seg__opt { flex: 1 1 auto; }
+  .pick-seg__label { width: 100%; padding: 0 16px; }
+
+  /* результат: сцена сверху, текст под ней на той же тёмной плитке */
+  .pick-result { flex-direction: column; min-height: 0; }
+  .pick-result__media { position: relative; inset: auto; height: 236px; flex: none; }
+  .pick-result__media img { inset: 0; width: 100%; object-position: 92% 40%; -webkit-mask-image: none; mask-image: none; }
+  .pick-result__media::after { background: linear-gradient(90deg, rgba(10, 12, 11, .8) 0, rgba(10, 12, 11, .3) 46%, transparent 70%), linear-gradient(180deg, transparent 62%, var(--dark) 100%); }
+  .pick-result__body { width: auto; gap: 20px; padding: 0 16px 20px; }
+  .pick-result__head { position: absolute; left: 16px; top: 18px; right: 40%; }
+  .pick-model__name { font-size: 23px; }
+  .pick-model__name a::after { inset: -9px 0; }
+  .pick-model__specs { font-size: 13.5px; }
+  .pick-why { padding: 16px; background: rgba(255, 255, 255, .08); }
+  .pick-buy { gap: 14px; }
+  .pick-buy__price .price { font-size: 24px; }
+  .pick-buy__actions > * { flex: 1 1 0; min-width: 0; padding-inline: 12px; }
+
+  .pick-how__grid { row-gap: 32px; }
+  /* под правилом оставлено место: чертёж не заходит на числа */
+  .pick-how__card { min-height: 0; padding: 20px 20px 136px; }
+  .pick-how__card .bp-card__art { width: 250px; right: -34px; bottom: -92px; }
+  .pick-rule { max-width: none; }
+  .pick-sheet { font-size: 14px; }
+  .pick-sheet th, .pick-sheet td { padding-inline: 10px; }
+  .pick-sheet__price { display: none; }
+  .pick-sheet td .link { margin-block: -12px; }
+
+  .pick-more__grid { grid-template-columns: minmax(0, 1fr); }
+  .pick-more .cat-tile { aspect-ratio: 1 / .62; }
+  .pick-duo__imgs img { height: 78%; }
+  .pick-call { min-height: 190px; }
+  .pick-call__tel { font-size: 23px; }
+  .pick-call .bp-card__art { width: 210px; right: -40px; bottom: -92px; }
+}
+@media (max-width: 479px) {
+  .pick-why__text { min-height: 4.35em; min-height: 3lh; }
+}
+@media (max-width: 399px) {
+  .pick-sheet th, .pick-sheet td { padding-inline: 6px; }
+  /* три колонки: стоянка переезжает второй строкой в первую ячейку */
+  .pick-sheet__parking { display: none; }
+  .pick-sheet__where { display: block; font-size: 12.5px; color: var(--text-2); }
+  .pick-bar__pre { display: none; }
+  .pick-bar__btn { min-width: 132px; }
+}
+@media (max-width: 379px) {
+  /* узкая плитка: название в две строки, чтобы не заходить на товар */
+  .pick-result__head { right: 46%; }
+}
+@media (max-width: 359px) {
+  .pick-why__text { min-height: 5.8em; min-height: 4lh; }
+  .pick-seg__label { padding-inline: 12px; }
+  .pick-model__name { font-size: 21px; }
+}

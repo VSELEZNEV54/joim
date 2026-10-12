@@ -1,0 +1,40 @@
+/* favorites: избранное. Заголовок со счётчиком и кнопкой очистки · сетка плиток из localStorage · пустое состояние
+   (светлая карточка с чертежом сердца) · ряд «Вам может быть интересно». Все классы страницы начинаются с fav-. */
+.fav-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px 24px; flex-wrap: wrap; padding-bottom: 32px; }
+.fav-head__main { min-width: 0; }
+.fav-head__count { margin-top: 10px; min-height: 1.5em; }
+.fav-head__count:empty { display: none; }
+.fav-head__clear .icon { width: 17px; height: 17px; }
+
+.fav-grid { padding-bottom: 8px; }
+/* плитка появляется коротким переходом, когда товар добавили на этой же странице */
+.fav-grid > li.is-new { animation: fav-in .35s var(--ease) both; }
+@keyframes fav-in { from { opacity: 0; transform: translateY(10px); } }
+
+/* пустое состояние: текст слева, чертёж прижат к правому нижнему углу и обрезан краем карточки */
+.fav-empty { min-height: 360px; padding: 28px 28px 32px; }
+.fav-empty__title { font-size: 20px; }
+.fav-empty .bp-card__text { max-width: 30em; font-size: 15px; }
+.fav-empty__actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 32px; }
+.fav-empty__art { width: 400px; max-width: 58%; right: 7%; bottom: -58px; }
+.fav-noscript { max-width: 44em; font-size: 15px; color: var(--text-2); }
+
+.fav-more { padding-top: 88px; }
+.fav-more[hidden] + * { margin-top: 0; }
+.fav:has(+ .fav-more[hidden]) { padding-bottom: var(--section); }
+
+@media (max-width: 1100px) {
+  .fav-empty__art { width: 340px; right: -8px; bottom: -50px; }
+}
+@media (max-width: 767px) {
+  .fav-head { padding-bottom: 24px; }
+  .fav-empty { min-height: 400px; padding: 20px 20px 24px; }
+  .fav-empty__title { font-size: 17px; }
+  .fav-empty__actions { margin-top: 24px; padding-top: 0; }
+  .fav-empty__art { width: 250px; max-width: none; right: -36px; bottom: -64px; }
+  .fav-more { padding-top: 56px; }
+}
+@media (max-width: 399px) {
+  .fav-empty__actions .btn { flex: 1 1 100%; }
+  .fav-empty { min-height: 430px; }
+}

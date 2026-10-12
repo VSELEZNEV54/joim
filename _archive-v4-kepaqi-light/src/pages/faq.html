@@ -1,0 +1,190 @@
+<!--page
+{
+  "path": "/faq/",
+  "title": "Вопросы и ответы о пусковых устройствах и автопылесосе JOIM",
+  "description": "Ответы на частые вопросы о JOIM: заведёт ли при полностью севшем аккумуляторе, что будет, если перепутать клеммы, как устройство работает на морозе.",
+  "h1": "Вопросы и&nbsp;ответы",
+  "parents": [],
+  "nav": "faq",
+  "css": ["pages/faq.css"]
+}
+-->
+
+<!-- Вопросы и ответы: заголовок · слева три группы вопросов на серых строках, справа липкая карточка «Не нашли ответа?» с чертежом · три ссылки.
+     Вопросы и ответы из content-pack, раздел 6; про доставку, оплату и технику помимо автомобиля: факты из разделов 2 и 4. Цифры моделей из справочника. -->
+
+<!-- 1. Заголовок -->
+<div class="container">
+  <div class="page-head faq-head">
+    <h1 class="page-title">Вопросы и&nbsp;ответы</h1>
+    <p class="lead">Коротко о&nbsp;том, что спрашивают чаще всего: запуск с&nbsp;севшим аккумулятором, клеммы, мороз, выбор модели и&nbsp;заказ.</p>
+  </div>
+</div>
+
+<!-- 2. Вопросы по группам и карточка поддержки -->
+<section class="faq" aria-labelledby="faq-start-title">
+  <div class="container faq__in">
+
+    <div class="faq__groups">
+      <div class="faq-group">
+        <h2 class="faq-group__title" id="faq-start-title">Запуск двигателя</h2>
+        <div class="accordion">
+          <div class="accordion__item is-open">
+            <h3 class="accordion__head"><button class="accordion__btn" type="button">Заведёт, если аккумулятор сел полностью?</button></h3>
+            <div class="accordion__panel"><div class="accordion__body"><p>Да. Устройство не&nbsp;подзаряжает аккумулятор, а&nbsp;отдаёт ток прямо на&nbsp;стартер.</p></div></div>
+          </div>
+          <div class="accordion__item">
+            <h3 class="accordion__head"><button class="accordion__btn" type="button">Что будет, если перепутать клеммы?</button></h3>
+            <div class="accordion__panel"><div class="accordion__body"><p>Ничего. <span class="nowrap">MCU-чип</span> проверяет полярность до&nbsp;подачи тока и&nbsp;не&nbsp;запустит процесс, индикатор покажет ошибку.</p></div></div>
+          </div>
+          <div class="accordion__item">
+            <h3 class="accordion__head"><button class="accordion__btn" type="button">Работает на&nbsp;морозе?</button></h3>
+            <div class="accordion__panel"><div class="accordion__body"><p>Да. Встроенный датчик температуры следит за&nbsp;нагревом батареи и&nbsp;корректирует отдачу. На&nbsp;сильном морозе устройство лучше держать в&nbsp;салоне, а&nbsp;не&nbsp;в&nbsp;багажнике: любой литий на&nbsp;холоде отдаёт меньше.</p></div></div>
+          </div>
+          <div class="accordion__item">
+            <h3 class="accordion__head"><button class="accordion__btn" type="button">Подходит только для&nbsp;автомобиля?</button></h3>
+            <div class="accordion__panel"><div class="accordion__body"><p>Нет. Пусковые устройства JOIM подходят не&nbsp;только машине: мотоциклы, лодки и&nbsp;катера, гидроциклы, снегоходы, грузовые.</p></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-group">
+        <h2 class="faq-group__title">Выбор и&nbsp;уход</h2>
+        <div class="accordion">
+          <div class="accordion__item">
+            <h3 class="accordion__head"><button class="accordion__btn" type="button">Чем ES-19 отличается от&nbsp;ES-29?</button></h3>
+            <div class="accordion__panel"><div class="accordion__body"><p>Током и&nbsp;запасом. <span class="nowrap">ES-19</span>: {{{products.es19.specs.current}}}, {{{products.es19.specs.capacity}}}, {{{products.es19.specs.starts}}} запусков, {{{products.es19.specs.engines}}}. <span class="nowrap">ES-29</span>: {{{products.es29.specs.current}}}, {{{products.es29.specs.capacity}}}, {{{products.es29.specs.starts}}} запусков, {{{products.es29.specs.engines}}}, плюс фонарь на&nbsp;1&nbsp;000&nbsp;лм и&nbsp;адаптер с&nbsp;Lightning. Подробнее в&nbsp;<a href="/compare/es19-vs-es29/">сравнении <span class="nowrap">ES-19</span> и&nbsp;<span class="nowrap">ES-29</span></a>, а&nbsp;под&nbsp;свой мотор модель подскажет <a href="/podbor/">подбор по&nbsp;машине</a>.</p></div></div>
+          </div>
+          <div class="accordion__item">
+            <h3 class="accordion__head"><button class="accordion__btn" type="button">Пусковое и&nbsp;пуско-зарядное устройство: в&nbsp;чём разница?</button></h3>
+            <div class="accordion__panel"><div class="accordion__body"><p>Пуско-зарядное работает от&nbsp;розетки и&nbsp;стоит в&nbsp;гараже. Пусковое (бустер) работает от&nbsp;своей батареи и&nbsp;лежит в&nbsp;машине: заводит мотор там, где сел аккумулятор.</p></div></div>
+          </div>
+          <div class="accordion__item">
+            <h3 class="accordion__head"><button class="accordion__btn" type="button">Сколько держит заряд без&nbsp;использования?</button></h3>
+            <div class="accordion__panel"><div class="accordion__body"><p>Несколько месяцев в&nbsp;режиме ожидания. Подзаряжать стоит раз в&nbsp;3–4&nbsp;месяца, индикатор 0–100&nbsp;% покажет остаток.</p></div></div>
+          </div>
+          <div class="accordion__item">
+            <h3 class="accordion__head"><button class="accordion__btn" type="button">Пылесос справится с&nbsp;песком и&nbsp;шерстью?</button></h3>
+            <div class="accordion__panel"><div class="accordion__body"><p>Да. В&nbsp;циклонной схеме тяжёлая фракция уходит в&nbsp;контейнер, не&nbsp;забивая фильтр. Фильтры промываются под&nbsp;водой и&nbsp;ставятся обратно.</p></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-group">
+        <h2 class="faq-group__title">Заказ и&nbsp;гарантия</h2>
+        <div class="accordion">
+          <div class="accordion__item">
+            <h3 class="accordion__head"><button class="accordion__btn" type="button">Как быстро привезёте?</button></h3>
+            <div class="accordion__panel"><div class="accordion__body"><p>По&nbsp;Москве курьер привозит в&nbsp;день заказа, если оформить его до&nbsp;15:00, это стоит 490&nbsp;₽. По&nbsp;России отправляем СДЭК: 2–7&nbsp;дней, от&nbsp;390&nbsp;₽. От&nbsp;15&nbsp;000&nbsp;₽ курьер и&nbsp;СДЭК бесплатно. Все способы на&nbsp;странице <a href="/delivery/">«Доставка и&nbsp;оплата»</a>.</p></div></div>
+          </div>
+          <div class="accordion__item">
+            <h3 class="accordion__head"><button class="accordion__btn" type="button">Как оплатить заказ?</button></h3>
+            <div class="accordion__panel"><div class="accordion__body"><p>Картой на&nbsp;сайте, наличными или картой при&nbsp;получении в&nbsp;Москве, по&nbsp;счёту для&nbsp;юрлиц. При&nbsp;заказе от&nbsp;20&nbsp;000&nbsp;₽ доступна рассрочка на&nbsp;6&nbsp;месяцев без&nbsp;переплаты.</p></div></div>
+          </div>
+          <div class="accordion__item">
+            <h3 class="accordion__head"><button class="accordion__btn" type="button">Что с&nbsp;гарантией и&nbsp;возвратом?</button></h3>
+            <div class="accordion__panel"><div class="accordion__body"><p>12&nbsp;месяцев гарантии от&nbsp;производителя. Брак меняем без&nbsp;экспертизы. Подробные условия на&nbsp;странице <a href="/warranty/">«Гарантия и&nbsp;возврат»</a>.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="faq__side" aria-labelledby="faq-ask-title">
+      <div class="bp-card faq-ask">
+        <h2 class="bp-card__title" id="faq-ask-title">Не&nbsp;нашли ответа?</h2>
+        <p class="bp-card__text">Спросите поддержку JOIM: она своя, без&nbsp;колл-центра подрядчика. Отвечаем на&nbsp;русском, в&nbsp;том числе в&nbsp;Telegram.</p>
+        <ul class="faq-ask__actions">
+          <li><button class="btn btn--dark btn--block" type="button" data-dialog-open="ask" aria-haspopup="dialog">Задать вопрос</button></li>
+          <li><a class="btn btn--white btn--block" href="https://t.me/joim_support_bot" rel="noopener">Telegram-бот поддержки{{icon arrow-up-right icon--move}}</a></li>
+          <li><a class="btn btn--white btn--block" href="tel:+74951201140">+7&nbsp;495&nbsp;120-11-40</a></li>
+        </ul>
+        {{> bp-gear cls=bp-card__art}}
+      </div>
+    </aside>
+
+  </div>
+</section>
+
+<!-- 3. Куда дальше -->
+<section class="section section--line faq-more" aria-labelledby="faq-more-title">
+  <div class="container">
+    <h2 class="visually-hidden" id="faq-more-title">Инструкции, гарантия и&nbsp;доставка</h2>
+    <ul class="faq-more__grid">
+      <li>
+        <a class="link-card" href="/instructions/">
+          <span class="link-card__title">Инструкции</span>
+          <span class="link-card__text">Запуск двигателя за&nbsp;пять шагов</span>
+          <span class="round-btn link-card__arrow" aria-hidden="true">{{icon arrow-up-right}}</span>
+        </a>
+      </li>
+      <li>
+        <a class="link-card" href="/delivery/">
+          <span class="link-card__title">Доставка и&nbsp;оплата</span>
+          <span class="link-card__text">Москва в&nbsp;день заказа, по&nbsp;России <span class="nowrap">2–7&nbsp;дней</span></span>
+          <span class="round-btn link-card__arrow" aria-hidden="true">{{icon arrow-up-right}}</span>
+        </a>
+      </li>
+      <li>
+        <a class="link-card" href="/podbor/">
+          <span class="link-card__title">Подбор по&nbsp;машине</span>
+          <span class="link-card__text">Три вопроса про&nbsp;мотор и&nbsp;ответ с&nbsp;ценой</span>
+          <span class="round-btn link-card__arrow" aria-hidden="true">{{icon arrow-up-right}}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- Окно «Задать вопрос» -->
+<dialog class="modal" id="ask" aria-labelledby="ask-title">
+  <button class="round-btn modal__close" type="button" data-dialog-close aria-label="Закрыть окно">{{icon close}}</button>
+  <form class="form" data-form data-form-reset novalidate>
+    <div class="form__main">
+      <h2 class="modal__title" id="ask-title">Задать вопрос</h2>
+      <p class="modal__text">Отвечаем сами, без&nbsp;колл-центра подрядчика.</p>
+      <div class="field">
+        <label class="visually-hidden" for="ask-name">Ваше имя</label>
+        <input class="input" id="ask-name" type="text" name="name" placeholder="Ваше имя" autocomplete="name" required data-error="Напишите, как к вам обращаться">
+      </div>
+      <div class="field">
+        <label class="visually-hidden" for="ask-contact">Телефон или e-mail</label>
+        <input class="input" id="ask-contact" type="text" name="contact" placeholder="Телефон или e-mail" required data-contact data-error="Оставьте телефон или e-mail">
+      </div>
+      <div class="field">
+        <label class="visually-hidden" for="ask-msg">Ваш вопрос</label>
+        <textarea class="textarea" id="ask-msg" name="message" placeholder="Ваш вопрос" required data-error="Напишите вопрос"></textarea>
+      </div>
+      <label class="check">
+        <input class="check__input" type="checkbox" name="agree" required data-error="Нужно согласие на обработку данных">
+        <span class="check__box" aria-hidden="true">{{icon check}}</span>
+        <span class="check__text">Согласен с&nbsp;<a href="/privacy/">политикой конфиденциальности</a></span>
+      </label>
+      <button class="btn btn--accent btn--lg btn--block" type="submit">Отправить вопрос</button>
+    </div>
+    <div class="form__success" data-form-success hidden>
+      <h2 class="modal__title">Вопрос отправлен</h2>
+      <p class="modal__text">Ответим по&nbsp;указанному контакту.</p>
+      <button class="btn btn--dark btn--block" type="button" data-dialog-close>Хорошо</button>
+    </div>
+  </form>
+</dialog>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Заведёт, если аккумулятор сел полностью?", "acceptedAnswer": { "@type": "Answer", "text": "Да. Устройство не подзаряжает аккумулятор, а отдаёт ток прямо на стартер." } },
+    { "@type": "Question", "name": "Что будет, если перепутать клеммы?", "acceptedAnswer": { "@type": "Answer", "text": "Ничего. MCU-чип проверяет полярность до подачи тока и не запустит процесс, индикатор покажет ошибку." } },
+    { "@type": "Question", "name": "Работает на морозе?", "acceptedAnswer": { "@type": "Answer", "text": "Да. Встроенный датчик температуры следит за нагревом батареи и корректирует отдачу. На сильном морозе устройство лучше держать в салоне, а не в багажнике: любой литий на холоде отдаёт меньше." } },
+    { "@type": "Question", "name": "Подходит только для автомобиля?", "acceptedAnswer": { "@type": "Answer", "text": "Нет. Пусковые устройства JOIM подходят не только машине: мотоциклы, лодки и катера, гидроциклы, снегоходы, грузовые." } },
+    { "@type": "Question", "name": "Чем ES-19 отличается от ES-29?", "acceptedAnswer": { "@type": "Answer", "text": "Током и запасом. ES-19: {{{products.es19.specs.current}}}, {{{products.es19.specs.capacity}}}, {{{products.es19.specs.starts}}} запусков, {{{products.es19.specs.engines}}}. ES-29: {{{products.es29.specs.current}}}, {{{products.es29.specs.capacity}}}, {{{products.es29.specs.starts}}} запусков, {{{products.es29.specs.engines}}}, плюс фонарь на 1 000 лм и адаптер с Lightning." } },
+    { "@type": "Question", "name": "Пусковое и пуско-зарядное устройство: в чём разница?", "acceptedAnswer": { "@type": "Answer", "text": "Пуско-зарядное работает от розетки и стоит в гараже. Пусковое (бустер) работает от своей батареи и лежит в машине: заводит мотор там, где сел аккумулятор." } },
+    { "@type": "Question", "name": "Сколько держит заряд без использования?", "acceptedAnswer": { "@type": "Answer", "text": "Несколько месяцев в режиме ожидания. Подзаряжать стоит раз в 3–4 месяца, индикатор 0–100 % покажет остаток." } },
+    { "@type": "Question", "name": "Пылесос справится с песком и шерстью?", "acceptedAnswer": { "@type": "Answer", "text": "Да. В циклонной схеме тяжёлая фракция уходит в контейнер, не забивая фильтр. Фильтры промываются под водой и ставятся обратно." } },
+    { "@type": "Question", "name": "Как быстро привезёте?", "acceptedAnswer": { "@type": "Answer", "text": "По Москве курьер привозит в день заказа, если оформить его до 15:00, это стоит 490 ₽. По России отправляем СДЭК: 2–7 дней, от 390 ₽. От 15 000 ₽ курьер и СДЭК бесплатно." } },
+    { "@type": "Question", "name": "Как оплатить заказ?", "acceptedAnswer": { "@type": "Answer", "text": "Картой на сайте, наличными или картой при получении в Москве, по счёту для юрлиц. При заказе от 20 000 ₽ доступна рассрочка на 6 месяцев без переплаты." } },
+    { "@type": "Question", "name": "Что с гарантией и возвратом?", "acceptedAnswer": { "@type": "Answer", "text": "12 месяцев гарантии от производителя. Брак меняем без экспертизы. Подробные условия на странице «Гарантия и возврат»." } }
+  ]
+}
+</script>

@@ -1,0 +1,76 @@
+/* delivery: страница «Доставка и оплата» (src/pages/delivery.html).
+   Порядок как на странице: заголовок · липкая строка чипов-якорей · три большие карточки с чертежами · три ссылки.
+   Карточка: заголовок с линией на две колонки, слева текст, по центру условия строками, правая треть отдана чертежу.
+   Все классы страницы начинаются с dlv-. Общие компоненты (bp-card, chips, link-card) лежат в main.css. */
+
+/* ---------- Заголовок и чипы ---------- */
+.dlv-head { padding-bottom: 18px; }
+.dlv-head .lead { max-width: 60em; text-wrap: pretty; }
+.dlv-nav { position: sticky; top: var(--sticky-top); z-index: var(--z-sticky); padding: 10px 0; background: #fff; transition: box-shadow .2s; }
+.dlv-nav.is-stuck { box-shadow: 0 1px 0 var(--line); }
+.dlv-nav__list { flex-wrap: nowrap; }
+.dlv-nav__list > li { flex: none; }
+
+/* ---------- Карточки ---------- */
+.dlv { padding-top: 12px; }
+.dlv__list { display: grid; gap: var(--gap); }
+.dlv-card {
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr) minmax(0, 5fr); grid-template-rows: auto 1fr auto; column-gap: 56px;
+  min-height: 400px; padding: 30px 36px 36px; scroll-margin-top: 52px; /* сверх scroll-padding-top страницы: высота строки чипов */
+}
+.dlv-card__title { grid-column: 1 / 3; margin-bottom: 26px; padding-bottom: 20px; font-size: 22px; line-height: 1.2; }
+.dlv-card__text { grid-column: 1; display: grid; align-content: start; gap: .9em; font-size: 15px; line-height: 1.55; }
+.dlv-card__list { grid-column: 2; align-self: start; }
+.dlv-card__list.bp-card__list, .dlv-card__list .bp-card__list { gap: 9px; font-size: 15px; }
+.dlv-card__list li { padding-bottom: 9px; }
+.dlv-card__note { margin-top: 16px; font-size: 14px; line-height: 1.45; color: var(--text-2); }
+.dlv-card__foot { grid-column: 1 / 3; align-self: end; display: flex; margin-top: 32px; }
+/* чертёж: правая треть карточки, низ срезан краем */
+.dlv-card .bp-card__art { right: 44px; bottom: -92px; width: 380px; max-width: none; }
+.dlv-card--map .bp-card__art { right: 16px; bottom: 6px; width: 440px; }
+.dlv-card:last-child .bp-card__art { right: 30px; bottom: -84px; width: 390px; }
+
+/* ---------- Куда дальше ---------- */
+.dlv-more { padding-top: 80px; }
+.dlv-more__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
+.dlv-more__grid > li { display: flex; min-width: 0; }
+.dlv-more .link-card { flex: 1; }
+.dlv-more .link-card__arrow .icon { transition: transform .3s var(--ease); }
+.dlv-more .link-card:hover .link-card__arrow .icon { transform: translate(2px, -2px); }
+
+/* ---------- Адаптив ---------- */
+@media (max-width: 1280px) {
+  .dlv-card { column-gap: 40px; padding-inline: 28px; }
+  .dlv-card .bp-card__art { right: 16px; width: 340px; }
+  .dlv-card--map .bp-card__art { right: 8px; width: 400px; }
+  .dlv-card:last-child .bp-card__art { right: 8px; width: 350px; }
+}
+/* планшет: текст и условия в две колонки, чертёж уходит под них в правый нижний угол */
+@media (max-width: 1100px) {
+  .dlv-card { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 32px; min-height: 0; padding: 26px 24px 28px; }
+  .dlv-card__title { grid-column: 1 / -1; }
+  .dlv-card__foot { grid-column: 1; margin-top: 150px; }
+  .dlv-card .bp-card__art, .dlv-card:last-child .bp-card__art { right: 20px; bottom: -150px; width: 300px; }
+  .dlv-card--map .bp-card__art { right: 8px; bottom: -30px; width: 340px; }
+  .dlv-more { padding-top: 64px; }
+}
+@media (max-width: 767px) {
+  .dlv-head { padding-bottom: 10px; }
+  .dlv-nav { padding: 8px 0; }
+  .dlv-nav__list { margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
+  .dlv-nav__list::-webkit-scrollbar { display: none; }
+  .dlv { padding-top: 8px; }
+  .dlv-card { grid-template-columns: minmax(0, 1fr); padding: 22px 20px 22px; scroll-margin-top: 48px; }
+  .dlv-card__title { margin-bottom: 20px; padding-bottom: 16px; font-size: 20px; }
+  .dlv-card__text, .dlv-card__list, .dlv-card__foot { grid-column: 1; }
+  .dlv-card__text { font-size: 14.5px; }
+  .dlv-card__list { margin-top: 22px; }
+  .dlv-card__list.bp-card__list, .dlv-card__list .bp-card__list { font-size: 14.5px; }
+  .dlv-card__foot { margin-top: 168px; }
+  .dlv-card .bp-card__art, .dlv-card:last-child .bp-card__art { right: -24px; bottom: -110px; width: 250px; }
+  .dlv-card--map .bp-card__art { right: -130px; bottom: -34px; width: 420px; }
+  .dlv-more { padding-top: 52px; }
+  .dlv-more__grid { grid-template-columns: minmax(0, 1fr); }
+  .dlv-more .link-card { justify-content: center; min-height: 0; padding: 16px 76px 16px 18px; }
+  .dlv-more .link-card__arrow { left: auto; right: 18px; top: 50%; bottom: auto; margin-top: -22px; }
+}

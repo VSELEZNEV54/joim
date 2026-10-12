@@ -1,0 +1,459 @@
+/* product: страница товара (src/templates/product.html), один шаблон на восемь товаров.
+   Порядок как на странице: 1 верх (галерея, описание, панель покупки, полоса ключевых цифр) · 2 «Что умеет» (мозаика) ·
+   3 комплектация (светлая вставка) · 4 характеристики · 5 шаги · 6 доставка и гарантия · 7 отзывы · 8 вопросы ·
+   9 «Вам может быть интересно» · 10 сцена с формой · 11 липкая панель покупки на телефоне · 12 адаптив.
+   Страница тёмная; светлые здесь только карточки: комплектация, отзывы, форма. Общие компоненты лежат в main.css. */
+
+/* ---------- 1. Верх: галерея слева, панель покупки справа ----------
+   Левая колонка длиннее правой (под галереей стоит описание), поэтому панель покупки прилипает, пока её прокручивают. */
+.pdp { padding: 12px 0 clamp(64px, 6vw, 112px); }
+.pdp__in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, min(40%, 640px)); gap: clamp(32px, 4.2vw, 88px); align-items: start; }
+.pdp__main, .pdp__side { min-width: 0; }
+@media (min-width: 900px) and (min-height: 560px) {
+  /* --side-top ставит product.js, когда панель выше окна: тогда она прилипает нижним краем */
+  .pdp__side { position: sticky; top: var(--side-top, calc(var(--sticky-top) + 20px)); }
+}
+
+/* ---------- Галерея ----------
+   Окно без своего фона: рендер стоит прямо на странице. Высота окна считается от высоты экрана (галерея и панель покупки видны
+   без прокрутки), но не больше ширины галереи. Лента кадров со scroll-snap: свайп на телефоне, стрелки и миниатюры на компьютере.
+   Тёмный кадр вписан в окно целиком, его края растворяет маска: прямоугольника снимка не видно. По размерам кадра (--w, --h
+   из разметки) считается, вертикальный он или горизонтальный: у вертикального шире растворены бока, у горизонтального верх. */
+.pdp-gallery { --stage-h: clamp(440px, calc(100svh - var(--sticky-top) - 104px), 900px); display: grid; grid-template-columns: 68px minmax(0, 1fr); gap: 16px; align-items: stretch; container-type: inline-size; }
+.pdp-gallery__stage { position: relative; height: min(var(--stage-h), 112cqw); isolation: isolate; counter-reset: pdp-slide; }
+/* мягкое светлое пятно за товаром: чёрный корпус не теряется на тёмной странице */
+.pdp-gallery__stage::before { content: ""; position: absolute; inset: 4% 2% 2%; z-index: -1; background: radial-gradient(closest-side, rgba(255, 255, 255, .07), rgba(255, 255, 255, 0)); pointer-events: none; }
+.pdp-gallery__stage:has(.pdp-gallery__track:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
+.pdp-gallery__track { display: flex; width: 100%; height: 100%; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; -ms-overflow-style: none; }
+.pdp-gallery__track::-webkit-scrollbar { display: none; }
+.pdp-gallery__track:focus-visible { outline: none; }
+.pdp-gallery__slide { position: relative; flex: none; display: grid; place-items: center; width: 100%; height: 100%; overflow: hidden; scroll-snap-align: start; scroll-snap-stop: always; counter-increment: pdp-slide; }
+.pdp-gallery__zoom { position: absolute; inset: 0; display: grid; grid-template: 100% / 100%; place-items: center; cursor: zoom-in; }
+.pdp-gallery__zoom:focus-visible { outline-offset: -4px; }
+.pdp-gallery__img { width: auto; height: auto; max-width: 100%; max-height: 100%; }
+/* тёмный кадр серии: края растворены в страницу */
+.pdp-gallery__slide--dark .pdp-gallery__img {
+  --tall: clamp(0, calc((var(--h) - var(--w) * 1.12) * 1000), 1); /* 1: вертикальный кадр, 0: горизонтальный или почти квадратный */
+  --fx: calc(var(--tall) * 17% + (1 - var(--tall)) * 9%);
+  --ft: calc(var(--tall) * 9% + (1 - var(--tall)) * 17%);
+  --fb: calc(var(--tall) * 6% + (1 - var(--tall)) * 10%);
+  filter: brightness(var(--tone, 1));
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--fx), #000 calc(100% - var(--fx)), transparent 100%), linear-gradient(180deg, transparent 0, #000 var(--ft), #000 calc(100% - var(--fb)), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 var(--fx), #000 calc(100% - var(--fx)), transparent 100%), linear-gradient(180deg, transparent 0, #000 var(--ft), #000 calc(100% - var(--fb)), transparent 100%);
+  -webkit-mask-composite: source-in; mask-composite: intersect;
+}
+/* в левом нижнем углу кадра посторонний предмет (край кейса): угол растворён, как в плитке каталога (tile.mod = corner) */
+.pdp-gallery__slide--corner .pdp-gallery__img {
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--fx), #000 calc(100% - var(--fx)), transparent 100%), linear-gradient(180deg, transparent 0, #000 var(--ft), #000 calc(100% - var(--fb)), transparent 100%), radial-gradient(circle at 0 100%, transparent 0, transparent 22%, #000 40%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 var(--fx), #000 calc(100% - var(--fx)), transparent 100%), linear-gradient(180deg, transparent 0, #000 var(--ft), #000 calc(100% - var(--fb)), transparent 100%), radial-gradient(circle at 0 100%, transparent 0, transparent 22%, #000 40%);
+}
+/* настоящая фотография заполняет окно, края мягко уходят в страницу */
+.pdp-gallery__slide--dark .pdp-gallery__img[src*="/photo-"] {
+  width: 100%; height: 100%; max-width: none; max-height: none; object-fit: cover;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 91%, transparent 100%), linear-gradient(180deg, transparent 0, #000 9%, #000 91%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 91%, transparent 100%), linear-gradient(180deg, transparent 0, #000 9%, #000 91%, transparent 100%);
+}
+/* общий план сцены: общий компонент .stage ставит товар в центр окна */
+.pdp-gallery__scene { position: absolute; inset: 0; }
+/* вырезка на прозрачном фоне: стоит на странице, под ней светлое пятно и тень */
+.pdp-gallery__slide--light::before { content: ""; position: absolute; inset: 8% 6% 4%; background: radial-gradient(closest-side, rgba(255, 255, 255, .1), rgba(255, 255, 255, 0)); pointer-events: none; }
+.pdp-gallery__slide--light .pdp-gallery__zoom { inset: 7% 9%; }
+.pdp-gallery__slide--light .pdp-gallery__img { filter: drop-shadow(0 22px 26px rgba(0, 0, 0, .5)); }
+/* видео: кадр 16:9 по центру окна, постер с кнопкой, сам ролик грузится только после клика */
+.pdp-gallery__player { position: relative; width: 100%; max-height: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: var(--r-lg); overflow: hidden; }
+.pdp-gallery__play { position: absolute; inset: 0; display: grid; place-items: center; width: 100%; height: 100%; }
+.pdp-gallery__play:focus-visible { outline-offset: -4px; }
+.pdp-gallery__poster { width: 100%; height: 100%; object-fit: cover; }
+.pdp-gallery__play-icon { position: absolute; left: 50%; top: 50%; display: grid; place-items: center; width: 76px; height: 76px; margin: -38px 0 0 -38px; border-radius: 50%; background: var(--accent); color: var(--on-accent); transition: transform .25s var(--ease), background-color .2s; }
+.pdp-gallery__play-icon .icon { width: 26px; height: 26px; margin-left: 3px; }
+.pdp-gallery__play:hover .pdp-gallery__play-icon { transform: scale(1.06); background: var(--text); }
+.pdp-gallery__video { position: absolute; inset: 0; width: 100%; height: 100%; background: #000; object-fit: contain; }
+/* поверх окна: счётчик кадров слева внизу, стрелки справа внизу */
+.pdp-gallery__count { position: absolute; left: 4px; bottom: 6px; z-index: 2; display: inline-flex; align-items: center; gap: .5em; min-height: 44px; font: 400 12px/1 var(--font-mono); letter-spacing: .08em; color: var(--text-3); font-variant-numeric: tabular-nums; pointer-events: none; }
+.pdp-gallery__count b { font-weight: 500; color: var(--text); }
+.pdp-gallery__total::before { content: "/"; margin-right: .5em; }
+.pdp-gallery__total::after { content: counter(pdp-slide, decimal-leading-zero); }
+.pdp-gallery__arrows { position: absolute; right: 0; bottom: 6px; z-index: 2; display: flex; gap: 8px; }
+.pdp-gallery__arrow { background: rgba(255, 255, 255, .08); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.pdp-gallery__arrow:hover:not(:disabled) { background: var(--accent); color: var(--on-accent); }
+.pdp-gallery__arrow:disabled { opacity: .3; }
+.no-js .pdp-gallery__arrows, .no-js .pdp-gallery__count, .no-js .pdp-gallery__play { display: none; }
+.no-js .pdp-gallery__video[hidden] { display: block !important; }
+@media (hover: none) { .pdp-gallery__arrows { display: none; } }
+/* миниатюры: на компьютере столбец слева от окна (высота равна высоте окна, лишнее прокручивается), на узком экране строка под окном.
+   Пока дальше есть скрытые миниатюры, край ленты тает (класс has-more ставит product.js) */
+.pdp-gallery__thumbs { order: -1; display: flex; flex-direction: column; gap: 6px; height: 0; min-height: 100%; margin: -2px; padding: 2px; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; -ms-overflow-style: none; }
+.pdp-gallery__thumbs::-webkit-scrollbar { display: none; }
+.pdp-gallery__thumbs > li { flex: none; }
+.pdp-gallery__thumbs.has-more { -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - 56px), transparent); mask-image: linear-gradient(180deg, #000 calc(100% - 56px), transparent); }
+.pdp-thumb { position: relative; display: block; width: 64px; height: 64px; background: var(--surface); border-radius: var(--r); box-shadow: inset 0 0 0 1px var(--line); overflow: hidden; transition: box-shadow .2s, background-color .2s; }
+.pdp-thumb:focus-visible { outline-offset: -2px; }
+.pdp-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%; opacity: .62; transition: opacity .2s; }
+.pdp-thumb--light img { object-fit: contain; padding: 8px; }
+.pdp-thumb:hover img, .pdp-thumb.is-active img { opacity: 1; }
+.pdp-thumb::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 0 var(--accent); transition: box-shadow .2s; pointer-events: none; }
+.pdp-thumb.is-active::after { box-shadow: inset 0 0 0 2px var(--accent); }
+.pdp-thumb__play { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(10, 12, 11, .4); color: #fff; }
+.pdp-thumb__play .icon { width: 20px; height: 20px; }
+
+/* ---------- Описание под галереей: стоит на одной линии с окном галереи ---------- */
+.pdp-about { display: grid; gap: clamp(24px, 2.4vw, 36px); margin-top: clamp(36px, 3.6vw, 60px); padding-left: 84px; }
+.pdp-about__text { max-width: 62ch; font-size: 16px; line-height: 1.6; color: var(--text); text-wrap: pretty; }
+.pdp-about__usage { display: grid; gap: 12px; }
+.pdp-about__chips { gap: 6px; }
+.pdp-about__chips .chip { min-height: 34px; padding-block: 6px; line-height: 1.25; white-space: normal; color: var(--text-2); }
+
+/* ---------- Панель покупки ---------- */
+.pdp__kicker { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 14px; min-height: 26px; }
+.pdp__title { margin-top: 16px; font-size: clamp(30px, 2.5vw, 38px); font-weight: 600; line-height: 1.1; letter-spacing: -.02em; text-wrap: balance; }
+.pdp__keys { margin-top: 14px; font-size: 15.5px; line-height: 1.4; color: var(--text-2); }
+.pdp__rating { display: flex; align-items: center; gap: 8px; width: fit-content; min-height: 44px; margin: 6px 0 -8px; font-size: 14.5px; line-height: 1; }
+.pdp__rating b { font-weight: 600; font-variant-numeric: tabular-nums; }
+.pdp__rating-count { color: var(--text-2); text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 3px; transition: color .2s; }
+.pdp__rating:hover .pdp__rating-count { color: var(--text); }
+.pdp-buy { margin-top: 26px; padding: clamp(22px, 2vw, 32px); background: var(--surface); border-radius: var(--r); box-shadow: inset 0 0 0 1px var(--line); container-type: inline-size; }
+.pdp-buy__price-row { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; }
+.pdp-buy__price { font-size: clamp(40px, 3.3vw, 52px); font-weight: 700; line-height: 1; letter-spacing: -.035em; }
+.pdp-buy__price--soon { font-size: clamp(26px, 2.2vw, 32px); font-weight: 600; letter-spacing: -.02em; line-height: 1.15; }
+.pdp-buy__stock { display: inline-flex; align-items: center; gap: 7px; font-size: 14px; line-height: 1.2; color: var(--text-2); }
+.pdp-buy__stock .icon { width: 17px; height: 17px; color: var(--accent); stroke-width: 2; }
+.pdp-buy__row { display: flex; align-items: center; gap: 8px; margin-top: clamp(20px, 1.8vw, 26px); }
+.pdp-buy__qty { flex: none; height: 56px; }
+.pdp-buy__qty .qty__btn { width: 46px; }
+.pdp-buy__add { flex: 1 1 auto; min-width: 0; min-height: 56px; padding-inline: 20px; }
+.pdp-buy__fav { width: 56px; height: 56px; box-shadow: inset 0 0 0 1px var(--line); }
+.pdp-buy__fav .icon { transition: fill .2s; }
+.pdp-buy__fav.is-active { color: var(--accent); }
+.pdp-buy__fav.is-active .icon { fill: currentColor; }
+.pdp-buy__fav:active { transform: scale(.94); }
+/* узкая панель (телефон до 380 px, правая колонка на 900–1000 px): количество и сердце в одной строке,
+   основная кнопка под ними на всю ширину */
+@container (max-width: 323px) {
+  .pdp-buy__row--qty { flex-wrap: wrap; }
+  .pdp-buy__row--qty .pdp-buy__qty { margin-right: auto; }
+  .pdp-buy__row--qty .pdp-buy__add { order: 3; flex: 1 0 100%; }
+}
+.pdp-buy__mp { display: flex; gap: 8px; margin-top: 10px; }
+.pdp-buy__mp .btn { flex: 1 1 0; min-width: 0; }
+.pdp-buy__note { max-width: 34em; margin-top: 18px; font-size: 14px; line-height: 1.45; color: var(--text-2); }
+.pdp-buy__ship { display: grid; gap: 10px; margin-top: clamp(20px, 1.8vw, 26px); padding-top: clamp(18px, 1.6vw, 24px); border-top: 1px solid var(--line); font-size: 14px; line-height: 1.4; color: var(--text-2); }
+.pdp-buy__ship li { display: grid; grid-template-columns: 20px 1fr; gap: 12px; align-items: start; }
+.pdp-buy__ship .icon { width: 19px; height: 19px; margin-top: 1px; color: var(--text-3); }
+.pdp-buy__ship b { font-weight: 500; color: var(--text); }
+.pdp-buy__more { margin: 6px 0 -10px; font-size: 14px; }
+.pdp__links { display: flex; flex-wrap: wrap; gap: 0 28px; margin-top: 10px; padding-inline: 2px; }
+.pdp__link { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font-size: 14.5px; color: var(--text-2); transition: color .2s; }
+.pdp__link:hover { color: var(--text); }
+.pdp__link .icon { width: 16px; height: 16px; transition: transform .25s var(--ease); }
+.pdp__link:hover .icon { transform: translate(2px, -2px); }
+
+/* ---------- Полоса ключевых цифр: общий компонент .stats ---------- */
+.pdp__stats { margin-top: clamp(56px, 5.4vw, 96px); }
+.pdp-stats .stat__label { max-width: 30ch; }
+
+/* ---------- 2. «Что умеет»: мозаика ----------
+   Широкая плитка во всю ширину и три плитки в ряд; плитки делят линии общего компонента .mosaic. Текст слева сверху, картинка:
+   --photo  фотография во всю плитку с затемнением под текст;
+   --scene  кадр серии «товар справа, слева пустая сцена»: левый край растворён под текст;
+   --cut    вырезка на прозрачном фоне стоит внизу плитки на светлом пятне;
+   --shot   вертикальный кадр серии: стоит справа внизу, края растворены. */
+.pdp-feats__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.pdp-feats__cell--wide { grid-column: 1 / -1; }
+.pdp-feat { position: relative; display: flex; flex-direction: column; height: 100%; min-height: clamp(460px, 36vw, 640px); overflow: hidden; isolation: isolate; }
+.pdp-feat__body { position: relative; z-index: 1; padding: clamp(22px, 2.1vw, 36px) clamp(22px, 2.1vw, 36px) 0; }
+.pdp-feat__title { max-width: 17em; font-size: clamp(20px, 1.6vw, 24px); font-weight: 600; line-height: 1.18; letter-spacing: -.02em; text-wrap: balance; }
+.pdp-feat__title::first-letter { text-transform: uppercase; }
+.pdp-feat__text { max-width: 40em; margin-top: 12px; font-size: 15px; line-height: 1.5; color: var(--text-2); text-wrap: pretty; }
+/* широкая плитка */
+.pdp-feats__cell--wide .pdp-feat { justify-content: flex-end; min-height: clamp(420px, 37vw, 660px); }
+.pdp-feats__cell--wide .pdp-feat__body { max-width: min(46%, 640px); padding-bottom: clamp(26px, 2.6vw, 48px); }
+.pdp-feats__cell--wide .pdp-feat__title { font-size: clamp(26px, 2.3vw, 36px); line-height: 1.1; }
+.pdp-feats__cell--wide .pdp-feat__text { margin-top: 16px; font-size: 16px; color: var(--text); }
+.pdp-feat--photo .pdp-feat__img, .pdp-feat--scene .pdp-feat__img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+.pdp-feat--photo .pdp-feat__img { object-position: 50% 46%; filter: brightness(1.12) contrast(1.04); }
+.pdp-feat--photo::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(10, 12, 11, .92) 0, rgba(10, 12, 11, .62) 30%, rgba(10, 12, 11, 0) 60%), linear-gradient(0deg, rgba(10, 12, 11, .7) 0, rgba(10, 12, 11, 0) 46%); pointer-events: none; }
+.pdp-feat--scene .pdp-feat__img {
+  object-position: 100% 50%;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, transparent 22%, #000 56%, #000 94%, transparent 100%), linear-gradient(180deg, transparent 0, #000 8%, #000 90%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, transparent 22%, #000 56%, #000 94%, transparent 100%), linear-gradient(180deg, transparent 0, #000 8%, #000 90%, transparent 100%);
+  -webkit-mask-composite: source-in; mask-composite: intersect;
+}
+/* вырезка: внизу плитки по центру, под ней светлое пятно */
+.pdp-feat--cut::before { content: ""; position: absolute; left: 6%; right: 6%; bottom: -4%; height: 64%; z-index: -1; background: radial-gradient(closest-side, rgba(255, 255, 255, .09), rgba(255, 255, 255, 0)); pointer-events: none; }
+.pdp-feat--cut .pdp-feat__img { align-self: center; width: auto; max-width: 84%; height: clamp(210px, 18vw, 330px); margin: auto 0 clamp(20px, 2vw, 36px); padding-top: 20px; object-fit: contain; object-position: 50% 100%; filter: drop-shadow(0 20px 24px rgba(0, 0, 0, .5)); }
+/* вертикальный кадр серии: нижняя часть кадра занимает низ плитки, края растворены */
+.pdp-feat--shot .pdp-feat__img {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: -1; width: 100%; height: 64%; object-fit: cover; object-position: 50% 100%;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 10%, #000 90%, transparent 100%), linear-gradient(180deg, transparent 0, #000 30%, #000 94%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 10%, #000 90%, transparent 100%), linear-gradient(180deg, transparent 0, #000 30%, #000 94%, transparent 100%);
+  -webkit-mask-composite: source-in; mask-composite: intersect;
+}
+
+/* ---------- 3. Комплектация: светлая вставка ----------
+   Карточка внутри контейнера: слева крупно комплект на прозрачном фоне, справа список. Токены «для светлого» подменяет класс .paper
+   на текстовой половине; левая половина красится тем же --paper. У моделей, где комплект снят на тёмной сцене
+   (pdp-kit__card--dark), кадр стоит прямо на странице, светлой остаётся только половина со списком. */
+.pdp-kit__card { display: grid; grid-template-columns: minmax(0, 1.22fr) minmax(0, 1fr); min-height: clamp(440px, 37vw, 660px); background: var(--paper); border-radius: var(--r); }
+.pdp-kit__media { display: grid; place-items: center; min-width: 0; padding: clamp(24px, 3.4vw, 64px); }
+.pdp-kit__img { width: 100%; height: auto; max-height: clamp(340px, 33vw, 620px); object-fit: contain; filter: drop-shadow(0 26px 26px rgba(20, 23, 22, .3)); }
+.pdp-kit__img--tall { width: auto; max-width: 100%; }
+.pdp-kit__body { display: flex; flex-direction: column; justify-content: center; min-width: 0; container-type: inline-size; padding: clamp(32px, 4vw, 80px) clamp(24px, 4vw, 80px) clamp(32px, 4vw, 80px) clamp(24px, 2vw, 40px); border-radius: var(--r); }
+.pdp-kit__list { display: grid; margin-top: clamp(22px, 2.2vw, 36px); border-top: 1px solid var(--line-strong); counter-reset: kit; }
+.pdp-kit__list li { display: grid; grid-template-columns: 44px minmax(0, 1fr); align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: clamp(15.5px, 1.2vw, 17px); line-height: 1.35; counter-increment: kit; }
+.pdp-kit__list li::before { content: counter(kit, decimal-leading-zero); font: 400 12px/1 var(--font-mono); letter-spacing: .08em; color: var(--text-3); }
+/* длинный список (от шести пунктов) встаёт в две колонки, если текстовой половине хватает ширины */
+@container (min-width: 600px) {
+  .pdp-kit__list:has(li:nth-child(6)) { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(20px, 2.4vw, 40px); }
+}
+.pdp-kit__note { max-width: 34em; margin-top: 20px; font-size: 14.5px; line-height: 1.45; color: var(--text-2); }
+/* комплект на тёмной сцене */
+.pdp-kit__card--dark { background: none; }
+.pdp-kit__card--dark .pdp-kit__media { padding: 0 clamp(16px, 2.4vw, 48px) 0 0; }
+.pdp-kit__card--dark .pdp-kit__body { padding-left: clamp(24px, 4vw, 80px); }
+.pdp-kit__img--dark {
+  max-height: clamp(360px, 36vw, 640px); filter: none; mix-blend-mode: lighten;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 10%, #000 90%, transparent 100%), linear-gradient(180deg, transparent 0, #000 14%, #000 90%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 10%, #000 90%, transparent 100%), linear-gradient(180deg, transparent 0, #000 14%, #000 90%, transparent 100%);
+  -webkit-mask-composite: source-in; mask-composite: intersect;
+}
+
+/* ---------- 4. Характеристики: группы на тёмном, подписи полей Geist Mono (общий .specs) ---------- */
+.pdp-specs__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(36px, 3.6vw, 60px) clamp(32px, 5vw, 104px); }
+.pdp-specs__grid--flat { grid-template-columns: minmax(0, 1fr); }
+.pdp-specs__group { min-width: 0; padding-top: 20px; border-top: 1px solid var(--line-strong); }
+.pdp-specs__name { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; font-size: 19px; font-weight: 600; line-height: 1.2; letter-spacing: -.02em; }
+.pdp-specs__name::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: 1px; background: var(--accent); }
+.pdp-specs .specs { font-size: 15.5px; }
+.pdp-specs .specs__row { grid-template-columns: minmax(132px, 40%) minmax(0, 1fr); gap: 20px; padding: 13px 0; }
+.pdp-specs .specs dd::first-letter { text-transform: uppercase; }
+.pdp-specs__grid--flat .pdp-specs__group { padding-top: 6px; }
+.pdp-specs__grid--flat .specs__row { grid-template-columns: minmax(132px, 26%) minmax(0, 1fr); }
+/* на широком окне четыре группы встают в один ряд (две группы остаются по половине ширины) */
+@media (min-width: 1800px) {
+  .pdp-specs__grid:has(> :nth-child(3)) { grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: clamp(32px, 3vw, 64px); }
+  .pdp-specs__grid:has(> :nth-child(3)) .specs__row { grid-template-columns: minmax(118px, 40%) minmax(0, 1fr); gap: 14px; }
+}
+
+/* ---------- 5. Как пользоваться: шаги в ряд с крупными номерами ---------- */
+.pdp-howto__head { align-items: flex-end; }
+.pdp-howto__lead { max-width: 46ch; font-size: 15px; line-height: 1.5; color: var(--text-2); text-wrap: pretty; }
+.pdp-steps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 1px solid var(--line-strong); }
+.pdp-steps--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.pdp-step { min-width: 0; padding: clamp(22px, 2.2vw, 32px) clamp(18px, 2vw, 36px) clamp(8px, 1vw, 16px) 0; }
+.pdp-step + .pdp-step { padding-left: clamp(18px, 2vw, 36px); border-left: 1px solid var(--line); }
+.pdp-step__num { display: block; font: 700 clamp(44px, 4.2vw, 68px)/1 var(--font); letter-spacing: -.04em; font-variant-numeric: tabular-nums; color: var(--text); }
+.pdp-step__label { display: block; }
+.pdp-step__text { max-width: 30em; margin-top: clamp(16px, 1.6vw, 24px); font-size: 15.5px; line-height: 1.45; text-wrap: pretty; }
+.pdp-steps--2 .pdp-step__text { max-width: 26em; margin-top: 14px; font-size: clamp(18px, 1.5vw, 22px); font-weight: 500; line-height: 1.3; letter-spacing: -.015em; }
+.pdp-howto__foot { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px 32px; margin-top: clamp(24px, 2.4vw, 40px); }
+.pdp-note { display: grid; grid-template-columns: 20px 1fr; gap: 10px; align-items: start; max-width: 56ch; font-size: 14.5px; line-height: 1.45; color: var(--text-2); }
+.pdp-note .icon { margin-top: 1px; color: var(--accent); }
+
+/* ---------- 6. Доставка и гарантия: пять условий в ряд ---------- */
+.pdp-ship__more { flex-wrap: wrap; }
+.pdp-ship__list { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 1px solid var(--line-strong); }
+.pdp-ship__item { min-width: 0; padding: clamp(20px, 2vw, 28px) clamp(16px, 1.8vw, 32px) 0 0; font-size: 15px; line-height: 1.45; }
+.pdp-ship__item + .pdp-ship__item { padding-left: clamp(16px, 1.8vw, 32px); border-left: 1px solid var(--line); }
+.pdp-ship__item .icon { width: 22px; height: 22px; color: var(--accent); }
+.pdp-ship__item .label { margin: 16px 0 8px; font-weight: 400; }
+.pdp-ship__item p { max-width: 30em; text-wrap: pretty; }
+
+/* ---------- 7. Отзывы: сводка рейтинга слева, лента светлых карточек справа уходит за правый край окна ---------- */
+.pdp-reviews { overflow: hidden; }
+.pdp-reviews__in { display: grid; grid-template-columns: minmax(260px, 24%) minmax(0, 1fr); gap: clamp(24px, 3vw, 64px); padding-left: var(--gutter); }
+.pdp-reviews__head { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
+.pdp-reviews__score { display: flex; align-items: flex-end; gap: 16px; margin-top: clamp(24px, 2.6vw, 44px); }
+.pdp-reviews__num { font: 700 clamp(64px, 6.2vw, 104px)/.86 var(--font); letter-spacing: -.045em; font-variant-numeric: tabular-nums; }
+.pdp-reviews__meta { display: grid; gap: 8px; padding-bottom: 4px; font-size: 14.5px; line-height: 1.2; color: var(--text-2); }
+.pdp-reviews__nav { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 28px; }
+.pdp-reviews__nav .btn { margin-right: 8px; }
+.pdp-reviews__nav.is-static .round-btn { display: none; }
+.pdp-reviews__rail { min-width: 0; }
+.pdp-reviews__track { --slider-gap: 12px; padding-right: var(--gutter); scroll-padding-left: 0; }
+/* три карточки (ES-29, PVC-1) делят ширину ленты, длинная лента (ES-19) прокручивается */
+.pdp-reviews__track > li { flex: 1 0 clamp(270px, 21vw, 420px); max-width: 560px; }
+.pdp-reviews .review-card { min-height: clamp(300px, 24vw, 380px); padding: 26px 24px 24px; }
+.pdp-reviews .review-card__name { margin-top: 0; }
+
+/* ---------- 8. Вопросы: заголовок и ссылки слева, аккордеон справа ---------- */
+.pdp-faq__in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); grid-template-areas: "title list" "more list"; grid-template-rows: auto 1fr; gap: 32px clamp(32px, 5vw, 96px); align-items: start; }
+.pdp-faq__title { grid-area: title; max-width: 11em; }
+.pdp-faq__list { grid-area: list; max-width: 1100px; }
+.pdp-faq__more { grid-area: more; display: grid; justify-items: start; gap: 16px; max-width: 30em; font-size: 15px; line-height: 1.5; color: var(--text-2); }
+.pdp-faq__links { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ---------- 9. Вам может быть интересно ---------- */
+.pdp-related__grid > li:nth-child(n+5) { display: none; } /* всегда четыре карточки: см. комментарий в шаблоне */
+/* на 821–1100 px общий список встаёт в три колонки и четвёртая карточка остаётся одна в ряду: здесь держим четыре */
+@media (min-width: 821px) and (max-width: 1100px) {
+  .pdp-related__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+/* ---------- 10. Сцена с товаром и светлая карточка-форма с уголками ----------
+   Товар стоит справа через общий компонент .stage (кадр серии, края растворены), слева на той же тёмной странице карточка формы. */
+.pdp-ask { position: relative; padding: var(--section) 0; border-top: 1px solid var(--line); overflow: hidden; isolation: isolate; --gridline-y: 64%; }
+.pdp-ask__in { position: relative; }
+.pdp-ask__stage { position: absolute; z-index: -1; right: 0; top: -24px; bottom: -40px; width: min(60%, 1180px); pointer-events: none; }
+.pdp-ask__card { width: min(100%, 600px); }
+.pdp-ask__lead { max-width: 27em; margin-top: 6px; font-size: 15px; line-height: 1.45; }
+.pdp-ask__lead--gap { margin-bottom: 14px; }
+.pdp-ask__tel { margin-bottom: 14px; font-size: 14.5px; color: var(--text-2); }
+.pdp-ask__tel a { color: var(--text); font-weight: 500; white-space: nowrap; }
+.pdp-ask .form__success { justify-items: start; }
+
+/* ---------- 11. Липкая панель покупки (телефон и планшет в столбик) ---------- */
+.pdp-bar { display: none; }
+
+/* ---------- 12. Адаптив ---------- */
+/* очень широкое окно: правая колонка шире, плитки мозаики не выше экрана */
+@media (min-width: 2000px) {
+  .pdp__in { grid-template-columns: minmax(0, 1fr) minmax(0, 720px); }
+  .pdp-feat { min-height: 640px; }
+  .pdp-related .tile { aspect-ratio: 1 / 1; } /* четыре плитки на 2560 px не выше экрана */
+}
+@media (max-width: 1280px) {
+  .pdp-about { padding-left: 0; }
+}
+/* планшет в альбоме и узкий ноутбук: миниатюры строкой под окном, мозаика и ряды в столбик */
+@media (max-width: 1099px) {
+  .pdp-gallery { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .pdp-gallery__stage { height: min(var(--stage-h), 104cqw); }
+  .pdp-gallery__thumbs { order: 0; flex-direction: row; height: auto; min-height: 0; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x proximity; }
+  .pdp-gallery__thumbs > li { scroll-snap-align: start; }
+  .pdp-gallery__thumbs.has-more { -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 56px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 56px), transparent); }
+  .pdp-thumb { width: 60px; height: 60px; }
+  /* мозаика: плитки одна под другой, у плиток с вырезкой текст слева, картинка справа */
+  .pdp-feats__grid { grid-template-columns: minmax(0, 1fr); }
+  .pdp-feat { min-height: 340px; }
+  .pdp-feats__cell--wide .pdp-feat { min-height: 440px; }
+  .pdp-feats__cell--wide .pdp-feat__body { max-width: min(60%, 560px); }
+  .pdp-feat--cut { flex-direction: row; align-items: center; }
+  .pdp-feat--cut .pdp-feat__body { flex: 1 1 52%; padding-bottom: clamp(22px, 2.1vw, 36px); align-self: flex-start; }
+  .pdp-feat--cut .pdp-feat__img { flex: 0 1 44%; min-width: 0; max-width: 44%; height: 260px; margin: 0 2% 0 0; padding: 0; object-position: 50% 50%; }
+  .pdp-feat--cut::before { left: 50%; right: 0; bottom: 6%; height: 88%; }
+  .pdp-feat--shot .pdp-feat__body { max-width: 50%; }
+  .pdp-feat--shot .pdp-feat__img { left: auto; width: 52%; height: 100%; object-position: 50% 78%;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 26%, #000 92%, transparent 100%), linear-gradient(180deg, transparent 0, #000 12%, #000 90%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 26%, #000 92%, transparent 100%), linear-gradient(180deg, transparent 0, #000 12%, #000 90%, transparent 100%); }
+  /* шаги и условия доставки: строки */
+  .pdp-steps { grid-template-columns: minmax(0, 1fr); }
+  .pdp-step { display: grid; grid-template-columns: clamp(72px, 12vw, 120px) minmax(0, 1fr); align-items: center; gap: 0 16px; padding: 18px 0; }
+  .pdp-step + .pdp-step { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
+  .pdp-step__num { font-size: clamp(40px, 6vw, 56px); }
+  .pdp-step__text { margin-top: 0; max-width: 44em; }
+  .pdp-steps--2 .pdp-step { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .pdp-steps--2 .pdp-step__text { margin-top: 10px; }
+  .pdp-ship__list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(24px, 4vw, 48px); border-top: 0; }
+  .pdp-ship__item, .pdp-ship__item + .pdp-ship__item { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 4px 16px; padding: 18px 0; border-left: 0; border-top: 1px solid var(--line); }
+  .pdp-ship__item .icon { grid-row: span 2; margin-top: 1px; }
+  .pdp-ship__item .label { margin: 2px 0 0; }
+  .pdp-ship__item p { grid-column: 2; }
+  /* отзывы: сводка строкой над лентой */
+  .pdp-reviews__in { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .pdp-reviews__head { flex-direction: row; align-items: flex-end; flex-wrap: wrap; gap: 20px 40px; padding-right: var(--gutter); }
+  .pdp-reviews__head .section-title { width: 100%; }
+  .pdp-reviews__score { margin-top: 0; }
+  .pdp-reviews__num { font-size: 64px; }
+  .pdp-reviews__nav { margin: 0 0 0 auto; padding-top: 0; }
+}
+/* планшет в столбик и телефон: одна колонка — галерея, заголовок и покупка, описание */
+@media (max-width: 899px) {
+  .pdp { padding-top: 6px; }
+  .pdp__in { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .pdp__main { display: contents; }
+  .pdp-gallery { order: 1; }
+  .pdp__side { order: 2; margin-top: 28px; }
+  .pdp-about { order: 3; margin-top: 36px; }
+  .pdp-gallery__stage { height: min(var(--stage-h), 100cqw, 72svh); }
+  .pdp-buy__price { font-size: 44px; }
+  .pdp__stats { margin-top: 48px; }
+  .pdp-kit__card { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  .pdp-kit__media { padding: 32px 24px 8px; }
+  .pdp-kit__img { max-height: 420px; }
+  .pdp-kit__body, .pdp-kit__card--dark .pdp-kit__body { padding: 28px 32px 36px; }
+  .pdp-kit__card--dark .pdp-kit__media { padding: 0 0 12px; }
+  .pdp-specs__grid { grid-template-columns: minmax(0, 1fr); }
+  .pdp-faq__in { grid-template-columns: minmax(0, 1fr); grid-template-areas: "title" "list" "more"; gap: 24px; }
+  .pdp-faq__title { max-width: none; }
+  .pdp-faq__more { margin-top: 8px; }
+  /* форма: сцена с товаром сверху, карточка под ней и слегка наезжает на её низ */
+  .pdp-ask { padding: 0 0 56px; --gridline-y: 180px; }
+  .pdp-ask__stage { position: relative; inset: auto; width: auto; height: 340px; margin-inline: calc(-1 * var(--gutter)); }
+  .pdp-ask__card { width: 100%; margin-top: -56px; }
+  /* панель покупки */
+  .pdp-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: var(--z-sticky); display: block; padding: 10px 0 max(10px, env(safe-area-inset-bottom)); background: var(--surface); border-top: 1px solid var(--line-strong); box-shadow: var(--shadow-bar); transform: translateY(105%); visibility: hidden; transition: transform .3s var(--ease), visibility 0s .3s; }
+  .pdp-bar.is-visible { transform: none; visibility: visible; transition: transform .3s var(--ease), visibility 0s; }
+  .pdp-bar__in { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .pdp-bar__info { display: grid; gap: 4px; min-width: 0; }
+  .pdp-bar__name { overflow: hidden; font-size: 12.5px; font-weight: 500; line-height: 1.2; color: var(--text-2); text-overflow: ellipsis; white-space: nowrap; }
+  .pdp-bar__price { font-size: 19px; line-height: 1.1; }
+  .pdp-bar__price--soon { font-weight: 500; font-size: 14px; white-space: nowrap; }
+  .pdp-bar__btn { flex: none; min-width: 156px; min-height: 48px; padding-inline: 20px; }
+  .pdp-bar__btn.btn--outline { min-width: 0; padding-inline: 16px; }
+}
+@media (max-width: 767px) {
+  /* крошки в одну строку: название товара стоит ниже заголовком, последняя крошка не нужна */
+  .page-product .crumbs__item[aria-current] { display: none; }
+  .pdp-gallery__thumbs { margin: 0 calc(-1 * var(--gutter)); padding: 2px var(--gutter); scroll-padding-inline: var(--gutter); }
+  .pdp-thumb { width: 56px; height: 56px; }
+  .pdp-gallery__count { left: 0; bottom: 0; }
+  .pdp__side { margin-top: 22px; }
+  .pdp__title { margin-top: 14px; font-size: 30px; }
+  .pdp__keys { font-size: 15px; }
+  .pdp-buy { padding: 20px 16px; }
+  .pdp-buy__price { font-size: 40px; }
+  .pdp-buy__price--soon { font-size: 26px; }
+  .pdp-buy__mp .btn { min-height: 42px; }
+  .pdp__links { gap: 0 20px; }
+  /* мозаика: текст сверху, картинка под ним */
+  .pdp-feat, .pdp-feats__cell--wide .pdp-feat { min-height: 0; }
+  .pdp-feat__body, .pdp-feats__cell--wide .pdp-feat__body { max-width: none; padding: 20px 16px 0; }
+  .pdp-feat__title { font-size: 20px; }
+  .pdp-feats__cell--wide .pdp-feat { justify-content: flex-start; }
+  .pdp-feats__cell--wide .pdp-feat__title { font-size: 24px; }
+  .pdp-feats__cell--wide .pdp-feat__text { margin-top: 12px; font-size: 15px; color: var(--text-2); }
+  .pdp-feat--photo, .pdp-feat--scene { flex-direction: column-reverse; justify-content: flex-end; }
+  .pdp-feat--photo .pdp-feat__body, .pdp-feat--scene .pdp-feat__body { padding: 18px 16px 22px; }
+  .pdp-feat--photo .pdp-feat__img, .pdp-feat--scene .pdp-feat__img { position: relative; inset: auto; z-index: 0; height: auto; aspect-ratio: 4 / 3; }
+  .pdp-feat--photo::after { display: none; }
+  .pdp-feat--scene .pdp-feat__img {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 30%, #000 94%, transparent 100%), linear-gradient(180deg, transparent 0, #000 8%, #000 90%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 30%, #000 94%, transparent 100%), linear-gradient(180deg, transparent 0, #000 8%, #000 90%, transparent 100%);
+  }
+  .pdp-feat--cut { flex-direction: column; align-items: stretch; }
+  .pdp-feat--cut .pdp-feat__body { flex: none; padding-bottom: 0; }
+  .pdp-feat--cut .pdp-feat__img { flex: none; align-self: center; max-width: 86%; height: 220px; margin: 16px 0 24px; object-position: 50% 100%; }
+  .pdp-feat--cut::before { left: 6%; right: 6%; bottom: 0; height: 60%; }
+  .pdp-feat--shot { min-height: 0; }
+  .pdp-feat--shot .pdp-feat__body { max-width: none; }
+  .pdp-feat--shot .pdp-feat__img { position: relative; left: auto; z-index: 0; width: 100%; height: auto; aspect-ratio: 4 / 3; margin-top: 4px; object-position: 50% 86%;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%), linear-gradient(180deg, transparent 0, #000 22%, #000 94%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%), linear-gradient(180deg, transparent 0, #000 22%, #000 94%, transparent 100%); }
+  .pdp-kit__media { padding: 24px 12px 0; }
+  .pdp-kit__body, .pdp-kit__card--dark .pdp-kit__body { padding: 24px 20px 28px; }
+  .pdp-kit__list li { grid-template-columns: 38px minmax(0, 1fr); padding: 12px 0; }
+  .pdp-specs__name { font-size: 18px; }
+  .pdp-specs .specs { font-size: 15px; }
+  .pdp-specs .specs__row, .pdp-specs__grid--flat .specs__row { grid-template-columns: minmax(0, 42%) minmax(0, 1fr); gap: 12px; padding: 12px 0; }
+  .pdp-howto__foot { margin-top: 20px; }
+  .pdp-ship__list { grid-template-columns: minmax(0, 1fr); }
+  .pdp-reviews__in { gap: 22px; padding-left: var(--gutter); }
+  .pdp-reviews__head { gap: 16px 24px; }
+  .pdp-reviews__num { font-size: 56px; }
+  .pdp-reviews__nav { width: 100%; margin-left: 0; }
+  .pdp-reviews__nav .btn { margin-right: auto; }
+  .pdp-reviews__track > li { flex: none; width: min(320px, calc(100vw - 2 * var(--gutter) - 28px)); max-width: none; }
+  .pdp-reviews .review-card { min-height: 264px; padding: 22px 20px 20px; }
+  .pdp-ask__stage { height: 280px; }
+  .pdp-ask__card { margin-top: -40px; }
+}
+@media (max-width: 389px) {
+  .pdp-bar__btn-more { display: none; } /* в узкой панели остаётся слово «Сообщить» */
+  .pdp-bar__btn { min-width: 132px; }
+  .pdp-buy__price { font-size: 36px; }
+  .pdp__title { font-size: 27px; }
+}
+@media (max-width: 359px) {
+  .pdp-buy { padding-inline: 12px; }
+  .pdp-buy__mp .btn { padding-inline: 8px; }
+}

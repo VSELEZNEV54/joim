@@ -1,0 +1,135 @@
+<!--page
+{
+  "path": "/reviews/",
+  "title": "Отзывы о пусковых устройствах и автопылесосе JOIM",
+  "description": "Отзывы покупателей о пусковых устройствах JOIM Easy Start ES-19 и ES-29 и автопылесосе PVC-1. Средняя оценка 5,0 по 25 отзывам, тексты публикуем дословно.",
+  "h1": "Отзывы покупателей",
+  "crumb": "Отзывы",
+  "parents": [],
+  "nav": "reviews",
+  "css": ["pages/reviews.css"],
+  "js": ["pages/reviews.js"],
+  "preloadImage": "/assets/img/deck/es19-stage.jpg"
+}
+-->
+
+<!-- Отзывы: заголовок · сводка (светлая карточка с оценкой и три плитки моделей с рендерами) · чипы-фильтр по модели · стена светлых
+     карточек отзывов · «JOIM в деле» с кадрами из обзоров. Тексты отзывов дословно: reviewsAll из справочника товаров и site.reviewsExtra из routes.json.
+     Оценки и число отзывов у моделей берутся из справочника. -->
+
+<!-- 1. Заголовок -->
+<div class="container">
+  <div class="page-head rev-head">
+    <h1 class="page-title">Отзывы покупателей</h1>
+    <p class="lead">Отзывы тех, кто уже возит JOIM в&nbsp;машине. Публикуем как есть, с&nbsp;авторской орфографией и&nbsp;пунктуацией.</p>
+  </div>
+</div>
+
+<!-- 2. Сводка: общая оценка и три модели, у которых есть отзывы -->
+<section class="rev-top" aria-labelledby="rev-top-title">
+  <div class="container">
+    <h2 class="visually-hidden" id="rev-top-title">Оценки по&nbsp;моделям</h2>
+    <ul class="rev-top__grid">
+      <li class="bp-card rev-score">
+        <p class="bp-card__title rev-score__title">Средняя оценка</p>
+        <p class="rev-score__value"><b>5,0</b>{{> stars}}</p>
+        <p class="bp-card__text">По&nbsp;25&nbsp;отзывам о&nbsp;трёх моделях: <span class="nowrap">ES-19</span>, <span class="nowrap">ES-29</span> и&nbsp;<span class="nowrap">PVC-1</span>.</p>
+        <!-- чертёж звезды: двойной контур со штриховкой, описанная и вписанная окружности, пятиугольник, оси и засечки -->
+        <svg class="bp bp-card__art rev-score__art" viewBox="0 0 340 352" width="340" height="352" aria-hidden="true" focusable="false">
+          <defs><pattern id="bp-h-star" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path class="bp-3" d="M0 0V6"/></pattern></defs>
+          <path class="bp-axis" d="M170 6V346M6 176H334"/>
+          <circle class="bp-3" cx="170" cy="176" r="150"/>
+          <path class="bp-3" d="M320 176L328 176M316.72 207.19L320.63 208.02M307.03 237.01L310.69 238.64M291.35 264.17L297.82 268.87M270.37 287.47L273.05 290.44M245 305.9L247 309.37M216.35 318.66L218.82 326.27M185.68 325.18L186.1 329.16M154.32 325.18L153.9 329.16M123.65 318.66L121.18 326.27M95 305.9L93 309.37M69.63 287.47L66.95 290.44M48.65 264.17L42.18 268.87M32.97 237.01L29.31 238.64M23.28 207.19L19.37 208.02M20 176L12 176M23.28 144.81L19.37 143.98M32.97 114.99L29.31 113.36M48.65 87.83L42.18 83.13M69.63 64.53L66.95 61.56M95 46.1L93 42.63M123.65 33.34L121.18 25.73M154.32 26.82L153.9 22.84M185.68 26.82L186.1 22.84M216.35 33.34L218.82 25.73M245 46.1L247 42.63M270.37 64.53L273.05 61.56M291.35 87.83L297.82 83.13M307.03 114.99L310.69 113.36M316.72 144.81L320.63 143.98"/>
+          <circle class="bp-3 bp-dash" cx="170" cy="176" r="132"/>
+          <circle class="bp-3 bp-dash" cx="170" cy="176" r="50.42"/>
+          <path class="bp-3" d="M170 44L295.54 135.21L247.59 282.79L92.41 282.79L44.46 135.21Z"/>
+          <path class="bp-3" d="M170 176L170 44M170 176L295.54 135.21M170 176L247.59 282.79M170 176L92.41 282.79M170 176L44.46 135.21"/>
+          <path d="M170 44L199.64 135.21L295.54 135.21L217.96 191.58L247.59 282.79L170 226.42L92.41 282.79L122.04 191.58L44.46 135.21L140.36 135.21ZM170 73.12L193.1 144.21L267.84 144.21L207.38 188.14L230.47 259.23L170 215.3L109.53 259.23L132.62 188.14L72.16 144.21L146.9 144.21Z" fill="url(#bp-h-star)" fill-rule="evenodd"/>
+          <path class="bp-2" d="M170 73.12L193.1 144.21L267.84 144.21L207.38 188.14L230.47 259.23L170 215.3L109.53 259.23L132.62 188.14L72.16 144.21L146.9 144.21Z"/>
+          <circle class="bp-2" cx="170" cy="176" r="9"/>
+          <circle class="bp-node" cx="170" cy="44" r="3.2"/><circle class="bp-node" cx="295.54" cy="135.21" r="3.2"/><circle class="bp-node" cx="247.59" cy="282.79" r="3.2"/><circle class="bp-node" cx="92.41" cy="282.79" r="3.2"/><circle class="bp-node" cx="44.46" cy="135.21" r="3.2"/><circle class="bp-node" cx="199.64" cy="135.21" r="3.2"/><circle class="bp-node" cx="217.96" cy="191.58" r="3.2"/><circle class="bp-node" cx="170" cy="226.42" r="3.2"/><circle class="bp-node" cx="122.04" cy="191.58" r="3.2"/><circle class="bp-node" cx="140.36" cy="135.21" r="3.2"/>
+        </svg>
+      </li>
+      <li>
+        <a class="cat-tile rev-tile" href="{{products.es19.url}}#reviews" style="--pos: 92% 50%">
+          <img class="cat-tile__img" src="/assets/img/deck/es19-stage.jpg" alt="{{products.es19.alt}}" width="1258" height="941" fetchpriority="high" decoding="async">
+          <span class="cat-tile__title">Easy&nbsp;Start <span class="nowrap">{{products.es19.model}}</span><span class="cat-tile__note"><span class="rev-tile__rate">{{products.es19.ratingFmt}}</span><span class="rev-tile__sep">&nbsp;· </span>{{{products.es19.reviewsHtml}}}</span></span>
+          <span class="round-btn round-btn--glass cat-tile__arrow" aria-hidden="true">{{icon arrow-up-right}}</span>
+        </a>
+      </li>
+      <li>
+        <a class="cat-tile rev-tile" href="{{products.es29.url}}#reviews" style="--pos: 92% 50%">
+          <img class="cat-tile__img" src="/assets/img/deck/es29-stage.jpg" alt="{{products.es29.alt}}" width="1258" height="941" decoding="async">
+          <span class="cat-tile__title">Easy&nbsp;Start <span class="nowrap">{{products.es29.model}}</span><span class="cat-tile__note"><span class="rev-tile__rate">{{products.es29.ratingFmt}}</span><span class="rev-tile__sep">&nbsp;· </span>{{{products.es29.reviewsHtml}}}</span></span>
+          <span class="round-btn round-btn--glass cat-tile__arrow" aria-hidden="true">{{icon arrow-up-right}}</span>
+        </a>
+      </li>
+      <li>
+        <a class="cat-tile rev-tile" href="{{products.pvc1.url}}#reviews" style="--pos: 88% 50%">
+          <img class="cat-tile__img" src="/assets/img/deck/pvc1-stage.jpg" alt="{{products.pvc1.alt}}" width="1672" height="941" decoding="async">
+          <span class="cat-tile__title rev-tile__title">Автопылесос <span class="nowrap">{{products.pvc1.model}}</span><span class="cat-tile__note"><span class="rev-tile__rate">{{products.pvc1.ratingFmt}}</span><span class="rev-tile__sep">&nbsp;· </span>{{{products.pvc1.reviewsHtml}}}</span></span>
+          <span class="round-btn round-btn--glass cat-tile__arrow" aria-hidden="true">{{icon arrow-up-right}}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- 3. Стена отзывов. Чипы фильтруют карточки по модели (reviews.js); без скрипта чипов нет и видны все отзывы -->
+<section class="rev-wall" aria-labelledby="rev-wall-title" data-rev>
+  <div class="container">
+    <div class="section-head rev-wall__head">
+      <h2 class="section-title" id="rev-wall-title">Что пишут покупатели</h2>
+      <div class="chips rev-filter" role="group" aria-label="Показать отзывы о&nbsp;модели" data-rev-filter>
+        <button class="chip" type="button" data-rev-chip="all" aria-pressed="true">Все модели</button>
+        <button class="chip" type="button" data-rev-chip="es19" aria-pressed="false">{{products.es19.model}}</button>
+        <button class="chip" type="button" data-rev-chip="es29" aria-pressed="false">{{products.es29.model}}</button>
+        <button class="chip" type="button" data-rev-chip="pvc1" aria-pressed="false">{{products.pvc1.model}}</button>
+      </div>
+    </div>
+    <ul class="rev-wall__list" data-rev-list>
+{{#each reviewsAll}}      <li data-rev-item="{{product}}">
+        <article class="review-card">
+          <p class="review-card__product"><a href="{{productUrl}}">{{productName}}</a></p>
+          <h3 class="review-card__name">{{name}}</h3>
+          {{> stars}}
+          <p class="review-card__text">{{text}}</p>
+          <p class="review-card__date"><time datetime="{{dateIso}}">{{dateFmt}}</time></p>
+        </article>
+      </li>
+{{/each}}{{#each site.reviewsExtra}}      <li data-rev-item="{{product}}">
+        <article class="review-card">
+          <p class="review-card__product">{{#if product == "es19"}}<a href="{{products.es19.url}}">{{products.es19.name}}</a>{{/if}}{{#if product == "es29"}}<a href="{{products.es29.url}}">{{products.es29.name}}</a>{{/if}}{{#if product == "pvc1"}}<a href="{{products.pvc1.url}}">{{products.pvc1.name}}</a>{{/if}}</p>
+          <h3 class="review-card__name">{{name}}</h3>
+          {{> stars}}
+          <p class="review-card__text">{{text}}</p>
+          <p class="review-card__date"><time datetime="{{dateIso}}">{{dateFmt}}</time></p>
+        </article>
+      </li>
+{{/each}}    </ul>
+    <p class="rev-wall__status visually-hidden" role="status" aria-live="polite" data-rev-status></p>
+  </div>
+</section>
+
+<!-- 4. JOIM в деле: шесть вертикальных кадров из обзоров блогеров -->
+<section class="section section--alt section--line rev-action" aria-labelledby="rev-action-title">
+  <div class="container">
+    <div class="rev-action__head">
+      <h2 class="section-title" id="rev-action-title">JOIM в&nbsp;деле</h2>
+      <p class="rev-action__text">Кадры из&nbsp;обзоров блогеров: внедорожник, трактор, мотоцикл и&nbsp;мотор V12.</p>
+    </div>
+    <ul class="rev-action__list">
+      <li><figure class="rev-shot"><span class="rev-shot__media"><img src="/assets/img/deck/action-1-obzor.jpg" alt="Блогер показывает пусковое устройство JOIM в&nbsp;обзоре" width="464" height="848" loading="lazy" decoding="async"></span><figcaption>Обзор устройства</figcaption></figure></li>
+      <li><figure class="rev-shot"><span class="rev-shot__media"><img src="/assets/img/deck/action-2-vnedorozhnik.jpg" alt="Пусковое устройство JOIM под&nbsp;капотом внедорожника" width="518" height="1016" loading="lazy" decoding="async"></span><figcaption>Внедорожник</figcaption></figure></li>
+      <li><figure class="rev-shot"><span class="rev-shot__media"><img src="/assets/img/deck/action-3-traktor.jpg" alt="Пусковое устройство JOIM подключено к&nbsp;аккумулятору трактора" width="519" height="925" loading="lazy" decoding="async"></span><figcaption>Подключение к&nbsp;трактору</figcaption></figure></li>
+      <li><figure class="rev-shot"><span class="rev-shot__media"><img src="/assets/img/deck/action-4-podkachka.jpg" alt="Подкачка колеса устройством JOIM с&nbsp;компрессором" width="506" height="922" loading="lazy" decoding="async"></span><figcaption>Подкачка колеса</figcaption></figure></li>
+      <li><figure class="rev-shot"><span class="rev-shot__media"><img src="/assets/img/deck/action-5-motocikl.jpg" alt="Пусковое устройство JOIM подключают к&nbsp;мотоциклу" width="519" height="915" loading="lazy" decoding="async"></span><figcaption>Подключение к&nbsp;мотоциклу</figcaption></figure></li>
+      <li><figure class="rev-shot rev-shot--hood"><span class="rev-shot__media"><img src="/assets/img/deck/action-6-pod-kapotom.jpg" alt="Пусковое устройство JOIM под&nbsp;капотом на&nbsp;моторе V12" width="464" height="848" loading="lazy" decoding="async"></span><figcaption>Под капотом</figcaption></figure></li>
+    </ul>
+    <div class="rev-action__foot">
+      <p>Выбираете модель под&nbsp;свою машину?</p>
+      <a class="btn btn--accent" href="/podbor/">Подбор по&nbsp;машине{{icon arrow-up-right icon--move}}</a>
+      <a class="btn btn--outline" href="/catalog/">Весь каталог</a>
+    </div>
+  </div>
+</section>

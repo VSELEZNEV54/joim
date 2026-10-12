@@ -1,0 +1,142 @@
+<!--page
+{
+  "path": "/delivery/",
+  "title": "Доставка и оплата: Москва в день заказа, Россия 2–7 дней",
+  "description": "Доставка JOIM: курьер по Москве 490 ₽ в день заказа, самовывоз бесплатно, СДЭК по России от 390 ₽ за 2–7 дней. Оплата картой, при получении или по счёту.",
+  "h1": "Доставка и&nbsp;оплата",
+  "parents": [],
+  "nav": "delivery",
+  "css": ["pages/delivery.css"],
+  "js": ["pages/delivery.js"]
+}
+-->
+
+<!-- Доставка и оплата: заголовок · липкая строка чипов-якорей · три раздела (оплата, доставка, гарантия и возврат): слева текст на тёмной
+     странице, справа светлая карточка с условиями и чертежом · три ссылки. Все цифры и условия из content-pack, раздел 3 и 4.
+     Чертежи те же, что в блоке «Оплата, доставка и гарантия» на главной. -->
+
+<!-- 1. Заголовок -->
+<div class="container">
+  <div class="page-head dlv-head">
+    <h1 class="page-title">Доставка и&nbsp;оплата</h1>
+    <p class="lead">По&nbsp;Москве привозим в&nbsp;день заказа, по&nbsp;России за&nbsp;2–7&nbsp;дней. От&nbsp;15&nbsp;000&nbsp;₽ курьер и&nbsp;СДЭК бесплатно.</p>
+  </div>
+</div>
+
+<!-- 2. Чипы-якоря: строка липнет под шапкой, пока на экране три раздела (общая обёртка .dlv-wrap); активный чип переключает
+     delivery.js по прокрутке -->
+<div class="dlv-wrap">
+<nav class="dlv-nav" aria-label="Разделы страницы" data-dlv-nav>
+  <div class="container">
+    <ul class="chips dlv-nav__list">
+      <li><a class="chip" href="#pay" aria-current="true">Оплата</a></li>
+      <li><a class="chip" href="#ship">Доставка</a></li>
+      <li><a class="chip" href="#warranty">Гарантия и&nbsp;возврат</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- 3. Три раздела: слева заголовок, текст и ссылка на тёмной странице, справа светлая карточка: условия строками и чертёж -->
+<div class="dlv">
+  <div class="container dlv__list">
+
+    <section class="dlv-sec" id="pay" aria-labelledby="pay-title" data-dlv-section>
+      <div class="dlv-sec__main">
+        <h2 class="section-title dlv-sec__title" id="pay-title">Оплата</h2>
+        <div class="dlv-sec__text">
+          <p>Заказ можно оплатить сразу на&nbsp;сайте или при&nbsp;получении в&nbsp;Москве. Компаниям выставляем счёт.</p>
+          <p>При&nbsp;заказе от&nbsp;20&nbsp;000&nbsp;₽ доступна рассрочка на&nbsp;6&nbsp;месяцев без&nbsp;переплаты.</p>
+        </div>
+        <p class="dlv-sec__foot"><a class="btn btn--outline" href="/oplata-chastyami/">Оплата частями{{icon arrow-up-right icon--move}}</a></p>
+      </div>
+      <div class="bp-card dlv-card">
+        <ul class="bp-card__list dlv-card__list">
+          <li><span>Картой на&nbsp;сайте</span><b>при&nbsp;оформлении</b></li>
+          <li><span>Наличными или&nbsp;картой при&nbsp;получении</span><b>в&nbsp;Москве</b></li>
+          <li><span>Для&nbsp;юрлиц</span><b>по&nbsp;счёту</b></li>
+          <li><span>Рассрочка на&nbsp;6&nbsp;месяцев</span><b>от&nbsp;20&nbsp;000&nbsp;₽</b></li>
+        </ul>
+        {{> bp-card cls=bp-card__art}}
+      </div>
+    </section>
+
+    <section class="dlv-sec dlv-sec--map" id="ship" aria-labelledby="ship-title" data-dlv-section>
+      <div class="dlv-sec__main">
+        <h2 class="section-title dlv-sec__title" id="ship-title">Доставка</h2>
+        <div class="dlv-sec__text">
+          <p>Курьер по&nbsp;Москве привозит в&nbsp;день заказа, если оформить его до&nbsp;15:00. Самовывоз: ул.&nbsp;Автозаводская, 23к2, ежедневно <span class="nowrap">09:00–21:00</span>.</p>
+          <p>Перед отправкой проверяем комплектность и&nbsp;снимаем упаковку на&nbsp;видео.</p>
+        </div>
+        <p class="dlv-sec__foot"><a class="btn btn--outline" href="/contacts/">Адрес и&nbsp;контакты{{icon arrow-up-right icon--move}}</a></p>
+      </div>
+      <div class="bp-card dlv-card">
+        <div class="dlv-card__list">
+          <ul class="bp-card__list">
+            <li><span>СДЭК по&nbsp;России, 2–7&nbsp;дней</span><b>от&nbsp;390&nbsp;₽</b></li>
+            <li><span>Курьер по&nbsp;Москве в&nbsp;день заказа</span><b>490&nbsp;₽</b></li>
+            <li><span>Почта России, 5–14&nbsp;дней</span><b>от&nbsp;320&nbsp;₽</b></li>
+            <li><span>Самовывоз в&nbsp;Москве</span><b>бесплатно</b></li>
+          </ul>
+          <p class="dlv-card__note">От&nbsp;15&nbsp;000&nbsp;₽ курьер и&nbsp;СДЭК бесплатно.</p>
+        </div>
+        {{> bp-map cls=bp-card__art}}
+      </div>
+    </section>
+
+    <section class="dlv-sec" id="warranty" aria-labelledby="warranty-title" data-dlv-section>
+      <div class="dlv-sec__main">
+        <h2 class="section-title dlv-sec__title" id="warranty-title">Гарантия и&nbsp;возврат</h2>
+        <div class="dlv-sec__text">
+          <p>Гарантию даёт производитель. Чек искать не&nbsp;нужно: заказ находим по&nbsp;телефону.</p>
+          <p>Передумали? Вернуть товар можно в&nbsp;течение 14&nbsp;дней.</p>
+        </div>
+        <p class="dlv-sec__foot"><a class="btn btn--outline" href="/warranty/">Гарантия и&nbsp;возврат{{icon arrow-up-right icon--move}}</a></p>
+      </div>
+      <div class="bp-card dlv-card">
+        <ul class="bp-card__list dlv-card__list">
+          <li><span>Гарантия производителя</span><b>12&nbsp;месяцев</b></li>
+          <li><span>Брак</span><b>меняем без&nbsp;экспертизы</b></li>
+          <li><span>Обратная отправка</span><b>за&nbsp;наш счёт</b></li>
+          <li><span>Клеммы и&nbsp;провода в&nbsp;первый год</span><b>меняем бесплатно</b></li>
+          <li><span>Возврат товара</span><b>14&nbsp;дней</b></li>
+        </ul>
+        {{> bp-box cls=bp-card__art}}
+      </div>
+    </section>
+
+  </div>
+</div>
+</div>
+
+<!-- 4. Куда дальше -->
+<section class="section dlv-more" aria-labelledby="dlv-more-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title" id="dlv-more-title">Остались вопросы?</h2>
+      <a class="btn btn--soft btn--sm" href="tel:+74951201140">+7&nbsp;495&nbsp;120-11-40</a>
+    </div>
+    <ul class="dlv-more__grid">
+      <li>
+        <a class="link-card" href="/faq/">
+          <span class="link-card__title">Вопросы и&nbsp;ответы</span>
+          <span class="link-card__text">Севший аккумулятор, клеммы, мороз, заряд</span>
+          <span class="round-btn link-card__arrow" aria-hidden="true">{{icon arrow-up-right}}</span>
+        </a>
+      </li>
+      <li>
+        <a class="link-card" href="/podbor/">
+          <span class="link-card__title">Подбор по&nbsp;машине</span>
+          <span class="link-card__text">Три вопроса про&nbsp;мотор и&nbsp;ответ с&nbsp;ценой</span>
+          <span class="round-btn link-card__arrow" aria-hidden="true">{{icon arrow-up-right}}</span>
+        </a>
+      </li>
+      <li>
+        <a class="link-card" href="/catalog/">
+          <span class="link-card__title">Каталог</span>
+          <span class="link-card__text">Пусковые устройства от&nbsp;{{price es19}} и&nbsp;автомобильные пылесосы</span>
+          <span class="round-btn link-card__arrow" aria-hidden="true">{{icon arrow-up-right}}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>

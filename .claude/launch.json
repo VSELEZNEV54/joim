@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "joim-store",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["/Users/vladimirseleznev/Desktop/Моя разработка/Примеры сайтов/JOIM/.claude/serve.mjs", "/Users/vladimirseleznev/Desktop/Моя разработка/Примеры сайтов/JOIM/store", "4173"],
+      "port": 4173
+    }
+  ]
+}

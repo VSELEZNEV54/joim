@@ -1,0 +1,40 @@
+<header class="header" data-header>
+  <div class="container header__in">
+    {{> logo}}
+    <button class="catalog-btn" type="button" data-catmenu-toggle aria-expanded="false" aria-controls="catmenu">
+      {{icon grid}}<span>Каталог</span>
+    </button>
+    <nav class="nav" aria-label="Разделы магазина">
+      <a class="nav__link" href="/podbor/" data-nav-key="podbor">Подбор по&nbsp;машине</a>
+      <a class="nav__link" href="/delivery/" data-nav-key="delivery">Доставка и&nbsp;оплата</a>
+      <a class="nav__link" href="/reviews/" data-nav-key="reviews">Отзывы</a>
+      <a class="nav__link" href="/faq/" data-nav-key="faq">Частые вопросы</a>
+      <a class="nav__link nav__link--extra" href="/about/" data-nav-key="about">О&nbsp;бренде</a>
+      <a class="nav__link" href="/contacts/" data-nav-key="contacts">Контакты</a>
+    </nav>
+    <div class="header__tools">
+      <button class="round-btn" type="button" data-dialog-open="search" aria-haspopup="dialog" aria-label="Поиск по товарам">{{icon search}}</button>
+      <a class="round-btn" href="/favorites/" data-fav-link aria-label="Избранное: пусто">{{icon heart}}<span class="round-btn__count" data-fav-count>0</span></a>
+      <a class="round-btn" href="/cart/" data-cart-button aria-label="Корзина: пусто">{{icon cart}}<span class="round-btn__count" data-cart-count>0</span></a>
+      <button class="round-btn round-btn--solid burger" type="button" data-dialog-open="menu" aria-haspopup="dialog" aria-expanded="false" aria-label="Открыть меню">{{icon menu}}</button>
+    </div>
+  </div>
+  <div class="catmenu" id="catmenu" data-catmenu hidden>
+    <div class="container">
+      <div class="catmenu__panel">
+        <ul class="catmenu__list">
+{{#each categories}}          <li>
+            <a class="catmenu__item" href="{{path}}">
+              <span class="catmenu__thumb"><img src="{{thumb}}" alt="" width="{{thumbW}}" height="{{thumbH}}" loading="lazy" decoding="async"></span>
+              <span class="catmenu__text"><span class="catmenu__name">{{#if isAll}}Все товары{{else}}{{{name}}}{{/if}}</span><span class="catmenu__count">{{countFmt}}</span></span>
+            </a>
+          </li>
+{{/each}}        </ul>
+        <ul class="catmenu__links">
+          <li><a class="catmenu__link" href="/podbor/"><span>Подбор по&nbsp;машине</span>{{icon arrow-up-right}}</a></li>
+          <li><a class="catmenu__link" href="/compare/es19-vs-es29/"><span>Сравнение <span class="nowrap">ES-19</span> и&nbsp;<span class="nowrap">ES-29</span></span>{{icon arrow-up-right}}</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>

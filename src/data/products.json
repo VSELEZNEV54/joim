@@ -1,0 +1,1398 @@
+{
+  "categories": [
+    {
+      "id": "all",
+      "path": "/catalog/",
+      "name": "Каталог",
+      "chip": "Все товары",
+      "h1": "Каталог",
+      "crumb": "Каталог",
+      "parents": [],
+      "nav": "catalog",
+      "title": "Каталог JOIM: пусковые устройства и автомобильные пылесосы",
+      "description": "Все товары JOIM: пусковые устройства Easy Start от 5 837 ₽ и автомобильные пылесосы. Своё производство, гарантия 12 месяцев, доставка по России 2–7 дней.",
+      "intro": "Восемь моделей JOIM: пусковые устройства Easy Start и&nbsp;автомобильные пылесосы. Три модели продаются сейчас, о&nbsp;поступлении остальных сообщим.",
+      "img": "/assets/img/deck/pvc7-stage.jpg",
+      "imgW": 1672,
+      "imgH": 941,
+      "thumb": "/assets/img/deck/pvc7.jpg",
+      "thumbW": 1300,
+      "thumbH": 840
+    },
+    {
+      "id": "puskovye",
+      "path": "/catalog/puskovye-ustroystva/",
+      "name": "Пусковые устройства",
+      "chip": "Пусковые устройства",
+      "h1": "Пусковые устройства для&nbsp;автомобиля",
+      "crumb": "Пусковые устройства",
+      "parents": [
+        {
+          "name": "Каталог",
+          "path": "/catalog/"
+        }
+      ],
+      "nav": "catalog",
+      "title": "Пусковые устройства для автомобиля: купить бустер JOIM",
+      "description": "Пусковые устройства JOIM Easy Start для автомобиля: ES-19 за 5 837 ₽ и ES-29 за 7 604 ₽. Заводят мотор с севшим аккумулятором. Гарантия 12 месяцев.",
+      "intro": "Пусковое устройство (бустер) заводит мотор с&nbsp;полностью севшим аккумулятором: не&nbsp;подзаряжает его, а&nbsp;отдаёт ток прямо на&nbsp;стартер. Работает от&nbsp;своей батареи и&nbsp;лежит в&nbsp;машине.",
+      "img": "/assets/img/deck/es19-stage.jpg",
+      "imgW": 1258,
+      "imgH": 941,
+      "thumb": "/assets/img/deck/es19.jpg",
+      "thumbW": 572,
+      "thumbH": 911
+    },
+    {
+      "id": "kompressor",
+      "path": "/catalog/puskovye-ustroystva/s-kompressorom/",
+      "name": "Пусковые с&nbsp;компрессором",
+      "chip": "С&nbsp;компрессором",
+      "h1": "Пусковые устройства с&nbsp;компрессором",
+      "crumb": "С&nbsp;компрессором",
+      "parents": [
+        {
+          "name": "Каталог",
+          "path": "/catalog/"
+        },
+        {
+          "name": "Пусковые устройства",
+          "path": "/catalog/puskovye-ustroystva/"
+        }
+      ],
+      "nav": "catalog",
+      "title": "Пусковые устройства с компрессором JOIM Easy Start",
+      "description": "Пусковые устройства JOIM Easy Start ES-55 и ES-99 со встроенным компрессором: заводят мотор и подкачивают колёса. Скоро в продаже, сообщим о поступлении.",
+      "intro": "ES-55 и&nbsp;ES-99 заводят мотор и&nbsp;подкачивают колёса: компрессор встроен в&nbsp;корпус, шланг лежит в&nbsp;комплекте.",
+      "note": "Сообщим, когда модели появятся в&nbsp;продаже",
+      "img": "/assets/img/deck/es99-stage.jpg",
+      "imgW": 1258,
+      "imgH": 941,
+      "thumb": "/assets/img/deck/es99.jpg",
+      "thumbW": 740,
+      "thumbH": 921
+    },
+    {
+      "id": "dizel",
+      "path": "/catalog/puskovye-ustroystva/dlya-dizelya/",
+      "name": "Для&nbsp;дизеля и&nbsp;больших моторов",
+      "chip": "Для&nbsp;дизеля",
+      "h1": "Пусковые устройства для&nbsp;дизеля и&nbsp;больших моторов",
+      "crumb": "Для&nbsp;дизеля и&nbsp;больших моторов",
+      "parents": [
+        {
+          "name": "Каталог",
+          "path": "/catalog/"
+        },
+        {
+          "name": "Пусковые устройства",
+          "path": "/catalog/puskovye-ustroystva/"
+        }
+      ],
+      "nav": "catalog",
+      "title": "Пусковое устройство для дизеля и больших моторов: JOIM ES-29",
+      "description": "JOIM Easy Start ES-29 для дизеля от 7 л и бензина от 8 л: пиковый ток 5 000 А, более 40 запусков на заряде. Цена 7 604 ₽, гарантия 12 месяцев.",
+      "intro": "ES-29 берёт дизель от&nbsp;7&nbsp;л и&nbsp;бензин от&nbsp;8&nbsp;л: пиковый ток 5&nbsp;000&nbsp;А и&nbsp;более 40&nbsp;запусков на&nbsp;заряде. ES-55 с&nbsp;током до&nbsp;8&nbsp;000&nbsp;А скоро появится в&nbsp;продаже.",
+      "img": "/assets/img/deck/es29-stage.jpg",
+      "imgW": 1258,
+      "imgH": 941,
+      "thumb": "/assets/img/deck/es29.jpg",
+      "thumbW": 614,
+      "thumbH": 881
+    },
+    {
+      "id": "pylesosy",
+      "path": "/catalog/avtopylesosy/",
+      "name": "Автомобильные пылесосы",
+      "chip": "Автомобильные пылесосы",
+      "h1": "Автомобильные пылесосы",
+      "crumb": "Автомобильные пылесосы",
+      "parents": [
+        {
+          "name": "Каталог",
+          "path": "/catalog/"
+        }
+      ],
+      "nav": "catalog",
+      "title": "Автомобильные пылесосы JOIM: купить беспроводной автопылесос",
+      "description": "Беспроводной автопылесос JOIM PVC-1 за 7 281 ₽: бесщёточный двигатель, до 40 минут работы, моющиеся фильтры. Модели PVC-7 и PVC-8 скоро в продаже.",
+      "intro": "Беспроводной PVC-1 с&nbsp;бесщёточным двигателем работает до&nbsp;40&nbsp;минут и&nbsp;умеет не&nbsp;только всасывать, но&nbsp;и&nbsp;продувать. PVC-7 и&nbsp;PVC-8 скоро появятся в&nbsp;продаже.",
+      "img": "/assets/img/deck/pvc8-stage.jpg",
+      "imgW": 1619,
+      "imgH": 971,
+      "thumb": "/assets/img/deck/pvc7-body.jpg",
+      "thumbW": 740,
+      "thumbH": 760
+    }
+  ],
+  "products": [
+    {
+      "id": "es19",
+      "name": "Пусковое устройство JOIM Easy Start ES-19",
+      "short": "Easy Start ES-19",
+      "model": "ES-19",
+      "type": "jump",
+      "cats": [
+        "puskovye"
+      ],
+      "status": "in_stock",
+      "price": 5837,
+      "rating": 5,
+      "reviews": 8,
+      "badge": "Хит продаж",
+      "url": "/product/joim-easy-start-es19/",
+      "ozonUrl": "https://www.ozon.ru/seller/gruppa-brendov-joim-gfy-goods-for-you/",
+      "wbUrl": "https://www.wildberries.ru/brands/19841883-joim",
+      "limitPetrol": 8,
+      "limitDiesel": 7,
+      "img": "/assets/img/deck/es19.jpg",
+      "w": 572,
+      "h": 911,
+      "alt": "Пусковое устройство JOIM Easy Start ES-19: чёрный корпус с лаймовыми вставками",
+      "tile": {
+        "scale": 0.88
+      },
+      "stage": {
+        "src": "/assets/img/deck/es19-stage.jpg",
+        "w": 1258,
+        "h": 941,
+        "cx": 77,
+        "cy": 51,
+        "s": 1,
+        "fr": 11,
+        "ft": 11
+      },
+      "cutImg": "https://joim.netlify.app/images/products/joim-es19-card.webp",
+      "cutW": 564,
+      "cutH": 1200,
+      "title": "Пусковое устройство JOIM Easy Start ES-19: купить за 5 837 ₽",
+      "description": "Пусковое устройство JOIM Easy Start ES-19: ток 3 300 А, более 20 запусков, бензин до 8 л, дизель до 7 л. Цена 5 837 ₽, гарантия 12 месяцев, доставка по России.",
+      "specsHtml": "3&nbsp;300&nbsp;А&nbsp;· до&nbsp;8&nbsp;л бензин&nbsp;· 20+&nbsp;запусков",
+      "fields": [
+        {
+          "label": "Ток",
+          "spec": "current"
+        },
+        {
+          "label": "Двигатели",
+          "spec": "engines"
+        },
+        {
+          "label": "Запусков на заряде",
+          "spec": "starts"
+        },
+        {
+          "label": "Фонарь",
+          "spec": "lamp"
+        }
+      ],
+      "about": "Пусковое устройство 12&nbsp;В для&nbsp;автомобиля: пусковой ток 3&nbsp;300&nbsp;А, ёмкость 29&nbsp;600&nbsp;мВт·ч, более 20&nbsp;запусков на&nbsp;одном заряде. Заводит бензиновый мотор до&nbsp;8&nbsp;л и&nbsp;дизель до&nbsp;7&nbsp;л с&nbsp;полностью севшим аккумулятором. Фонарь 700&nbsp;лм, два USB и&nbsp;быстрая зарядка Type-C: работает и&nbsp;как повербанк.",
+      "gallery": [
+        {
+          "src": "/assets/img/deck/es19.jpg",
+          "w": 572,
+          "h": 911,
+          "bg": "dark",
+          "alt": "Пусковое устройство JOIM Easy Start ES-19 на тёмной сцене"
+        },
+        {
+          "src": "https://joim.netlify.app/images/products/joim-es19-card.webp",
+          "w": 564,
+          "h": 1200,
+          "bg": "light",
+          "alt": "ES-19 анфас: логотип, четыре точки индикатора и кнопка питания"
+        },
+        {
+          "src": "https://joim.netlify.app/images/products/joim-es19-2.webp",
+          "w": 1200,
+          "h": 973,
+          "bg": "light",
+          "alt": "ES-19 в ракурсе три четверти: торец со светящимся фонарём"
+        },
+        {
+          "src": "https://joim.netlify.app/images/products/joim-es19-3.webp",
+          "w": 1200,
+          "h": 861,
+          "bg": "light",
+          "alt": "ES-19: торец с USB-разъёмами и Type-C"
+        },
+        {
+          "src": "https://joim.netlify.app/images/products/joim-es19-klemmy.webp",
+          "w": 1200,
+          "h": 766,
+          "bg": "light",
+          "alt": "ES-19 с подключёнными красной и чёрной клеммами"
+        },
+        {
+          "src": "/assets/img/deck/es19-kit.png",
+          "w": 1280,
+          "h": 853,
+          "bg": "light",
+          "alt": "Комплект ES-19 в кейсе: устройство, клеммы, адаптер и кабель"
+        },
+        {
+          "src": "/assets/img/deck/photo-hood.jpg",
+          "w": 1672,
+          "h": 940,
+          "bg": "dark",
+          "alt": "ES-19 с клеммами под капотом ночью"
+        },
+        {
+          "src": "https://joim.netlify.app/images/products/es19-promo-poster.webp",
+          "w": 1280,
+          "h": 720,
+          "bg": "dark",
+          "alt": "Видео: запуск двигателя с ES-19",
+          "video": "https://joim.netlify.app/video/es19-promo.mp4"
+        }
+      ],
+      "specs": [
+        {
+          "key": "current",
+          "name": "Пусковой ток",
+          "value": "3&nbsp;300&nbsp;А"
+        },
+        {
+          "key": "currentType",
+          "name": "",
+          "value": "пусковой"
+        },
+        {
+          "key": "voltage",
+          "name": "Напряжение",
+          "value": "12&nbsp;В"
+        },
+        {
+          "key": "engines",
+          "name": "Двигатели",
+          "value": "бензин до&nbsp;8&nbsp;л, дизель до&nbsp;7&nbsp;л"
+        },
+        {
+          "key": "starts",
+          "name": "Запусков на&nbsp;заряде",
+          "value": "более&nbsp;20"
+        },
+        {
+          "key": "capacity",
+          "name": "Ёмкость",
+          "value": "29&nbsp;600&nbsp;мВт·ч"
+        },
+        {
+          "key": "battery",
+          "name": "Батарея",
+          "value": "литий-полимерная"
+        },
+        {
+          "key": "temp",
+          "name": "Работает на&nbsp;морозе",
+          "value": "до&nbsp;−30&nbsp;°C"
+        },
+        {
+          "key": "lamp",
+          "name": "Фонарь",
+          "value": "700&nbsp;лм, стробоскоп и&nbsp;SOS"
+        },
+        {
+          "key": "ports",
+          "name": "Разъёмы",
+          "value": "2&nbsp;×&nbsp;USB, Type-C"
+        },
+        {
+          "key": "size",
+          "name": "Габариты",
+          "value": "190&nbsp;×&nbsp;95&nbsp;×&nbsp;40&nbsp;мм"
+        },
+        {
+          "key": "caseSize",
+          "name": "Кейс",
+          "value": "220&nbsp;×&nbsp;120&nbsp;×&nbsp;90&nbsp;мм"
+        },
+        {
+          "key": "clamps",
+          "name": "Клеммы",
+          "value": "260&nbsp;мм"
+        },
+        {
+          "key": "warranty",
+          "name": "Гарантия",
+          "value": "12&nbsp;месяцев"
+        }
+      ],
+      "kit": [
+        "Пусковое устройство, заряжено с&nbsp;завода",
+        "Клеммы с&nbsp;модулем защиты",
+        "Адаптер и&nbsp;USB-кабель на&nbsp;три наконечника",
+        "Кейс на&nbsp;липучке Velcro: держится на&nbsp;стенке багажника"
+      ],
+      "usage": [
+        "Легковые автомобили",
+        "Грузовая техника",
+        "Мотоциклы",
+        "Лодки и&nbsp;катера",
+        "Гидроциклы",
+        "Снегоходы"
+      ]
+    },
+    {
+      "id": "es29",
+      "name": "Пусковое устройство JOIM Easy Start ES-29",
+      "short": "Easy Start ES-29",
+      "model": "ES-29",
+      "type": "jump",
+      "cats": [
+        "puskovye",
+        "dizel"
+      ],
+      "status": "in_stock",
+      "price": 7604,
+      "rating": 5,
+      "reviews": 8,
+      "badge": "",
+      "url": "/product/joim-easy-start-es29/",
+      "ozonUrl": "https://www.ozon.ru/seller/gruppa-brendov-joim-gfy-goods-for-you/",
+      "wbUrl": "https://www.wildberries.ru/brands/19841883-joim",
+      "img": "/assets/img/deck/es29.jpg",
+      "w": 614,
+      "h": 881,
+      "alt": "Пусковое устройство JOIM Easy Start ES-29: чёрный корпус с лаймовой кнопкой питания",
+      "tile": {
+        "scale": 0.96,
+        "y": 3.5,
+        "duo": 150
+      },
+      "stage": {
+        "src": "/assets/img/deck/es29-stage.jpg",
+        "w": 1258,
+        "h": 941,
+        "cx": 74,
+        "cy": 54,
+        "s": 1.1,
+        "fr": 12
+      },
+      "cutImg": "https://joim.netlify.app/images/products/joim-es29-card.webp",
+      "cutW": 549,
+      "cutH": 1200,
+      "title": "Пусковое устройство JOIM Easy Start ES-29: купить за 7 604 ₽",
+      "description": "JOIM Easy Start ES-29: пиковый ток 5 000 А, 59 000 мВт·ч, более 40 запусков на заряде, фонарь 1 000 лм. Для дизеля от 7 л и бензина от 8 л. 7 604 ₽.",
+      "specsHtml": "5&nbsp;000&nbsp;А&nbsp;· дизель от&nbsp;7&nbsp;л&nbsp;· 40+&nbsp;запусков",
+      "fields": [
+        {
+          "label": "Ток",
+          "spec": "current"
+        },
+        {
+          "label": "Двигатели",
+          "spec": "engines"
+        },
+        {
+          "label": "Запусков на заряде",
+          "spec": "starts"
+        },
+        {
+          "label": "Фонарь",
+          "spec": "lamp"
+        }
+      ],
+      "about": "Старшая модель для&nbsp;больших моторов и&nbsp;грузовой техники: пиковый ток 5&nbsp;000&nbsp;А, ёмкость 59&nbsp;000&nbsp;мВт·ч, более 40&nbsp;запусков на&nbsp;одном заряде. Берёт дизель от&nbsp;7&nbsp;л и&nbsp;бензин от&nbsp;8&nbsp;л. Фонарь 1&nbsp;000&nbsp;лм, клеммы со&nbsp;световым индикатором подключения, адаптер с&nbsp;Type-C, Lightning и&nbsp;Micro-USB.",
+      "gallery": [
+        {
+          "src": "/assets/img/deck/es29.jpg",
+          "w": 614,
+          "h": 881,
+          "bg": "dark",
+          "alt": "Пусковое устройство JOIM Easy Start ES-29 на тёмной сцене"
+        },
+        {
+          "src": "https://joim.netlify.app/images/products/joim-es29-card.webp",
+          "w": 549,
+          "h": 1200,
+          "bg": "light",
+          "alt": "ES-29 анфас: чёрный корпус и лаймовая кнопка питания"
+        },
+        {
+          "src": "https://joim.netlify.app/images/products/joim-es29-3.webp",
+          "w": 1158,
+          "h": 990,
+          "bg": "light",
+          "alt": "ES-29 в разборе: корпус, плата, ячейки и клеммы по слоям"
+        },
+        {
+          "src": "/assets/img/deck/es29-kit.png",
+          "w": 1094,
+          "h": 902,
+          "bg": "light",
+          "alt": "Комплект ES-29: кейс, устройство, клеммы, провода и адаптер"
+        },
+        {
+          "src": "/assets/img/deck/es29-stage.jpg",
+          "w": 1258,
+          "h": 941,
+          "bg": "dark",
+          "alt": "ES-29 на тёмной сцене, общий план"
+        }
+      ],
+      "specs": [
+        {
+          "key": "current",
+          "name": "Пиковый ток",
+          "value": "5&nbsp;000&nbsp;А"
+        },
+        {
+          "key": "currentType",
+          "name": "",
+          "value": "пиковый"
+        },
+        {
+          "key": "voltage",
+          "name": "Напряжение",
+          "value": "12&nbsp;В"
+        },
+        {
+          "key": "engines",
+          "name": "Двигатели",
+          "value": "дизель от&nbsp;7&nbsp;л, бензин от&nbsp;8&nbsp;л"
+        },
+        {
+          "key": "starts",
+          "name": "Запусков на&nbsp;заряде",
+          "value": "более&nbsp;40"
+        },
+        {
+          "key": "capacity",
+          "name": "Ёмкость",
+          "value": "59&nbsp;000&nbsp;мВт·ч"
+        },
+        {
+          "key": "battery",
+          "name": "Батарея",
+          "value": "литий-полимерная"
+        },
+        {
+          "key": "temp",
+          "name": "Работает на&nbsp;морозе",
+          "value": "до&nbsp;−30&nbsp;°C"
+        },
+        {
+          "key": "lamp",
+          "name": "Фонарь",
+          "value": "1&nbsp;000&nbsp;лм, стробоскоп и&nbsp;SOS"
+        },
+        {
+          "key": "ports",
+          "name": "Разъёмы",
+          "value": "2&nbsp;×&nbsp;USB, Type-C, 2&nbsp;×&nbsp;DC"
+        },
+        {
+          "key": "adapter",
+          "name": "Адаптер",
+          "value": "Type-C, Lightning и&nbsp;Micro-USB"
+        },
+        {
+          "key": "size",
+          "name": "Габариты",
+          "value": "190&nbsp;×&nbsp;95&nbsp;×&nbsp;40&nbsp;мм"
+        },
+        {
+          "key": "warranty",
+          "name": "Гарантия",
+          "value": "12&nbsp;месяцев"
+        }
+      ],
+      "kit": [
+        "Пусковое устройство",
+        "Клеммы со&nbsp;световым индикатором подключения",
+        "Адаптер с&nbsp;Type-C, Lightning и&nbsp;Micro-USB",
+        "Провода",
+        "Кейс"
+      ],
+      "usage": [
+        "Дизель от&nbsp;7&nbsp;л и&nbsp;бензин от&nbsp;8&nbsp;л",
+        "Грузовая техника",
+        "Внедорожники",
+        "Мотоциклы",
+        "Лодки и&nbsp;катера",
+        "Снегоходы"
+      ]
+    },
+    {
+      "id": "pvc1",
+      "name": "Беспроводной автопылесос JOIM PVC-1",
+      "short": "Автопылесос PVC-1",
+      "model": "PVC-1",
+      "type": "vacuum",
+      "cats": [
+        "pylesosy"
+      ],
+      "status": "in_stock",
+      "price": 7281,
+      "rating": 5,
+      "reviews": 9,
+      "badge": "",
+      "url": "/product/joim-pvc1/",
+      "ozonUrl": "https://www.ozon.ru/seller/gruppa-brendov-joim-gfy-goods-for-you/",
+      "wbUrl": "https://www.wildberries.ru/brands/19841883-joim",
+      "img": "/assets/img/deck/pvc1.jpg",
+      "w": 624,
+      "h": 921,
+      "alt": "Беспроводной автопылесос JOIM PVC-1 в двух цветах: оранжевом и чёрном",
+      "tile": {
+        "scale": 0.9,
+        "tone": 0.84,
+        "duo": 145
+      },
+      "stage": {
+        "src": "/assets/img/deck/pvc1-stage.jpg",
+        "w": 1672,
+        "h": 941,
+        "cx": 72,
+        "cy": 56,
+        "s": 1.1,
+        "fr": 14
+      },
+      "cutImg": "https://joim.netlify.app/images/products/joim-pvc1-card.webp",
+      "cutW": 225,
+      "cutH": 1200,
+      "title": "Беспроводной автопылесос JOIM PVC-1: купить за 7 281 ₽",
+      "description": "JOIM PVC-1: бесщёточный двигатель, до 40 минут работы, зарядка по USB Type-C, циклон и HEPA-фильтр, режим обдува. Цена 7 281 ₽, гарантия 12 месяцев.",
+      "specsHtml": "до&nbsp;40&nbsp;минут работы&nbsp;· HEPA&#8209;фильтр&nbsp;· обдув",
+      "fields": [
+        {
+          "label": "Работа",
+          "spec": "runtime"
+        },
+        {
+          "label": "Зарядка",
+          "spec": "charge"
+        },
+        {
+          "label": "Фильтры",
+          "spec": "filters"
+        },
+        {
+          "label": "Режимы",
+          "spec": "modes"
+        }
+      ],
+      "about": "Беспроводной автомобильный пылесос с&nbsp;бесщёточным двигателем: до&nbsp;40&nbsp;минут работы, зарядка 2,5&nbsp;часа по&nbsp;USB Type-C. Циклон, фильтр грубой очистки и&nbsp;HEPA: фильтры моются под&nbsp;краном, расходников нет. Два режима: всасывание и&nbsp;обдув. Три сопла продувают дефлекторы и&nbsp;накачивают матрас, мяч или круг. Корпус из&nbsp;алюминия, два цвета: чёрный и&nbsp;оранжевый.",
+      "gallery": [
+        {
+          "src": "/assets/img/deck/pvc1.jpg",
+          "w": 624,
+          "h": 921,
+          "bg": "dark",
+          "alt": "Автопылесос JOIM PVC-1 в оранжевом и чёрном корпусе"
+        },
+        {
+          "src": "https://joim.netlify.app/images/products/joim-pvc1-card.webp",
+          "w": 225,
+          "h": 1200,
+          "bg": "light",
+          "alt": "PVC-1 в чёрном корпусе, стоит вертикально"
+        },
+        {
+          "src": "https://joim.netlify.app/images/products/joim-pvc1-body.webp",
+          "w": 1200,
+          "h": 689,
+          "bg": "light",
+          "alt": "PVC-1 крупно: сопло и корпус с дисплеем"
+        },
+        {
+          "src": "https://joim.netlify.app/images/products/joim-pvc1-cyclone.webp",
+          "w": 1200,
+          "h": 1040,
+          "bg": "light",
+          "alt": "PVC-1 в разборе: контейнер и фильтры"
+        },
+        {
+          "src": "https://joim.netlify.app/images/products/joim-pvc1-kit-flat.webp",
+          "w": 1070,
+          "h": 1200,
+          "bg": "light",
+          "alt": "Комплект PVC-1: кейс, шланг и насадки"
+        },
+        {
+          "src": "/assets/img/deck/pvc1-detail-1.jpg",
+          "w": 656,
+          "h": 875,
+          "bg": "dark",
+          "alt": "PVC-1: сопло и корпус крупным планом"
+        },
+        {
+          "src": "/assets/img/deck/pvc1-detail-2.jpg",
+          "w": 656,
+          "h": 875,
+          "bg": "dark",
+          "alt": "PVC-1 с кейсом и насадками"
+        },
+        {
+          "src": "/assets/img/deck/pvc1-detail-3.jpg",
+          "w": 656,
+          "h": 875,
+          "bg": "dark",
+          "alt": "Насадки PVC-1: щётка, щелевая насадка и три сопла"
+        },
+        {
+          "src": "/assets/img/deck/pvc1-detail-4.jpg",
+          "w": 656,
+          "h": 875,
+          "bg": "dark",
+          "alt": "PVC-1 с гибким шлангом"
+        }
+      ],
+      "specs": [
+        {
+          "key": "motor",
+          "name": "Двигатель",
+          "value": "бесщёточный"
+        },
+        {
+          "key": "runtime",
+          "name": "Время работы",
+          "value": "до&nbsp;40&nbsp;минут"
+        },
+        {
+          "key": "charge",
+          "name": "Зарядка",
+          "value": "2,5&nbsp;часа по&nbsp;USB Type-C"
+        },
+        {
+          "key": "filters",
+          "name": "Фильтрация",
+          "value": "циклон, фильтр грубой очистки и&nbsp;HEPA"
+        },
+        {
+          "key": "modes",
+          "name": "Режимы",
+          "value": "всасывание и&nbsp;обдув"
+        },
+        {
+          "key": "body",
+          "name": "Корпус",
+          "value": "алюминий, чёрный или оранжевый"
+        },
+        {
+          "key": "length",
+          "name": "Длина",
+          "value": "352&nbsp;мм"
+        },
+        {
+          "key": "hose",
+          "name": "Гибкий шланг",
+          "value": "445&nbsp;мм"
+        },
+        {
+          "key": "warranty",
+          "name": "Гарантия",
+          "value": "12&nbsp;месяцев"
+        }
+      ],
+      "kit": [
+        "Пылесос",
+        "Гибкий шланг",
+        "Щётка для&nbsp;обивки",
+        "Щелевая насадка со&nbsp;щёткой",
+        "Три сопла для&nbsp;обдува",
+        "Адаптер и&nbsp;кабель Type-C",
+        "Кейс с&nbsp;ложементом"
+      ],
+      "usage": [
+        "Салон и&nbsp;багажник",
+        "Коврики и&nbsp;обивка",
+        "Дефлекторы и&nbsp;щели между сиденьями",
+        "Песок и&nbsp;шерсть",
+        "Накачка матраса, мяча или круга"
+      ]
+    },
+    {
+      "id": "es2",
+      "name": "Пусковое устройство JOIM Easy Start ES-2",
+      "short": "Easy Start ES-2",
+      "model": "ES-2",
+      "type": "jump",
+      "cats": [
+        "puskovye"
+      ],
+      "status": "soon",
+      "price": null,
+      "rating": null,
+      "reviews": null,
+      "badge": "Скоро",
+      "url": "/product/joim-easy-start-es2/",
+      "ozonUrl": "https://www.ozon.ru/seller/gruppa-brendov-joim-gfy-goods-for-you/",
+      "wbUrl": "https://www.wildberries.ru/brands/19841883-joim",
+      "img": "/assets/img/deck/es2.jpg",
+      "w": 536,
+      "h": 901,
+      "alt": "Пусковое устройство JOIM Easy Start ES-2 с дисплеем заряда",
+      "tile": {
+        "scale": 0.88,
+        "y": 2
+      },
+      "stage": {
+        "src": "/assets/img/deck/es2-stage.jpg",
+        "w": 1258,
+        "h": 941,
+        "cx": 77,
+        "cy": 53,
+        "s": 1,
+        "fr": 11,
+        "ft": 11
+      },
+      "title": "Пусковое устройство JOIM Easy Start ES-2: скоро в продаже",
+      "description": "JOIM Easy Start ES-2, базовая модель: пусковой ток до 3 000 А, бензин до 7 л, дизель до 4 л, около 15 запусков на заряде. Сообщим, когда появится в продаже.",
+      "specsHtml": "до&nbsp;3&nbsp;000&nbsp;А&nbsp;· бензин до&nbsp;7&nbsp;л&nbsp;· около 15&nbsp;запусков",
+      "fields": [
+        {
+          "label": "Ток",
+          "spec": "current"
+        },
+        {
+          "label": "Двигатели",
+          "spec": "engines"
+        },
+        {
+          "label": "Запусков на заряде",
+          "spec": "starts"
+        },
+        {
+          "label": "Фонарь",
+          "spec": "lamp"
+        }
+      ],
+      "about": "Базовая модель линейки Easy Start: пусковой ток до&nbsp;3&nbsp;000&nbsp;А, бензиновые моторы до&nbsp;7&nbsp;л и&nbsp;дизель до&nbsp;4&nbsp;л, около 15&nbsp;запусков на&nbsp;одном заряде. Фонарь 700&nbsp;лм, USB и&nbsp;Type-C, дисплей показывает заряд в&nbsp;процентах.",
+      "gallery": [
+        {
+          "src": "/assets/img/deck/es2.jpg",
+          "w": 536,
+          "h": 901,
+          "bg": "dark",
+          "alt": "Пусковое устройство JOIM Easy Start ES-2 на тёмной сцене"
+        },
+        {
+          "src": "/assets/img/deck/es2-kit.png",
+          "w": 1036,
+          "h": 863,
+          "bg": "light",
+          "alt": "Комплект ES-2 в чехле: устройство, пусковые провода, адаптер"
+        },
+        {
+          "src": "/assets/img/deck/es2-stage.jpg",
+          "w": 1258,
+          "h": 941,
+          "bg": "dark",
+          "alt": "ES-2 на тёмной сцене, общий план"
+        }
+      ],
+      "specs": [
+        {
+          "key": "current",
+          "name": "Пусковой ток",
+          "value": "до&nbsp;3&nbsp;000&nbsp;А"
+        },
+        {
+          "key": "engines",
+          "name": "Двигатели",
+          "value": "бензин до&nbsp;7&nbsp;л, дизель до&nbsp;4&nbsp;л"
+        },
+        {
+          "key": "starts",
+          "name": "Запусков на&nbsp;заряде",
+          "value": "около&nbsp;15"
+        },
+        {
+          "key": "lamp",
+          "name": "Фонарь",
+          "value": "700&nbsp;лм"
+        },
+        {
+          "key": "ports",
+          "name": "Разъёмы",
+          "value": "USB и&nbsp;Type-C"
+        },
+        {
+          "key": "display",
+          "name": "Дисплей",
+          "value": "заряд в&nbsp;процентах"
+        }
+      ],
+      "kit": [
+        "Чехол",
+        "Пусковое устройство",
+        "Пусковые провода",
+        "Переходники",
+        "Инструкция",
+        "Адаптер",
+        "Провод зарядки"
+      ],
+      "usage": [
+        "Бензиновые моторы до&nbsp;7&nbsp;л",
+        "Дизель до&nbsp;4&nbsp;л"
+      ]
+    },
+    {
+      "id": "es55",
+      "name": "Пусковое устройство с компрессором JOIM Easy Start ES-55",
+      "short": "Easy Start ES-55",
+      "model": "ES-55",
+      "type": "jump",
+      "cats": [
+        "puskovye",
+        "kompressor",
+        "dizel"
+      ],
+      "status": "soon",
+      "price": null,
+      "rating": null,
+      "reviews": null,
+      "badge": "Скоро",
+      "url": "/product/joim-easy-start-es55/",
+      "ozonUrl": "https://www.ozon.ru/seller/gruppa-brendov-joim-gfy-goods-for-you/",
+      "wbUrl": "https://www.wildberries.ru/brands/19841883-joim",
+      "img": "/assets/img/deck/es55.jpg",
+      "w": 808,
+      "h": 1042,
+      "alt": "Пусковое устройство с компрессором JOIM Easy Start ES-55 со шлангом",
+      "tile": {
+        "scale": 1.04,
+        "y": 6,
+        "tone": 0.94,
+        "fade": 6,
+        "duo": 128
+      },
+      "stage": {
+        "src": "/assets/img/deck/es55-stage.jpg",
+        "w": 1448,
+        "h": 1082,
+        "cx": 80,
+        "cy": 50,
+        "s": 1,
+        "fr": 10
+      },
+      "title": "Пусковое устройство с компрессором JOIM ES-55: скоро в продаже",
+      "description": "JOIM Easy Start ES-55: усиленная версия со встроенным компрессором, пусковой ток до 8 000 А, около 25 запусков, фонарь 1 000 лм. Сообщим о поступлении.",
+      "specsHtml": "до&nbsp;8&nbsp;000&nbsp;А&nbsp;· компрессор&nbsp;· около 25&nbsp;запусков",
+      "fields": [
+        {
+          "label": "Ток",
+          "spec": "current"
+        },
+        {
+          "label": "Двигатели",
+          "spec": "engines"
+        },
+        {
+          "label": "Запусков на заряде",
+          "spec": "starts"
+        },
+        {
+          "label": "Фонарь",
+          "spec": "lamp"
+        }
+      ],
+      "about": "Усиленная версия со&nbsp;встроенным компрессором: пусковой ток до&nbsp;8&nbsp;000&nbsp;А, заводит любой бензиновый и&nbsp;любой дизельный двигатель, около 25&nbsp;запусков на&nbsp;одном заряде. Фонарь 1&nbsp;000&nbsp;лм, USB и&nbsp;Type-C, дисплей.",
+      "gallery": [
+        {
+          "src": "/assets/img/deck/es55.jpg",
+          "w": 808,
+          "h": 1042,
+          "bg": "dark",
+          "alt": "Пусковое устройство JOIM Easy Start ES-55 со шлангом компрессора"
+        },
+        {
+          "src": "/assets/img/deck/es55-kit.png",
+          "w": 1297,
+          "h": 824,
+          "bg": "light",
+          "alt": "Комплект ES-55: чехол, устройство, пусковые провода, шланг компрессора"
+        },
+        {
+          "src": "/assets/img/deck/es55-stage.jpg",
+          "w": 1448,
+          "h": 1082,
+          "bg": "dark",
+          "alt": "ES-55 на тёмной сцене, общий план"
+        }
+      ],
+      "specs": [
+        {
+          "key": "current",
+          "name": "Пусковой ток",
+          "value": "до&nbsp;8&nbsp;000&nbsp;А"
+        },
+        {
+          "key": "compressor",
+          "name": "Компрессор",
+          "value": "встроенный"
+        },
+        {
+          "key": "engines",
+          "name": "Двигатели",
+          "value": "любой бензиновый и&nbsp;любой дизельный"
+        },
+        {
+          "key": "starts",
+          "name": "Запусков на&nbsp;заряде",
+          "value": "около&nbsp;25"
+        },
+        {
+          "key": "lamp",
+          "name": "Фонарь",
+          "value": "1&nbsp;000&nbsp;лм"
+        },
+        {
+          "key": "ports",
+          "name": "Разъёмы",
+          "value": "USB и&nbsp;Type-C"
+        },
+        {
+          "key": "display",
+          "name": "Дисплей",
+          "value": "есть"
+        }
+      ],
+      "kit": [
+        "Чехол",
+        "Пусковое устройство",
+        "Пусковые провода",
+        "Переходники",
+        "Инструкция",
+        "Адаптер",
+        "Провод зарядки",
+        "Шланг компрессора"
+      ],
+      "usage": [
+        "Любой бензиновый двигатель",
+        "Любой дизельный двигатель",
+        "Подкачка колёс"
+      ]
+    },
+    {
+      "id": "es99",
+      "name": "Пусковое устройство с компрессором JOIM Easy Start ES-99",
+      "short": "Easy Start ES-99",
+      "model": "ES-99",
+      "type": "jump",
+      "cats": [
+        "puskovye",
+        "kompressor"
+      ],
+      "status": "soon",
+      "price": null,
+      "rating": null,
+      "reviews": null,
+      "badge": "Скоро",
+      "url": "/product/joim-easy-start-es99/",
+      "ozonUrl": "https://www.ozon.ru/seller/gruppa-brendov-joim-gfy-goods-for-you/",
+      "wbUrl": "https://www.wildberries.ru/brands/19841883-joim",
+      "img": "/assets/img/deck/es99.jpg",
+      "w": 740,
+      "h": 921,
+      "alt": "Пусковое устройство с компрессором JOIM Easy Start ES-99 со шлангом",
+      "tile": {
+        "scale": 0.96,
+        "y": 1,
+        "tone": 0.94,
+        "fade": 6,
+        "duo": 128
+      },
+      "stage": {
+        "src": "/assets/img/deck/es99-stage.jpg",
+        "w": 1258,
+        "h": 941,
+        "cx": 72,
+        "cy": 52,
+        "s": 1,
+        "fr": 12
+      },
+      "title": "Пусковое устройство с компрессором JOIM ES-99: скоро в продаже",
+      "description": "JOIM Easy Start ES-99 со встроенным компрессором: пусковой ток до 5 000 А, бензин до 8 л, дизель до 7 л, более 20 запусков. Сообщим о поступлении.",
+      "specsHtml": "до&nbsp;5&nbsp;000&nbsp;А&nbsp;· компрессор&nbsp;· более 20&nbsp;запусков",
+      "fields": [
+        {
+          "label": "Ток",
+          "spec": "current"
+        },
+        {
+          "label": "Двигатели",
+          "spec": "engines"
+        },
+        {
+          "label": "Запусков на заряде",
+          "spec": "starts"
+        },
+        {
+          "label": "Фонарь",
+          "spec": "lamp"
+        }
+      ],
+      "about": "Пусковое устройство со&nbsp;встроенным компрессором: пусковой ток до&nbsp;5&nbsp;000&nbsp;А, бензиновые моторы до&nbsp;8&nbsp;л и&nbsp;дизель до&nbsp;7&nbsp;л, более 20&nbsp;запусков на&nbsp;одном заряде. Фонарь 1&nbsp;000&nbsp;лм, USB и&nbsp;Type-C, дисплей.",
+      "gallery": [
+        {
+          "src": "/assets/img/deck/es99.jpg",
+          "w": 740,
+          "h": 921,
+          "bg": "dark",
+          "alt": "Пусковое устройство JOIM Easy Start ES-99 со шлангом компрессора"
+        },
+        {
+          "src": "/assets/img/deck/es99-kit.jpg",
+          "w": 1000,
+          "h": 760,
+          "bg": "dark",
+          "alt": "Комплект ES-99 в чехле: устройство, пусковые провода, шланг компрессора"
+        },
+        {
+          "src": "/assets/img/deck/es99-stage.jpg",
+          "w": 1258,
+          "h": 941,
+          "bg": "dark",
+          "alt": "ES-99 на тёмной сцене, общий план"
+        }
+      ],
+      "specs": [
+        {
+          "key": "current",
+          "name": "Пусковой ток",
+          "value": "до&nbsp;5&nbsp;000&nbsp;А"
+        },
+        {
+          "key": "compressor",
+          "name": "Компрессор",
+          "value": "встроенный"
+        },
+        {
+          "key": "engines",
+          "name": "Двигатели",
+          "value": "бензин до&nbsp;8&nbsp;л, дизель до&nbsp;7&nbsp;л"
+        },
+        {
+          "key": "starts",
+          "name": "Запусков на&nbsp;заряде",
+          "value": "более&nbsp;20"
+        },
+        {
+          "key": "lamp",
+          "name": "Фонарь",
+          "value": "1&nbsp;000&nbsp;лм"
+        },
+        {
+          "key": "ports",
+          "name": "Разъёмы",
+          "value": "USB и&nbsp;Type-C"
+        },
+        {
+          "key": "display",
+          "name": "Дисплей",
+          "value": "есть"
+        }
+      ],
+      "kit": [
+        "Чехол",
+        "Пусковое устройство",
+        "Пусковые провода",
+        "Переходники",
+        "Инструкция",
+        "Адаптер",
+        "Провод зарядки",
+        "Шланг компрессора"
+      ],
+      "usage": [
+        "Бензиновые моторы до&nbsp;8&nbsp;л",
+        "Дизель до&nbsp;7&nbsp;л",
+        "Подкачка колёс"
+      ]
+    },
+    {
+      "id": "pvc7",
+      "name": "Автомобильный пылесос JOIM PVC-7",
+      "short": "Автопылесос PVC-7",
+      "model": "PVC-7",
+      "type": "vacuum",
+      "cats": [
+        "pylesosy"
+      ],
+      "status": "soon",
+      "price": null,
+      "rating": null,
+      "reviews": null,
+      "badge": "Скоро",
+      "url": "/product/joim-pvc7/",
+      "ozonUrl": "https://www.ozon.ru/seller/gruppa-brendov-joim-gfy-goods-for-you/",
+      "wbUrl": "https://www.wildberries.ru/brands/19841883-joim",
+      "img": "/assets/img/deck/pvc7-body.jpg",
+      "w": 740,
+      "h": 760,
+      "alt": "Автомобильный пылесос JOIM PVC-7: компактный корпус с рукояткой",
+      "tile": {
+        "scale": 1.04,
+        "x": 2,
+        "y": 4,
+        "mod": "corner"
+      },
+      "stage": {
+        "src": "/assets/img/deck/pvc7-stage.jpg",
+        "w": 1672,
+        "h": 941,
+        "cx": 47,
+        "cy": 52,
+        "s": 0.82,
+        "fl": 7,
+        "fr": 7
+      },
+      "title": "Автомобильный пылесос JOIM PVC-7: скоро в продаже",
+      "description": "Автомобильный пылесос JOIM PVC-7: компактная конструкция, полный набор насадок и эргономичный кейс для хранения. Сообщим, когда модель появится в продаже.",
+      "specsHtml": "компактный формат&nbsp;· набор насадок&nbsp;· кейс",
+      "fields": [
+        {
+          "label": "Формат",
+          "spec": "format"
+        },
+        {
+          "label": "Комплектация",
+          "spec": "kitSet"
+        },
+        {
+          "label": "Хранение",
+          "spec": "storage"
+        }
+      ],
+      "about": "Компактная конструкция и&nbsp;полный набор насадок для&nbsp;уборки в&nbsp;автомобиле и&nbsp;дома. Устройство и&nbsp;аксессуары хранятся вместе в&nbsp;эргономичном кейсе.",
+      "gallery": [
+        {
+          "src": "/assets/img/deck/pvc7-body.jpg",
+          "w": 740,
+          "h": 760,
+          "bg": "dark",
+          "alt": "Автомобильный пылесос JOIM PVC-7 крупным планом"
+        },
+        {
+          "src": "/assets/img/deck/pvc7.jpg",
+          "w": 1300,
+          "h": 840,
+          "bg": "dark",
+          "alt": "PVC-7 с кейсом и насадками"
+        },
+        {
+          "src": "/assets/img/deck/pvc7-stage.jpg",
+          "w": 1672,
+          "h": 941,
+          "bg": "dark",
+          "alt": "PVC-7 на тёмной сцене, общий план"
+        }
+      ],
+      "specs": [
+        {
+          "key": "format",
+          "name": "Формат",
+          "value": "компактный"
+        },
+        {
+          "key": "kitSet",
+          "name": "Комплектация",
+          "value": "полная: насадки для&nbsp;разных сценариев уборки"
+        },
+        {
+          "key": "storage",
+          "name": "Хранение",
+          "value": "эргономичный кейс: устройство и&nbsp;аксессуары вместе"
+        }
+      ],
+      "kit": [
+        "Пылесос",
+        "Насадки для&nbsp;разных сценариев уборки",
+        "Эргономичный кейс"
+      ],
+      "usage": [
+        "Уборка в&nbsp;автомобиле",
+        "Уборка дома"
+      ]
+    },
+    {
+      "id": "pvc8",
+      "name": "Автомобильный пылесос JOIM PVC-8",
+      "short": "Автопылесос PVC-8",
+      "model": "PVC-8",
+      "type": "vacuum",
+      "cats": [
+        "pylesosy"
+      ],
+      "status": "soon",
+      "price": null,
+      "rating": null,
+      "reviews": null,
+      "badge": "Скоро",
+      "url": "/product/joim-pvc8/",
+      "ozonUrl": "https://www.ozon.ru/seller/gruppa-brendov-joim-gfy-goods-for-you/",
+      "wbUrl": "https://www.wildberries.ru/brands/19841883-joim",
+      "img": "/assets/img/deck/pvc8-body.jpg",
+      "w": 960,
+      "h": 600,
+      "alt": "Автомобильный пылесос JOIM PVC-8: ручной формат со съёмным контейнером",
+      "tile": {
+        "scale": 1.08,
+        "x": 2.5,
+        "y": -25,
+        "rot": -21,
+        "mod": "float"
+      },
+      "stage": {
+        "src": "/assets/img/deck/pvc8-stage.jpg",
+        "w": 1619,
+        "h": 971,
+        "cx": 51,
+        "cy": 50,
+        "s": 0.8,
+        "fl": 6,
+        "fr": 6
+      },
+      "title": "Автомобильный пылесос JOIM PVC-8: скоро в продаже",
+      "description": "Автомобильный пылесос JOIM PVC-8: ручной формат, съёмный контейнер, в комплекте кейс, шланг и насадки. Сообщим, когда модель появится в продаже.",
+      "specsHtml": "ручной формат&nbsp;· съёмный контейнер&nbsp;· кейс",
+      "fields": [
+        {
+          "label": "Формат",
+          "spec": "format"
+        },
+        {
+          "label": "Контейнер",
+          "spec": "container"
+        },
+        {
+          "label": "В комплекте",
+          "spec": "kitSet"
+        }
+      ],
+      "about": "Ручной формат, полный комплект и&nbsp;удобное хранение: в&nbsp;комплекте кейс, шланг и&nbsp;насадки. Съёмный контейнер: контейнер и&nbsp;фильтры легко извлекаются. Ручка и&nbsp;компактный корпус.",
+      "gallery": [
+        {
+          "src": "/assets/img/deck/pvc8-body.jpg",
+          "w": 960,
+          "h": 600,
+          "bg": "dark",
+          "alt": "Автомобильный пылесос JOIM PVC-8 крупным планом"
+        },
+        {
+          "src": "/assets/img/deck/pvc8.jpg",
+          "w": 1520,
+          "h": 890,
+          "bg": "dark",
+          "alt": "PVC-8 с кейсом, шлангом и насадками"
+        },
+        {
+          "src": "/assets/img/deck/pvc8-stage.jpg",
+          "w": 1619,
+          "h": 971,
+          "bg": "dark",
+          "alt": "PVC-8 на тёмной сцене, общий план"
+        }
+      ],
+      "specs": [
+        {
+          "key": "format",
+          "name": "Формат",
+          "value": "ручной, компактный корпус с&nbsp;ручкой"
+        },
+        {
+          "key": "container",
+          "name": "Контейнер",
+          "value": "съёмный, фильтры легко извлекаются"
+        },
+        {
+          "key": "kitSet",
+          "name": "В&nbsp;комплекте",
+          "value": "кейс, шланг и&nbsp;насадки"
+        }
+      ],
+      "kit": [
+        "Пылесос",
+        "Кейс",
+        "Шланг",
+        "Насадки"
+      ],
+      "usage": [
+        "Уборка в&nbsp;автомобиле"
+      ]
+    }
+  ],
+  "reviews": [
+    {
+      "product": "es19",
+      "name": "Константин",
+      "date": "2026-06-16",
+      "text": "Это просто выручалка!!! Очень часто забываю выключить фары, и естественно разряжается аккумулятор, эта штука заводит про то бомба!! Спасибо большое!"
+    },
+    {
+      "product": "es29",
+      "name": "Геннадий",
+      "date": "2026-07-19",
+      "text": "Отличное пусковое. Уже пришлось попробовать. Результат вообще класс шкоду фабиа завёл на мертвом аккумуляторе с полу оборота. Ну я думаю и помощней технику заведёт без проблем."
+    },
+    {
+      "product": "es19",
+      "name": "Роман",
+      "date": "2026-06-02",
+      "text": "Авто w203 2.7 cdi. В морозы подсаженый акум. Зарядного хватило на 2 запуска. При 20. Градусах бензинка с мертвым акумом соседа завелась практически сразу. Акум взял только 4 %."
+    },
+    {
+      "product": "es19",
+      "name": "Вячеслав",
+      "date": "2026-05-11",
+      "text": "Запускает. Очень помогла в прошедшую зиму. Пузотерки по 4-5 штук за утро. У меня внедорожник - легко!"
+    },
+    {
+      "product": "es19",
+      "name": "Юлия",
+      "date": "2026-05-07",
+      "text": "Ооочень !нужная вещь!!! 5 минут- и машина снова на ходу без посторонней помощи. Заказала мужу, теперь взяла второй уже для себя ."
+    },
+    {
+      "product": "es19",
+      "name": "Оксана",
+      "date": "2026-05-07",
+      "text": "Просто лучшая покупка за последние полгода. Машина стала как новее. Ездишь и не паришься: хоть музыку слушай хоть зарядку телефона оставь - знаешь что в багажнике лежит Джоим и в любой момент даст искру. Вещь обязательная как огнетушитель и знак аварийной остановки. Joim ES‑19 однозначно 5 баллов!"
+    },
+    {
+      "product": "es19",
+      "name": "Варя",
+      "date": "2026-05-05",
+      "text": "Думаете летом не нужен? Очень нужен. Забыла включить вентилятор охлаждения на стоянке сел аккумулятор в ноль. Жара 35 градусов. Joim завёл без проблем. А ещё встроенный фонарик очень выручил ночью у моря искала ключи в песке. Устройство на все сезоны. Не только морозилка."
+    },
+    {
+      "product": "es29",
+      "name": "Анна",
+      "date": "2026-02-04",
+      "text": "Отличная вещь,рекомендую, отработав в ночь утром запустила машину без проблем,и не только свою,мужики попросили сылку на такую класную вещ"
+    },
+    {
+      "product": "es29",
+      "name": "Наталья",
+      "date": "2026-01-28",
+      "text": "Отличное пусковое устройство!Муж запускал аккумулятор на машине, в сильные морозы.Я использую как зарядное устройство для часов и телефона.Пришло все упакованное. Очень красивый ,приятный чехол .Инструкция на русском языке. Мощный фонарик. Покупкой очень довольны!!!"
+    },
+    {
+      "product": "pvc1",
+      "name": "Ксения",
+      "date": "2026-07-16",
+      "text": "Крутой пылесос для быстрой поверхностной уборки. В машине ездит собака, от нее много шерсти. Пылесос справляется, есть разные насадки. Очень удобно что аккумуляторный, заряда хватает на 2-3 раза полностью пропылесосить машину, с коврами, багажником и прочим мусором. Было важно наличие узкой части, чтоб пролезать между сидениями. Приходит в чехле-кейса. В целом за свои деньги огонь."
+    },
+    {
+      "product": "pvc1",
+      "name": "Нона",
+      "date": "2026-04-22",
+      "text": "Лучше один JOIM чем три ноунейма. Брала до этого пылесос за 800 рублей на заправке. Хватило на две уборки мотор сгорел от крошек. Этот JOIM собран на совесть: корпус из алюминия а не крашеный пластик бесщеточный двигатель не боится перегрузок. Тянет отлично даже шерсть таксы с ворса ковриков собирает"
+    },
+    {
+      "product": "pvc1",
+      "name": "Эля",
+      "date": "2026-04-22",
+      "text": "Хватает на полную уборку салона и багажника. Зарядила до полного успела пропылесосить оба ряда коврики багажник и ещё дверные карманы. В конце оставалось одно деление. 40 минут – честное время не завышенное. Для кроссовера самое то. JOIM не обманывает в характеристиках проверено на двух их устройствах."
+    }
+  ],
+  "jumpSteps": [
+    "Подключить кабель с&nbsp;клеммами к&nbsp;пусковому устройству.",
+    "Красный зажим на&nbsp;плюс аккумулятора, чёрный на&nbsp;минус.",
+    "Включить устройство, подождать десять секунд и&nbsp;повернуть ключ.",
+    "Выключить устройство и&nbsp;вынуть кабель из&nbsp;гнезда.",
+    "Снять зажимы: сначала чёрный, потом красный."
+  ]
+}

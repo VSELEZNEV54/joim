@@ -1,0 +1,27 @@
+<header class="header" data-header>
+  <div class="container header__in">
+    <a class="logo" href="/" aria-label="JOIM: на главную">
+      <svg class="logo__mark" aria-hidden="true" focusable="false"><use href="#i-mark"/></svg>
+      <span class="logo__word">JOIM</span>
+    </a>
+    <nav class="nav" aria-label="Разделы магазина">
+      <a class="nav__link" href="/catalog/puskovye-ustroystva/" data-nav-key="puskovye">Пусковые устройства</a>
+      <a class="nav__link" href="/catalog/avtopylesosy/" data-nav-key="pylesosy">Автопылесосы</a>
+      <a class="nav__link" href="/podbor/" data-nav-key="podbor">Подбор по&nbsp;машине</a>
+      <a class="nav__link" href="/compare/es19-vs-es29/" data-nav-key="compare">Сравнение</a>
+      <a class="nav__link" href="/reviews/" data-nav-key="reviews">Отзывы</a>
+      <a class="nav__link" href="/gifts/" data-nav-key="gifts">Подарки</a>
+      <a class="nav__link" href="/blog/" data-nav-key="blog">Блог</a>
+    </nav>
+    <div class="header__tools">
+      <button class="cart-btn" type="button" data-dialog-open="cart" data-cart-button aria-haspopup="dialog" aria-label="Корзина: пусто">
+        {{icon cart}}
+        <span class="cart-btn__label">Корзина</span>
+        <span class="cart-btn__count" data-cart-count hidden>0</span>
+      </button>
+      <button class="icon-btn burger" type="button" data-dialog-open="menu" aria-haspopup="dialog" aria-expanded="false" aria-label="Открыть меню">
+        {{icon menu}}
+      </button>
+    </div>
+  </div>
+</header>

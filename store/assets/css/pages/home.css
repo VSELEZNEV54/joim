@@ -1,0 +1,272 @@
+/* home: главная. Порядок как на странице: первый экран со строкой показателей · популярные · мозаика каталога · о бренде ·
+   преимущества · отзывы и «JOIM в деле» · оплата, доставка, гарантия · вопросы · опт. Общие компоненты лежат в main.css.
+   Страница тёмная; светлые здесь только карточки: «о бренде», преимущества, отзывы, оплата и доставка, оптовая форма. */
+
+/* ---------- 1. Первый экран ----------
+   Сцена чуть светлее страницы: крупные мягкие волны-лепестки тон в тон (формы из знака JOIM), тонкая сетка, светлое пятно за товаром.
+   ES-19 стоит в ракурсе три четверти над линией показателей. Высота экрана равна высоте окна: показатели видны без прокрутки. */
+.hero { position: relative; display: flex; flex-direction: column; min-height: clamp(640px, calc(100svh - var(--topbar-h)), 1080px); padding-top: var(--header-h); background: #111413; overflow: hidden; isolation: isolate; }
+.hero__scene { position: absolute; inset: 0; z-index: -1; }
+/* низ сцены уходит в цвет страницы: на высоких окнах, где первый экран ниже окна, у него нет видимой кромки */
+.hero__scene::after { content: ""; position: absolute; inset: auto 0 0; height: 26%; background: linear-gradient(0deg, var(--bg) 0, rgba(10, 12, 11, 0) 100%); }
+.hero__waves { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hero__wave--a { fill: rgba(255, 255, 255, .038); }
+.hero__wave--c { fill: rgba(255, 255, 255, .05); }
+.hero__wave--b { fill: rgba(0, 0, 0, .3); }
+.hero__wave--d { fill: rgba(0, 0, 0, .34); }
+.hero__grid {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(255, 255, 255, .04) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .04) 1px, transparent 1px);
+  background-size: clamp(96px, 8.3333vw, 160px) clamp(96px, 8.3333vw, 160px); background-position: 50% 0;
+  -webkit-mask-image: radial-gradient(ellipse 62% 78% at 70% 46%, #000 12%, transparent 78%); mask-image: radial-gradient(ellipse 62% 78% at 70% 46%, #000 12%, transparent 78%);
+}
+.hero__glow { position: absolute; left: 50%; top: 4%; width: 46%; height: 84%; background: radial-gradient(closest-side, rgba(255, 255, 255, .075), rgba(255, 255, 255, 0)); }
+.hero__in { position: relative; flex: 1; display: flex; align-items: center; }
+.hero__copy { position: relative; z-index: 1; width: min(100%, 60%); padding-block: clamp(28px, 5vh, 64px); }
+.hero__title { max-width: 16.4em; font-size: clamp(46px, 3.4vw, 54px); font-weight: 600; line-height: 1.1; letter-spacing: -.02em; }
+.hero__typed { color: var(--text-3); }
+.type__rest { color: transparent; }
+.type__caret { margin-right: -2px; border-left: 2px solid var(--accent); animation: caret 1s steps(1) infinite; }
+/* печать закончена: каретка мигает ещё три раза и гаснет (мигание дольше пяти секунд без остановки недопустимо) */
+.is-typed .type__caret { animation-iteration-count: 3; animation-fill-mode: forwards; }
+@keyframes caret { 50%, 100% { opacity: 0; } }
+.hero__text { max-width: 34em; margin-top: clamp(20px, 2.6vh, 28px); font-size: 16px; line-height: 1.5; color: var(--text-2); text-wrap: pretty; }
+.hero__plaques { display: flex; flex-wrap: wrap; gap: 8px 10px; margin-top: clamp(20px, 2.6vh, 28px); }
+.hero__btn { min-width: 232px; margin-top: clamp(24px, 3.4vh, 36px); }
+/* товар: вырезка 564×1200 на прозрачном фоне, высота по свободному месту экрана, но не больше 1,15 от исходной (иначе мылится) */
+.hero__product { position: absolute; z-index: 0; left: 54%; right: 2%; top: 0; bottom: clamp(20px, 3vh, 36px); display: grid; grid-template: minmax(0, 1fr) / 100%; justify-items: center; pointer-events: none; }
+.hero__product img { position: relative; z-index: 1; width: auto; height: 100%; max-height: 1380px; max-width: none; filter: drop-shadow(0 30px 40px rgba(0, 0, 0, .45)); }
+.hero__shadow { position: absolute; left: 50%; bottom: -26px; width: min(120%, 560px); height: 64px; transform: translateX(-50%); background: radial-gradient(closest-side, rgba(0, 0, 0, .7), rgba(0, 0, 0, 0)); }
+.hero__bottom { position: relative; z-index: 1; padding-bottom: clamp(24px, 4vh, 44px); }
+
+/* ---------- 2–3. Популярные и мозаика каталога ---------- */
+.home-cap::first-letter { text-transform: uppercase; }
+.home-catalog__all { display: grid; place-items: center; width: 44px; height: 44px; margin-right: -10px; color: var(--text-3); transition: color .2s; }
+.home-catalog__all:hover { color: var(--accent); }
+.home-catalog__all .icon { width: 26px; height: 26px; }
+.mosaic { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.mosaic__cell--3 { grid-column: span 2; }
+.mosaic__cell--2 { grid-column: span 3; }
+.mosaic .cat-tile { height: 100%; min-height: 0; }
+.mosaic__cell--3 .cat-tile { aspect-ratio: 452 / 470; }
+.mosaic__cell--2 .cat-tile { aspect-ratio: 680 / 380; }
+/* плитка с комплектом: кадр стоит справа внизу целиком */
+/* подложка кадра чуть темнее страницы: режим lighten оставляет от неё только то, что светлее фона плитки */
+.cat-tile--kit .cat-tile__img { inset: auto 3% 5% auto; width: 60%; height: 84%; object-fit: contain; object-position: 100% 100%; mix-blend-mode: lighten; --fl: 10%; --fr: 6%; --fb: 6%; --ft: 5%; }
+.cat-tile--kit .cat-tile__note { max-width: 15em; }
+/* плитка сравнения: два кадра рядом */
+.cat-tile__duo { position: absolute; inset: 0; z-index: -2; display: flex; align-items: flex-end; justify-content: flex-end; padding: 0 4% 3% 0; transition: transform .7s var(--ease); }
+.cat-tile__duo img { flex: none; width: auto; height: 70%;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 24%, #000 76%, transparent 100%), linear-gradient(180deg, transparent 0, #000 22%, #000 90%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 24%, #000 76%, transparent 100%), linear-gradient(180deg, transparent 0, #000 22%, #000 90%, transparent 100%);
+  -webkit-mask-composite: source-in; mask-composite: intersect; }
+.cat-tile__duo img + img { margin-left: -7%; }
+.cat-tile--duo:hover .cat-tile__duo { transform: scale(1.04); }
+
+/* ---------- 4. О бренде ----------
+   Фото под капотом во всю ширину окна сдвинуто влево, чтобы устройство целиком стояло левее карточки; открывшуюся справа
+   полосу закрывает градиент в цвет страницы. Поверх лежит светлая карточка с уголками. */
+.home-about { position: relative; display: flex; min-height: clamp(760px, 56vw, 980px); background: var(--bg); overflow: hidden; isolation: isolate; --gridline-y: 56%; }
+.home-about__bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 30% 50%; transform: translateX(-14%); filter: brightness(1.2) contrast(1.05); }
+.home-about::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(270deg, var(--bg) 0, var(--bg) 13%, transparent 34%), linear-gradient(0deg, rgba(10, 12, 11, .78) 0, transparent 42%), linear-gradient(180deg, var(--bg-2) 0, transparent 14%); }
+.home-about__in { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; padding-block: 120px 72px; }
+.home-docs { display: flex; gap: 28px; }
+.home-doc { display: block; width: clamp(132px, 10vw, 168px); font-size: 13.5px; line-height: 1.3; color: var(--text); }
+.home-doc img { width: 100%; aspect-ratio: 132 / 180; object-fit: cover; object-position: 50% 0; margin-bottom: 12px; background: #fff; border: 4px solid #fff; border-radius: 2px; transition: transform .3s var(--ease); }
+.home-doc:hover img { transform: translateY(-4px); }
+.home-about__card { flex: none; width: min(100%, clamp(528px, 40vw, 640px)); margin-bottom: 40px; }
+.home-about__text { display: grid; gap: 14px; margin: 28px 0 28px; font-size: 15px; line-height: 1.55; }
+
+/* ---------- 5. Преимущества: четыре светлые карточки с чертежами ---------- */
+.home-why__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gap); }
+.home-why .bp-card { min-height: clamp(470px, 34vw, 600px); }
+.home-why .bp-card__art { width: clamp(250px, 76%, 340px); right: -22px; bottom: -64px; }
+.home-why li:nth-child(2) .bp-card__art { width: clamp(270px, 82%, 360px); right: -30px; bottom: -64px; }
+.home-why li:nth-child(3) .bp-card__art { width: clamp(290px, 88%, 380px); right: -70px; bottom: -40px; }
+.home-why li:nth-child(4) .bp-card__art { width: clamp(270px, 82%, 360px); right: -36px; bottom: -66px; }
+
+/* ---------- 6. Отзывы ---------- */
+.home-reviews { padding: var(--section) 0; overflow: hidden; }
+.home-reviews__quote { max-width: 13em; }
+.home-reviews__author { margin-top: 14px; font-size: 14px; color: var(--text-2); }
+.home-reviews__bar { display: flex; align-items: center; gap: 16px 40px; flex-wrap: wrap; margin-top: 32px; padding: 24px 0 36px; border-top: 1px solid var(--line); }
+.home-reviews__sub { font-size: 14.5px; color: var(--text-2); max-width: 17em; }
+.home-reviews__rating { display: flex; align-items: center; gap: 10px; font-size: 14.5px; color: var(--text-2); }
+.home-reviews__rating b { color: var(--text); font-weight: 600; }
+.home-reviews__nav { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.home-reviews__nav .btn { margin-right: 8px; }
+.home-reviews__rail { padding-left: var(--gutter); }
+.home-reviews__track { --slider-gap: 12px; padding-right: var(--gutter); scroll-padding-left: 0; }
+.home-reviews__track > li { width: clamp(400px, 30vw, 520px); max-width: calc(100vw - 2 * var(--gutter) - 24px); }
+.home-reviews .review-card { min-height: 356px; padding: 24px; }
+/* строка товара в карточке отзыва: миниатюра и название */
+.home-review__prod a { display: flex; align-items: center; gap: 12px; }
+.home-review__prod .mini-tile { width: 48px; height: 48px; }
+.home-review__prod + .review-card__name { margin-top: 10px; }
+.home-action { margin-top: 72px; padding-top: 40px; border-top: 1px solid var(--line); }
+.home-action__head { display: flex; align-items: baseline; gap: 12px 32px; flex-wrap: wrap; margin-bottom: 28px; }
+.home-action__title { font-size: 24px; line-height: 1.2; }
+.home-action__text { font-size: 14.5px; color: var(--text-2); }
+.home-action__list { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--gap); }
+.home-shot__media { display: block; aspect-ratio: 9 / 14; border-radius: var(--r); background: var(--surface); overflow: hidden; }
+.home-shot img { width: 100%; height: 100%; object-fit: cover; filter: brightness(1.08); }
+/* горизонтальный кадр блогера: в окне остаётся рука с устройством на фоне машины, номерной знак уходит за нижний край */
+.home-shot--review img { object-position: 74% 50%; transform: scale(1.2); transform-origin: 62% 12%; }
+/* в кадре вшиты титры сверху и снизу: увеличиваем и сдвигаем, чтобы они ушли за край окна */
+.home-shot--hood img { object-position: 50% 62%; transform: scale(1.16); }
+.home-shot figcaption { margin-top: 12px; font: 400 12px/1.4 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--text-3); }
+
+/* ---------- 7. Оплата, доставка, гарантия: три светлые карточки с чертежами ---------- */
+.home-service__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
+.home-service .bp-card { min-height: clamp(600px, 44vw, 760px); padding: 28px; }
+.home-service .bp-card__title { font-size: 22px; }
+.home-service .bp-card__text, .home-service .bp-card__list { max-width: 26em; }
+.home-service .bp-card__text--note { margin-top: 12px; color: var(--text-2); }
+.home-service .bp-card__art { width: clamp(330px, 62%, 460px); right: 20px; bottom: -78px; }
+/* карта: вся страна от Калининграда до Чукотки внутри карточки */
+.home-service .bp-card--map .bp-dots { stroke-opacity: .68; }
+.home-service .bp-card--map .bp-card__art { width: min(100% - 8px, clamp(430px, 84%, 640px)); max-width: none; right: 4px; bottom: 86px; }
+.home-service li:nth-child(3) .bp-card__art { width: clamp(330px, 62%, 460px); right: 6px; bottom: -36px; }
+
+/* ---------- 8. Вопросы: заголовок и кнопка слева, аккордеон справа ---------- */
+.home-faq__in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); grid-template-areas: "title list" "more list"; grid-template-rows: auto 1fr; gap: 32px clamp(32px, 5vw, 96px); align-items: start; }
+.home-faq__title { grid-area: title; max-width: 11em; }
+.home-faq__list { grid-area: list; max-width: 1100px; }
+.home-faq__more { grid-area: more; display: grid; justify-items: start; gap: 14px; font-size: 15px; color: var(--text-2); }
+.home-faq__more .btn { min-width: 220px; }
+.home-faq__all { padding: 12px 0; margin-top: -6px; font-size: 14px; color: var(--text-2); }
+
+/* ---------- 9. Опт ----------
+   Тёмная сцена: справа крупный чертёж партии на поддоне светлыми линиями, слева светлая карточка-форма с уголками. */
+.home-opt { position: relative; padding: var(--section) 0; background: var(--bg); overflow: hidden; isolation: isolate; --gridline-y: 60%; }
+.home-opt__art { position: absolute; z-index: -1; right: calc(var(--gutter) + clamp(0px, 8vw, 220px)); bottom: -64px; width: clamp(420px, 38vw, 720px); height: auto; color: var(--bp); --bp-paper: var(--bg); overflow: visible; pointer-events: none; }
+.home-opt__card { width: min(100%, 624px); }
+.home-opt__lead { margin-top: 8px; font-size: 15px; line-height: 1.45; max-width: 27em; }
+.home-opt__tel { margin-bottom: 14px; font-size: 14.5px; color: var(--text-2); }
+.home-opt__tel a { color: var(--text); font-weight: 500; white-space: nowrap; }
+.home-opt .form__success { justify-items: start; }
+
+/* ---------- Адаптив ---------- */
+/* очень широкое окно (от 2000 px): мозаика растёт числом колонок, восемь плиток встают 4 + 4, иначе блок занимал бы два экрана */
+@media (min-width: 2000px) {
+  .mosaic { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .mosaic__cell--3, .mosaic__cell--2 { grid-column: span 1; }
+  .mosaic__cell--3 .cat-tile, .mosaic__cell--2 .cat-tile { aspect-ratio: 1 / 1; }
+  .cat-tile--kit .cat-tile__img { width: 78%; height: 62%; }
+}
+/* невысокое окно ноутбука: первый экран с показателями помещается целиком */
+@media (min-width: 901px) and (max-height: 780px) {
+  .hero__copy { padding-block: 20px; }
+  .hero__text { font-size: 15px; }
+  .hero__bottom { padding-bottom: 20px; }
+  .hero .stats { padding-top: 20px; }
+  .hero .stat__value { font-size: 36px; }
+  .hero .stat__label { margin-top: 10px; }
+}
+@media (max-width: 1280px) {
+  .home-why .bp-card { min-height: 480px; }
+  .home-service .bp-card__art { right: -10px; }
+  .home-service .bp-card--map .bp-card__art { right: 4px; }
+}
+@media (max-width: 1100px) {
+  .hero__title { font-size: 40px; }
+  .hero__copy { width: 60%; }
+  .hero__product { left: 58%; right: 0; }
+  .mosaic { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mosaic__cell--3, .mosaic__cell--2 { grid-column: span 1; }
+  .mosaic__cell--m-wide { grid-column: 1 / -1; }
+  .mosaic .cat-tile { aspect-ratio: 1 / 1.1; }
+  .mosaic__cell--m-wide .cat-tile { aspect-ratio: 16 / 9; }
+  /* половинные плитки: рендер занимает нижние 4/5, название и подпись стоят над ним, а не на корпусе */
+  .mosaic__cell--3:not(.mosaic__cell--m-wide) .cat-tile__img { top: auto; height: 80%; }
+  /* о бренде в столбик: фото отдельной полосой сверху, карточка наезжает на его низ, документы под карточкой */
+  .home-about { display: block; min-height: 0; }
+  .home-about__bg { position: relative; inset: auto; display: block; height: auto; aspect-ratio: 16 / 9; object-position: 50% 50%; transform: none; }
+  .home-about::before { inset: 0 0 auto; aspect-ratio: 16 / 9; background: linear-gradient(0deg, var(--bg) 0, transparent 36%); }
+  .home-about .gridlines { bottom: auto; aspect-ratio: 16 / 9; }
+  .home-about__in { flex-direction: column-reverse; align-items: stretch; padding-block: 0 56px; gap: 44px; }
+  .home-about__card { align-self: flex-end; width: min(100%, 600px); margin: -96px 0 0; }
+  .home-why__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .home-why .bp-card { min-height: 400px; }
+  .home-service__grid { grid-template-columns: minmax(0, 1fr); }
+  .home-service .bp-card { min-height: 420px; }
+  .home-service .bp-card__text, .home-service .bp-card__list { max-width: min(26em, 46%); }
+  .home-service .bp-card__art, .home-service li:nth-child(3) .bp-card__art { width: 330px; }
+  .home-service .bp-card--map .bp-card__art { width: min(480px, 50%); right: 16px; bottom: 96px; }
+  .home-action__list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px var(--gap); }
+  .home-opt__art { right: -40px; width: min(480px, 46vw); }
+}
+@media (max-width: 900px) {
+  /* первый экран в столбик: текст, под ним товар, ниже показатели 2×2 */
+  .hero { min-height: 0; }
+  .hero__in { flex-direction: column; align-items: stretch; }
+  .hero__copy { width: 100%; padding-block: 32px 8px; }
+  .hero__title { max-width: 15em; }
+  .hero__product { position: relative; left: auto; right: auto; top: auto; bottom: auto; height: min(118vw, 520px); margin: 16px 0 36px; }
+  .hero__glow { left: 10%; top: 38%; width: 80%; height: 50%; }
+  .hero__grid { -webkit-mask-image: radial-gradient(ellipse 90% 46% at 50% 58%, #000 12%, transparent 80%); mask-image: radial-gradient(ellipse 90% 46% at 50% 58%, #000 12%, transparent 80%); }
+  .home-faq__in { grid-template-columns: minmax(0, 1fr); grid-template-areas: "title" "list" "more"; gap: 24px; }
+  .home-faq__title { max-width: none; }
+  .home-faq__more { margin-top: 8px; }
+}
+@media (max-width: 767px) {
+  .hero__copy { padding-top: 28px; }
+  .hero__title { font-size: 31px; line-height: 1.12; max-width: none; }
+  .hero__text { margin-top: 18px; font-size: 15px; }
+  .hero__plaques { margin-top: 20px; gap: 8px; }
+  .hero__btn { width: 100%; margin-top: 24px; }
+  .hero__product { height: min(112vw, 460px); margin: 20px 0 32px; }
+  .hero__bottom { padding-bottom: 32px; }
+  .mosaic .cat-tile { aspect-ratio: 1 / 1.24; }
+  .mosaic__cell--m-wide .cat-tile { aspect-ratio: 1 / .62; }
+  /* половинные плитки: подпись скрыта, рендер занимает нижние 4/5, чтобы название читалось */
+  .mosaic__cell--3:not(.mosaic__cell--m-wide) .cat-tile__note { display: none; }
+  .mosaic__cell--3:not(.mosaic__cell--m-wide) .cat-tile__img { top: auto; height: 78%; --fl: 14%; }
+  .mosaic__cell--3:not(.mosaic__cell--m-wide) .cat-tile__duo img { height: 56%; }
+  /* узкий телефон (до 389 px): у широких плиток название и подпись идут узкой колонкой слева и не ложатся на рендер */
+  @media (max-width: 389px) {
+    .mosaic__cell--m-wide .cat-tile { aspect-ratio: 1 / .74; }
+    .mosaic__cell--m-wide .cat-tile__title { max-width: 9.6em; }
+    .mosaic__cell--m-wide .cat-tile__note { max-width: 11em; }
+    .mosaic__cell--m-wide .cat-tile:not(.cat-tile--kit) .cat-tile__img { --fl: 44%; }
+  }
+  /* комплект стоит под названием, подпись узкой колонкой слева: текст и зажимы не пересекаются */
+  .cat-tile--kit .cat-tile__img { width: 66%; height: 80%; right: 0; }
+  .cat-tile--kit .cat-tile__note { max-width: 10.5em; }
+  @media (max-width: 389px) { .cat-tile--kit .cat-tile__img { width: 56%; height: 64%; right: 2%; } }
+  .home-about__bg, .home-about::before, .home-about .gridlines { aspect-ratio: 4 / 3; }
+  .home-about__bg { object-position: 56% 50%; }
+  .home-about__in { padding-block: 0 40px; gap: 32px; }
+  .home-about__card { width: 100%; margin-top: -48px; }
+  .home-about__text { margin: 20px 0 24px; }
+  .home-docs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .home-doc { width: auto; max-width: 132px; font-size: 12.5px; }
+  .home-why__grid { grid-template-columns: minmax(0, 1fr); }
+  .home-why .bp-card { min-height: 380px; }
+  .home-why .bp-card__art, .home-why li:nth-child(n) .bp-card__art { width: 240px; right: -16px; bottom: -72px; }
+  .home-why li:nth-child(1) .bp-card__art { bottom: -100px; }
+  .home-why li:nth-child(3) .bp-card__art { width: 260px; right: -56px; bottom: -76px; }
+  .home-reviews__bar { margin-top: 24px; padding: 20px 0 24px; gap: 12px 24px; }
+  .home-reviews__nav { margin-left: 0; width: 100%; }
+  .home-reviews__nav .btn { margin-right: auto; }
+  .home-reviews__track > li { width: min(330px, calc(100vw - 2 * var(--gutter) - 28px)); max-width: none; }
+  /* на телефоне строка товара с миниатюрой уходит в подвал карточки (над датой): у короткого отзыва свободное место
+     оказывается между текстом и подвалом, карточка не выглядит недозаполненной */
+  .home-reviews .review-card { min-height: 248px; padding: 20px 20px 18px; }
+  .home-review__prod { order: 5; margin-top: auto; padding-top: 14px; border-top: 1px solid var(--line); }
+  .home-review__prod + .review-card__name { margin-top: 0; }
+  .home-reviews .review-card__date { order: 6; margin-top: 0; padding-top: 0; }
+  /* самый длинный отзыв на телефоне не показываем (он есть на странице отзывов): из-за него вся лента была бы на треть выше */
+  .home-reviews__long { display: none; }
+  .home-action { margin-top: 48px; padding-top: 32px; }
+  .home-action__list { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); scroll-padding-inline: var(--gutter); }
+  .home-action__list::-webkit-scrollbar { display: none; }
+  .home-action__list > li { flex: none; width: 46%; scroll-snap-align: start; }
+  .home-service .bp-card { min-height: 520px; padding: 20px; }
+  .home-service .bp-card__text, .home-service .bp-card__list { max-width: none; }
+  .home-service .bp-card__art, .home-service li:nth-child(3) .bp-card__art { width: 280px; right: -30px; bottom: -80px; }
+  .home-service .bp-card--map { min-height: 500px; }
+  .home-service .bp-card--map .bp-card__art { width: calc(100% - 8px); right: 4px; bottom: 84px; }
+  /* чертёж выглядывает над карточкой */
+  .home-opt { padding: 188px 0 56px; --gridline-y: 150px; }
+  .home-opt__art { top: -34px; bottom: auto; right: -44px; width: 300px; }
+}

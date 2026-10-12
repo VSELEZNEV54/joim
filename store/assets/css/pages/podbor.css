@@ -1,0 +1,241 @@
+/* podbor: подбор по машине. Порядок как на странице: заголовок · виджет (светлая карточка с тремя вопросами и результат
+   на тёмной странице) · «Как мы считаем» (светлая карточка с чертежом и шпаргалка) · плитки-ссылки · нижняя панель покупки.
+   Страница тёмная; светлые здесь только карточки с чертежами. Все классы страницы начинаются с pick-. */
+.page-podbor {
+  --pick-form: clamp(380px, 36vw, 620px);  /* ширина карточки с вопросами: на 1920 и 2560 форма не растягивается */
+}
+
+/* ---------- Заголовок ---------- */
+.pick-head { padding-bottom: 32px; }
+
+/* ---------- Виджет ---------- */
+.pick { display: grid; grid-template-columns: minmax(0, var(--pick-form)) minmax(0, 1fr); gap: var(--gap); }
+
+/* вопросы: светлая карточка. Вопросы стоят от верхнего края, низ карточки отдан чертежу устройства (срезан нижним краем, как в карточках bp-card) */
+.pick__form { position: relative; display: flex; flex-direction: column; justify-content: flex-start; gap: 34px; min-width: 0; padding: 36px 36px 40px; border-radius: var(--r); background: linear-gradient(165deg, #EEF1F0 0%, #F8FAF9 46%, #E8ECEA 100%); overflow: hidden; isolation: isolate; }
+/* чертёж привязан к верху карточки и начинается сразу под вопросами: на любой высоте карточки он не заходит под подсказку, низ срезает край */
+.pick__art { position: absolute; right: -14px; top: 424px; z-index: -1; width: 264px; height: auto; color: var(--bp); opacity: .9; pointer-events: none; }
+.pick-q { min-width: 0; margin: 0; padding: 0; border: 0; }
+.pick-q__label { display: block; padding: 0; font-size: 17px; font-weight: 600; line-height: 1.25; letter-spacing: -.01em; color: var(--text); }
+.pick-q__control { margin-top: 14px; }
+.pick-q__hint { margin-top: 12px; font-size: 13.5px; line-height: 1.45; color: var(--text-2); }
+
+/* выбор из двух: пилюли, выбранная тёмная */
+.pick-seg { display: flex; flex-wrap: wrap; gap: 8px; }
+.pick-seg__opt { position: relative; display: inline-flex; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.pick-seg__opt input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.pick-seg__label {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 0 24px; border-radius: var(--pill);
+  background: var(--surface); color: var(--text); box-shadow: inset 0 0 0 1px var(--line); font: 500 15px/1.1 var(--font); white-space: nowrap;
+  transition: background-color .2s, color .2s, box-shadow .2s;
+}
+.pick-seg__opt:hover .pick-seg__label { background: var(--accent); color: var(--on-accent); box-shadow: none; }
+.pick-seg__opt input:checked + .pick-seg__label { background: var(--text); color: var(--bg); box-shadow: none; }
+.pick-seg__opt input:focus-visible + .pick-seg__label { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* объём: подпись и число с кнопками «меньше / больше», ниже ползунок со шкалой */
+.pick-volume__head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.pick-volume__stepper { flex: none; background: var(--surface); border-color: var(--line); border-radius: var(--pill); overflow: hidden; }
+.pick-volume__stepper .qty__btn { width: 46px; }
+.pick-volume__stepper .qty__btn:hover:not(:disabled) { background: var(--accent); color: var(--on-accent); }
+.pick-volume__stepper .qty__val { min-width: 62px; font-size: 15px; font-weight: 600; white-space: nowrap; }
+.pick-range { display: block; width: 100%; height: 44px; margin: 6px 0 0; background: transparent; cursor: pointer; -webkit-appearance: none; appearance: none; -webkit-tap-highlight-color: transparent; }
+.pick-range::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: linear-gradient(90deg, var(--text) var(--val, 11%), var(--line-strong) var(--val, 11%)); }
+.pick-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 24px; height: 24px; margin-top: -10px; border: 2px solid var(--text); border-radius: 50%; background: var(--accent); transition: transform .2s var(--ease); }
+.pick-range::-moz-range-track { height: 4px; border-radius: 2px; background: var(--line-strong); }
+.pick-range::-moz-range-progress { height: 4px; border-radius: 2px; background: var(--text); }
+.pick-range::-moz-range-thumb { box-sizing: border-box; width: 24px; height: 24px; border: 2px solid var(--text); border-radius: 50%; background: var(--accent); }
+.pick-range:hover::-webkit-slider-thumb, .pick-range:active::-webkit-slider-thumb { transform: scale(1.12); }
+.pick-range:focus-visible { outline: none; }
+.pick-range:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--focus); outline-offset: 3px; }
+.pick-range:focus-visible::-moz-range-thumb { outline: 2px solid var(--focus); outline-offset: 3px; }
+.pick-scale { position: relative; height: 18px; margin: -4px 12px 0; font-size: 13px; line-height: 18px; color: var(--text-2); font-variant-numeric: tabular-nums; }
+.pick-scale span { position: absolute; top: 0; left: var(--at); transform: translateX(-50%); white-space: nowrap; }
+.pick-scale span:first-child { transform: translateX(-12px); }
+.pick-scale span:last-child { left: auto; right: -12px; transform: none; }
+
+/* результат: текст слева, рендер модели справа стоит прямо на странице (сцена .stage, края кадра растворены);
+   вокруг тонкая линия. Высота не растёт вместе с шириной окна */
+.pick-result { position: relative; display: flex; min-width: 0; min-height: clamp(540px, 41vw, 640px); border-radius: var(--r); box-shadow: inset 0 0 0 1px var(--line); overflow: hidden; isolation: isolate; }
+.pick-result__media { position: absolute; inset: 0 0 0 36%; z-index: -1; --ax: 58%; --ay: 51%; }
+.pick-result__media .stage__link { inset: 5% 0 4%; }
+.pick-result__media img { opacity: 0; transition: opacity .45s var(--ease); }
+.pick-result__media img.is-active { opacity: 1; }
+.pick-result__body { display: flex; flex-direction: column; justify-content: space-between; gap: 28px; width: min(56%, 500px); padding: 36px 0 36px 36px; }
+.pick-result__label { margin-bottom: 12px; }
+.pick-model__name { font-size: clamp(28px, 2.3vw, 36px); font-weight: 600; line-height: 1.12; letter-spacing: -.02em; }
+.pick-model__name a { position: relative; transition: color .2s; }
+.pick-model__name a::after { content: ""; position: absolute; inset: -6px 0; } /* зона касания 44 px */
+.pick-model__name a:hover { color: var(--accent); }
+.pick-model__specs { margin-top: 12px; font-size: 14.5px; line-height: 1.45; color: var(--text-2); }
+.pick-model.is-swap, .is-swap[data-pick-price] { animation: pick-swap .3s var(--ease); }
+@keyframes pick-swap { from { opacity: 0; transform: translateY(6px); } }
+
+/* расчёт: число против предела ES-19 и одна строка объяснения */
+.pick-why { padding: 18px 20px 18px; border-radius: var(--r); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+.pick-meter__scale { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0 12px; font-size: 13px; line-height: 1.4; color: var(--text-2); font-variant-numeric: tabular-nums; }
+.pick-meter__scale b { font-size: 14.5px; font-weight: 600; color: var(--text); }
+.pick-meter__track { position: relative; height: 4px; margin-top: 10px; border-radius: 2px; background: var(--line-strong); overflow: hidden; }
+.pick-meter__fill { position: absolute; inset: 0; background: var(--accent); transform: scaleX(var(--fill, .2)); transform-origin: left center; transition: transform .3s var(--ease); }
+/* высота зарезервирована под самую длинную фразу: при смене ответа кнопка не прыгает */
+.pick-why__text { display: flex; align-items: center; min-height: 4.35em; min-height: 3lh; margin-top: 14px; font-size: 14.5px; line-height: 1.45; text-wrap: pretty; }
+
+.pick-buy { display: grid; gap: 18px; }
+.pick-buy__price { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 16px; }
+.pick-buy__price .price { font-size: clamp(28px, 2.3vw, 34px); line-height: 1.1; letter-spacing: -.03em; }
+.pick-buy__stock { display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; color: var(--text-2); white-space: nowrap; }
+.pick-buy__stock .icon { width: 16px; height: 16px; color: var(--accent); stroke-width: 2; }
+.pick-buy__actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.pick-buy__btn { min-width: 184px; }
+.pick-buy__more { padding-inline: 26px; }
+
+/* ---------- Как мы считаем ---------- */
+.pick-how { padding-bottom: calc(var(--section) - 8px); }
+.pick-how__grid { display: grid; grid-template-columns: minmax(0, var(--pick-form)) minmax(0, 1fr); gap: var(--gap) clamp(32px, 4vw, 72px); align-items: start; }
+.pick-how__card { min-height: 0; padding: 24px 24px 28px; }
+.pick-how__card .bp-card__text { max-width: 27em; }
+/* три числа правила: пределы ES-19 и множитель запаса */
+.pick-rule { max-width: 300px; margin-top: 24px; font-size: 14.5px; line-height: 1.4; }
+.pick-rule > div { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 9px 0; border-bottom: 1px dashed var(--line-strong); }
+.pick-rule > div:last-child { border-bottom: 0; padding-bottom: 0; }
+.pick-rule dt { color: var(--text-2); }
+.pick-rule dd { flex: none; font-size: 17px; font-weight: 600; line-height: 1.2; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+.pick-how__card .bp-card__art { width: 260px; right: -40px; bottom: -56px; }
+.pick-how__sheet { min-width: 0; max-width: 1120px; }
+.pick-sheet caption { padding-bottom: 18px; }
+.pick-sheet th, .pick-sheet td { vertical-align: middle; }
+.pick-sheet tbody th { color: var(--text); white-space: nowrap; }
+.pick-sheet td { white-space: nowrap; }
+.pick-sheet td:nth-child(2) { color: var(--text-2); }
+.pick-sheet tbody tr:last-child > * { border-bottom: 0; }
+.pick-sheet td:nth-child(3) { font-variant-numeric: tabular-nums; }
+/* ссылка на модель: зона касания на всю высоту строки */
+.pick-sheet td .link { display: inline-flex; align-items: center; min-width: 44px; min-height: 44px; margin-block: -13px; font-weight: 600; }
+.pick-sheet__price { margin-left: 10px; color: var(--text-2); font-variant-numeric: tabular-nums; }
+.pick-sheet__where { display: none; }
+
+/* ---------- Ссылки и телефон ---------- */
+.pick-more__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
+.pick-more__grid > li { min-width: 0; }
+/* плитки с рендерами: фон страницы, вокруг тонкая линия; высота не растёт вместе с шириной окна */
+.pick-more .cat-tile { height: clamp(300px, 26vw, 420px); min-height: 0; border-radius: var(--r); box-shadow: inset 0 0 0 1px var(--line); }
+/* название в две строки: не ложится на шланг компрессора */
+.pick-more__grid > li:nth-child(2) .cat-tile__title { max-width: 8.6em; }
+/* плитка сравнения: два кадра рядом, края растворены */
+.pick-duo__imgs { position: absolute; inset: 0; z-index: -2; display: flex; align-items: flex-end; justify-content: flex-end; padding: 0 3% 3% 0; transition: transform .7s var(--ease); }
+.pick-duo__imgs img { flex: none; width: auto; height: 70%;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 24%, #000 76%, transparent 100%), linear-gradient(180deg, transparent 0, #000 22%, #000 90%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 24%, #000 76%, transparent 100%), linear-gradient(180deg, transparent 0, #000 22%, #000 90%, transparent 100%);
+  -webkit-mask-composite: source-in; mask-composite: intersect; }
+.pick-duo__imgs img + img { margin-left: -7%; }
+.pick-duo:hover .pick-duo__imgs { transform: scale(1.04); }
+.pick-call { height: 100%; min-height: 0; }
+.pick-call__title { margin-bottom: 18px; }
+.pick-call__tel { font-size: clamp(26px, 2.1vw, 32px); font-weight: 600; line-height: 1.15; letter-spacing: -.02em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pick-call__btn { position: absolute; left: 24px; bottom: 24px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); transition: background-color .2s, color .2s; }
+.pick-call:hover .pick-call__btn { background: var(--accent); color: var(--on-accent); box-shadow: none; }
+.pick-call .bp-card__art { width: 250px; right: -40px; bottom: -84px; }
+
+/* ---------- Нижняя панель (телефон и планшет) ---------- */
+.pick-bar { display: none; }
+
+/* ---------- Адаптив ---------- */
+@media (max-width: 1280px) {
+  .pick__form { padding: 32px 28px; }
+  .pick__art { top: 408px; width: 236px; }
+  .pick-result__body { gap: 20px; padding: 28px 0 28px 28px; }
+  .pick-buy__btn { min-width: 0; flex: 1 1 150px; }
+  .pick-buy__more { padding-inline: 20px; }
+}
+/* планшет и телефон: вопросы, под ними результат; модель, цена и кнопка продублированы в нижней панели */
+@media (max-width: 1100px) {
+  .pick__art { display: none; }
+  .pick { grid-template-columns: minmax(0, 1fr); }
+  .pick__form { gap: 28px; padding: 28px 24px 32px; }
+  .pick-result { min-height: 480px; }
+  .pick-result__media { left: 44%; --ax: 54%; }
+  .pick-result__body { width: min(56%, 460px); }
+  .pick-why__text { min-height: 2.9em; min-height: 2lh; }
+  .pick-how__grid { grid-template-columns: minmax(0, 1fr); row-gap: 40px; }
+  .pick-how__card { min-height: 300px; }
+  .pick-how__card .bp-card__text { max-width: 34em; }
+  .pick-how__card .bp-card__art { width: 280px; right: -20px; bottom: -70px; }
+  .pick-more__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pick-more__grid > li:last-child { grid-column: 1 / -1; }
+  .pick-call { min-height: 200px; }
+
+  .pick-bar {
+    position: fixed; inset: auto 0 0; z-index: var(--z-sticky); display: block;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background: var(--surface); border-top: 1px solid var(--line-strong); box-shadow: var(--shadow-bar);
+    transform: translateY(100%); visibility: hidden;
+    transition: transform .3s var(--ease), visibility 0s linear .3s;
+  }
+  .pick-bar.is-open { transform: none; visibility: visible; transition-delay: 0s; }
+  .pick-bar__in { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 64px; padding-block: 10px; }
+  .pick-bar__info { display: flex; flex-direction: column; justify-content: center; gap: 2px; min-width: 0; min-height: 44px; }
+  .pick-bar__name { font-size: 13px; line-height: 1.3; color: var(--text-2); }
+  .pick-bar__name b { font-size: 14px; font-weight: 600; line-height: 1.3; color: var(--text); white-space: nowrap; }
+  .pick-bar__price { font-size: 17px; line-height: 1.2; }
+  .pick-bar__info:active { opacity: .7; }
+  .pick-bar__btn { flex: none; min-width: 152px; min-height: 44px; }
+}
+
+@media (max-width: 767px) {
+  .pick-head { padding-bottom: 24px; }
+  .pick__form { gap: 26px; padding: 22px 16px 24px; }
+  .pick-seg__opt { flex: 1 1 auto; }
+  .pick-seg__label { width: 100%; padding: 0 16px; }
+
+  /* результат: рендер сверху, текст под ним */
+  .pick-result { flex-direction: column; min-height: 0; }
+  .pick-result__media { position: relative; inset: auto; height: 244px; flex: none; --ax: 72%; --ay: 52%; }
+  .pick-result__media .stage__link { inset: 4% 0 0; }
+  .pick-result__body { width: auto; gap: 20px; padding: 0 16px 20px; }
+  .pick-result__head { position: absolute; left: 16px; top: 18px; right: 44%; }
+  .pick-result__label { margin-bottom: 8px; }
+  .pick-model__name { font-size: 24px; }
+  .pick-model__name a::after { inset: -9px 0; }
+  .pick-model__specs { margin-top: 8px; font-size: 13.5px; }
+  .pick-why { padding: 16px; }
+  .pick-buy { gap: 14px; }
+  .pick-buy__price .price { font-size: 26px; }
+  .pick-buy__actions > * { flex: 1 1 0; min-width: 0; padding-inline: 12px; }
+
+  .pick-how__grid { row-gap: 32px; }
+  /* под правилом оставлено место: чертёж не заходит на числа */
+  .pick-how__card { min-height: 0; padding: 20px 20px 136px; }
+  .pick-how__card .bp-card__art { width: 250px; right: -34px; bottom: -92px; }
+  .pick-rule { max-width: none; }
+  .pick-sheet { font-size: 14px; }
+  .pick-sheet th, .pick-sheet td { padding-inline: 10px; }
+  .pick-sheet__price { display: none; }
+  .pick-sheet td .link { margin-block: -12px; }
+
+  .pick-more__grid { grid-template-columns: minmax(0, 1fr); }
+  .pick-more .cat-tile { height: auto; aspect-ratio: 1 / .62; }
+  .pick-duo__imgs img { height: 78%; }
+  .pick-call { min-height: 190px; }
+  .pick-call__tel { font-size: 24px; }
+  .pick-call__btn { left: 20px; bottom: 20px; }
+  .pick-call .bp-card__art { width: 210px; right: -40px; bottom: -92px; }
+}
+@media (max-width: 479px) {
+  .pick-why__text { min-height: 4.35em; min-height: 3lh; }
+}
+@media (max-width: 399px) {
+  .pick-sheet th, .pick-sheet td { padding-inline: 6px; }
+  /* три колонки: стоянка переезжает второй строкой в первую ячейку */
+  .pick-sheet__parking { display: none; }
+  .pick-sheet__where { display: block; font-size: 12.5px; color: var(--text-2); }
+  .pick-bar__pre { display: none; }
+  .pick-bar__btn { min-width: 132px; }
+}
+@media (max-width: 379px) {
+  /* узкая плитка: название в две строки, чтобы не заходить на товар */
+  .pick-result__head { right: 48%; }
+}
+@media (max-width: 359px) {
+  .pick-why__text { min-height: 5.8em; min-height: 4lh; }
+  .pick-seg__label { padding-inline: 12px; }
+  .pick-model__name { font-size: 22px; }
+}

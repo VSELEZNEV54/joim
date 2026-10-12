@@ -1,0 +1,290 @@
+<!--page
+{
+  "path": "/compare/es19-vs-es29/",
+  "title": "Сравнение JOIM ES-19 и ES-29: какое пусковое устройство купить",
+  "description": "Сравнение пусковых устройств JOIM Easy Start ES-19 и ES-29: ток, ёмкость, запуски на заряде, двигатели, фонарь и цена. ES-19 за 5 837 ₽, ES-29 за 7 604 ₽.",
+  "h1": "Сравнение пусковых устройств JOIM ES-19 и&nbsp;ES-29",
+  "crumb": "Сравнение ES-19 и&nbsp;ES-29",
+  "parents": [{ "name": "Пусковые устройства", "path": "/catalog/puskovye-ustroystva/" }],
+  "darkTop": true,
+  "nav": "compare",
+  "css": ["pages/compare.css"],
+  "js": ["pages/compare.js"],
+  "preloadImage": "https://joim.netlify.app/images/products/joim-es19-card.webp",
+  "ogImage": "https://joim.netlify.app/images/products/joim-es29-card.webp"
+}
+-->
+
+<!-- 1. Заголовок и ответ одной строкой -->
+<div class="page-head page-head--dark on-dark cmp-head">
+  <div class="container">
+    <h1>Сравнение пусковых устройств JOIM <span class="nowrap">ES-19</span> и&nbsp;<span class="nowrap">ES-29</span></h1>
+    <p class="page-head__lead cmp-head__lead"><span class="cmp-head__line"><span class="nowrap">ES-19</span> дешевле и&nbsp;закрывает почти любую легковую.</span> <span class="cmp-head__line"><span class="nowrap">ES-29</span> для&nbsp;больших моторов и&nbsp;с&nbsp;двойным запасом запусков.</span></p>
+  </div>
+</div>
+
+<!-- 2. Таблица сравнения. Над ней компактная липкая панель (от 768 px): появляется, когда карточки товаров ушли под шапку.
+     В ней второй тумблер «Только отличия», состояние общее с тумблером в шапке таблицы. На телефоне панели нет: там нижняя панель покупки -->
+<section class="section section--flush cmp-section" aria-labelledby="cmp-title">
+  <div class="cmp" data-cmp>
+    <div class="cmp-bar" data-cmp-bar role="group" aria-label="Товары в&nbsp;сравнении">
+      <div class="container cmp-bar__in">
+        <div class="cmp-bar__tools">
+          <label class="switch cmp-bar__switch"><input type="checkbox" data-cmp-diff><span>Только отличия</span></label>
+          <p class="cmp-bar__count" data-cmp-count>14&nbsp;параметров</p>
+        </div>
+        <div class="cmp-bar__prod">
+          <span class="cmp-bar__thumb"><img src="{{products.es19.img}}" alt="" width="{{products.es19.w}}" height="{{products.es19.h}}" loading="lazy" decoding="async"></span>
+          <span class="cmp-bar__text">
+            <a class="cmp-bar__name" href="{{products.es19.url}}"><span class="cmp-bar__line">Easy Start</span> {{products.es19.model}}</a>
+            <span class="cmp-bar__price">{{price es19}}</span>
+          </span>
+          <button class="btn btn--lime btn--sm cmp-bar__btn" type="button" data-add-to-cart="es19" aria-label="В&nbsp;корзину: {{products.es19.short}}">В&nbsp;корзину</button>
+        </div>
+        <div class="cmp-bar__prod">
+          <span class="cmp-bar__thumb"><img src="{{products.es29.img}}" alt="" width="{{products.es29.w}}" height="{{products.es29.h}}" loading="lazy" decoding="async"></span>
+          <span class="cmp-bar__text">
+            <a class="cmp-bar__name" href="{{products.es29.url}}"><span class="cmp-bar__line">Easy Start</span> {{products.es29.model}}</a>
+            <span class="cmp-bar__price">{{price es29}}</span>
+          </span>
+          <button class="btn btn--lime btn--sm cmp-bar__btn" type="button" data-add-to-cart="es29" aria-label="В&nbsp;корзину: {{products.es29.short}}">В&nbsp;корзину</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <table class="cmp-table" data-cmp-table aria-describedby="cmp-note">
+        <caption class="visually-hidden">Сравнение характеристик пусковых устройств JOIM Easy&nbsp;Start ES-19 и&nbsp;ES-29</caption>
+        <colgroup><col class="cmp-table__c1"><col><col></colgroup>
+        <thead>
+          <tr>
+            <td class="cmp-table__corner">
+              <div class="cmp-tools">
+                <h2 class="cmp-tools__title" id="cmp-title">Характеристики<span class="visually-hidden"> ES-19 и&nbsp;ES-29</span></h2>
+                <label class="switch cmp-tools__switch"><input type="checkbox" data-cmp-diff><span>Только отличия</span></label>
+                <p class="cmp-tools__note">
+                  <span class="cmp-tools__count" data-cmp-count>14&nbsp;параметров</span>
+                  <span class="cmp-tools__legend"><span class="cmp-tools__mark" aria-hidden="true"></span>лучшее значение в&nbsp;строке</span>
+                </p>
+              </div>
+            </td>
+            <th class="cmp-table__prod" scope="col" abbr="{{products.es19.model}}">
+              <div class="cmp-prod">
+                <a class="cmp-prod__media plate plate--auto" href="{{products.es19.url}}" tabindex="-1" aria-hidden="true">
+                  <img src="{{products.es19.img}}" alt="{{products.es19.alt}}" width="{{products.es19.w}}" height="{{products.es19.h}}" fetchpriority="high" decoding="async">
+                </a>
+                <div class="cmp-prod__body">
+                  <span class="badge cmp-prod__tag">{{products.es19.badge}}</span>
+                  <a class="cmp-prod__name" href="{{products.es19.url}}">Easy&nbsp;Start <span class="nowrap">{{products.es19.model}}</span></a>
+                  <p class="rating cmp-prod__rating">{{icon star}}<span class="visually-hidden">Оценка </span><b>{{products.es19.ratingFmt}}</b> <span>{{{products.es19.reviewsHtml}}}</span></p>
+                  <p class="stock cmp-prod__stock">{{icon check}}В&nbsp;наличии</p>
+                  <p class="price cmp-prod__price">{{price es19}}</p>
+                  <button class="btn btn--lime btn--block cmp-prod__btn" type="button" data-add-to-cart="es19" aria-label="В&nbsp;корзину: {{products.es19.short}}">В&nbsp;корзину</button>
+                </div>
+              </div>
+            </th>
+            <th class="cmp-table__prod" scope="col" abbr="{{products.es29.model}}">
+              <div class="cmp-prod">
+                <a class="cmp-prod__media plate plate--auto" href="{{products.es29.url}}" tabindex="-1" aria-hidden="true">
+                  <img src="{{products.es29.img}}" alt="{{products.es29.alt}}" width="{{products.es29.w}}" height="{{products.es29.h}}" decoding="async">
+                </a>
+                <div class="cmp-prod__body">
+                  <span class="cmp-prod__tag cmp-prod__tag--plain">Старшая модель</span>
+                  <a class="cmp-prod__name" href="{{products.es29.url}}">Easy&nbsp;Start <span class="nowrap">{{products.es29.model}}</span></a>
+                  <p class="rating cmp-prod__rating">{{icon star}}<span class="visually-hidden">Оценка </span><b>{{products.es29.ratingFmt}}</b> <span>{{{products.es29.reviewsHtml}}}</span></p>
+                  <p class="stock cmp-prod__stock">{{icon check}}В&nbsp;наличии</p>
+                  <p class="price cmp-prod__price">{{price es29}}</p>
+                  <button class="btn btn--lime btn--block cmp-prod__btn" type="button" data-add-to-cart="es29" aria-label="В&nbsp;корзину: {{products.es29.short}}">В&nbsp;корзину</button>
+                </div>
+              </div>
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr class="cmp-table__group"><th colspan="3" scope="rowgroup">Запуск</th></tr>
+          <tr>
+            <th scope="row">Ток<sup class="cmp-table__mark">*</sup></th>
+            <td>{{{products.es19.specs.current}}} <span class="cmp-table__sub">{{products.es19.specs.currentType}}</span></td>
+            <td>{{{products.es29.specs.current}}} <span class="cmp-table__sub">{{products.es29.specs.currentType}}</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Двигатели</th>
+            <td>{{{products.es19.specs.engines}}}</td>
+            <td>{{{products.es29.specs.engines}}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Запусков на&nbsp;заряде</th>
+            <td>{{{products.es19.specs.starts}}}</td>
+            <td class="is-win">{{{products.es29.specs.starts}}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Напряжение</th>
+            <td>{{{products.es19.specs.voltage}}}</td>
+            <td>{{{products.es29.specs.voltage}}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Рабочая температура</th>
+            <td>{{{products.es19.specs.temp}}}</td>
+            <td>{{{products.es29.specs.temp}}}</td>
+          </tr>
+        </tbody>
+
+        <tbody>
+          <tr class="cmp-table__group"><th colspan="3" scope="rowgroup">Батарея</th></tr>
+          <tr>
+            <th scope="row">Ёмкость</th>
+            <td>{{{products.es19.specs.capacity}}}</td>
+            <td class="is-win">{{{products.es29.specs.capacity}}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Тип батареи</th>
+            <td>{{{products.es19.specs.battery}}}</td>
+            <td>{{{products.es29.specs.battery}}}</td>
+          </tr>
+        </tbody>
+
+        <tbody>
+          <tr class="cmp-table__group"><th colspan="3" scope="rowgroup">Фонарь и&nbsp;разъёмы</th></tr>
+          <tr>
+            <th scope="row">Фонарь</th>
+            <td>{{{products.es19.specs.lamp}}}</td>
+            <td class="is-win">{{{products.es29.specs.lamp}}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Разъёмы на&nbsp;корпусе</th>
+            <td>{{{products.es19.specs.ports}}}</td>
+            <td class="is-win">{{{products.es29.specs.ports}}}</td>
+          </tr>
+        </tbody>
+
+        <tbody>
+          <tr class="cmp-table__group"><th colspan="3" scope="rowgroup">Габариты и&nbsp;комплект</th></tr>
+          <tr>
+            <th scope="row">Габариты корпуса</th>
+            <td>{{{products.es19.specs.size}}}</td>
+            <td>{{{products.es29.specs.size}}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Клеммы</th>
+            <td>с&nbsp;модулем защиты</td>
+            <td>с&nbsp;модулем защиты и&nbsp;световым индикатором подключения</td>
+          </tr>
+          <tr>
+            <th scope="row">Адаптер и&nbsp;кабель</th>
+            <td>адаптер и&nbsp;USB&#8209;кабель на&nbsp;три наконечника</td>
+            <td>адаптер с&nbsp;{{{products.es29.specs.adapter}}}</td>
+          </tr>
+        </tbody>
+
+        <tbody>
+          <tr class="cmp-table__group"><th colspan="3" scope="rowgroup">Цена и&nbsp;гарантия</th></tr>
+          <tr>
+            <th scope="row">Цена</th>
+            <td class="is-win">{{price es19}}</td>
+            <td>{{price es29}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Гарантия</th>
+            <td>{{{products.es19.specs.warranty}}}</td>
+            <td>{{{products.es29.specs.warranty}}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="cmp-note" id="cmp-note"><span aria-hidden="true">*</span> У&nbsp;<span class="nowrap">ES-19</span> указан пусковой ток, у&nbsp;<span class="nowrap">ES-29</span> пиковый. Это разные измерения, поэтому в&nbsp;строке «Ток» лучшее значение не&nbsp;отмечено.</p>
+    </div>
+  </div>
+
+  <!-- телефон: покупка в зоне пальца, пока кнопки из шапки таблицы не видны -->
+  <div class="cmp-buy" data-cmp-buy role="group" aria-label="Купить">
+    <div class="cmp-buy__in">
+      <div class="cmp-buy__item">
+        <p class="cmp-buy__label"><b>{{products.es19.model}}</b> <span>{{price es19}}</span></p>
+        <button class="btn btn--lime btn--sm btn--block" type="button" data-add-to-cart="es19" aria-label="В&nbsp;корзину: {{products.es19.short}}">В&nbsp;корзину</button>
+      </div>
+      <div class="cmp-buy__item">
+        <p class="cmp-buy__label"><b>{{products.es29.model}}</b> <span>{{price es29}}</span></p>
+        <button class="btn btn--lime btn--sm btn--block" type="button" data-add-to-cart="es29" aria-label="В&nbsp;корзину: {{products.es29.short}}">В&nbsp;корзину</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Кому какая -->
+<section class="section section--soft" aria-labelledby="fit-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-head__title" id="fit-title">Кому какая модель подойдёт</h2>
+    </div>
+    <ul class="cmp-fit">
+      <li>
+        <article class="cmp-fit__card">
+          <div class="cmp-fit__text">
+            <h3 class="cmp-fit__title"><a href="{{products.es19.url}}">Easy&nbsp;Start <span class="nowrap">{{products.es19.model}}</span></a></h3>
+            <p class="cmp-fit__lead">Закрывает почти любую легковую и&nbsp;стоит дешевле.</p>
+            <ul class="list-check cmp-fit__list">
+              <li>Машина одна и&nbsp;городская</li>
+              <li>Бензиновый мотор до&nbsp;{{products.es19.limitPetrol}}&nbsp;л</li>
+              <li>Дизель до&nbsp;{{products.es19.limitDiesel}}&nbsp;л</li>
+              <!-- разницу в цене дописывает compare.js из цен справочника; без скрипта остаётся «Дешевле ES-29» -->
+              <li>Дешевле <span class="nowrap">{{products.es29.model}}</span><span data-cmp-save></span></li>
+            </ul>
+          </div>
+          <div class="cmp-fit__media plate plate--4x3 plate--wide">
+            <img src="https://joim.netlify.app/images/products/joim-es19-klemmy.webp" alt="ES-19 с&nbsp;подключёнными красной и&nbsp;чёрной клеммами" width="1200" height="766" loading="lazy" decoding="async">
+          </div>
+          <div class="cmp-fit__buy">
+            <span class="price">{{price es19}}</span>
+            <button class="btn btn--lime cmp-fit__btn" type="button" data-add-to-cart="es19" aria-label="В&nbsp;корзину: {{products.es19.short}}">В&nbsp;корзину</button>
+            <a class="more-link cmp-fit__more" href="{{products.es19.url}}">Подробнее о&nbsp;{{products.es19.model}}{{icon chevron-right}}</a>
+          </div>
+        </article>
+      </li>
+      <li>
+        <article class="cmp-fit__card">
+          <div class="cmp-fit__text">
+            <h3 class="cmp-fit__title"><a href="{{products.es29.url}}">Easy&nbsp;Start <span class="nowrap">{{products.es29.model}}</span></a></h3>
+            <p class="cmp-fit__lead">Берёт мотор крупнее и&nbsp;держит вдвое больше запусков.</p>
+            <ul class="list-check cmp-fit__list">
+              <li>Дизель и&nbsp;большие моторы</li>
+              <li>Грузовая техника</li>
+              <li>В&nbsp;семье несколько машин</li>
+              <li>Машина зимует на&nbsp;улице и&nbsp;нужен запас</li>
+            </ul>
+          </div>
+          <div class="cmp-fit__media plate plate--4x3 plate--wide">
+            <img src="https://joim.netlify.app/images/products/joim-es29-set.webp" alt="Комплект ES-29: кейс, устройство, клеммы, провода и&nbsp;адаптер" width="610" height="461" loading="lazy" decoding="async">
+          </div>
+          <div class="cmp-fit__buy">
+            <span class="price">{{price es29}}</span>
+            <button class="btn btn--lime cmp-fit__btn" type="button" data-add-to-cart="es29" aria-label="В&nbsp;корзину: {{products.es29.short}}">В&nbsp;корзину</button>
+            <a class="more-link cmp-fit__more" href="{{products.es29.url}}">Подробнее о&nbsp;{{products.es29.model}}{{icon chevron-right}}</a>
+          </div>
+        </article>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- 4. Подбор, хаб и сравнения с другими брендами -->
+<section class="section cmp-more" aria-labelledby="brands-title">
+  <div class="container">
+    <a class="link-strip" href="/podbor/">
+      <span class="link-strip__text">Не&nbsp;уверены? <span>Подберём по&nbsp;машине: три вопроса про мотор</span></span>
+      {{icon arrow-right}}
+    </a>
+    <div class="cmp-more__row">
+      <div class="cmp-brands">
+        <h2 class="cmp-brands__title" id="brands-title">Сравнения с&nbsp;другими брендами</h2>
+        <ul class="tags">
+          <li><a class="tag" href="/compare/joim-vs-baseus/">JOIM и&nbsp;Baseus</a></li>
+          <li><a class="tag" href="/compare/joim-vs-70mai/">JOIM и&nbsp;70mai</a></li>
+          <li><a class="tag" href="/compare/joim-vs-carku/">JOIM и&nbsp;Carku</a></li>
+          <li><a class="tag" href="/compare/pvc1-vs-xiaomi/">PVC-1 и&nbsp;Xiaomi</a></li>
+        </ul>
+      </div>
+      <a class="more-link cmp-more__hub" href="/catalog/puskovye-ustroystva/">Все пусковые устройства{{icon chevron-right}}</a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,68 @@
+{
+  "es19": {
+    "model": "ES-19",
+    "rating": 5.0,
+    "reviews": 8,
+    "badge": "Хит продаж",
+    "alt": "Пусковое устройство JOIM Easy Start ES-19: чёрный корпус с лаймовыми вставками",
+    "specsHtml": "3&nbsp;300&nbsp;А&nbsp;· до&nbsp;8&nbsp;л бензин&nbsp;· 20+&nbsp;запусков",
+    "description": "Пусковое устройство 12 В для автомобиля: пусковой ток 3 300 А, ёмкость 29 600 мВт·ч, более 20 запусков на одном заряде. Бензин до 8 л, дизель до 7 л. Фонарь 700 лм, 2 × USB и Type-C.",
+    "specs": {
+      "current": "3&nbsp;300&nbsp;А",
+      "currentType": "пусковой",
+      "voltage": "12&nbsp;В",
+      "engines": "бензин до&nbsp;8&nbsp;л, дизель до&nbsp;7&nbsp;л",
+      "starts": "более&nbsp;20",
+      "capacity": "29&nbsp;600&nbsp;мВт·ч",
+      "battery": "литий-полимерная",
+      "temp": "до&nbsp;−30&nbsp;°C",
+      "lamp": "700&nbsp;лм, стробоскоп и&nbsp;SOS",
+      "ports": "2&nbsp;×&nbsp;USB, Type-C",
+      "size": "190&nbsp;×&nbsp;95&nbsp;×&nbsp;40&nbsp;мм",
+      "caseSize": "220&nbsp;×&nbsp;120&nbsp;×&nbsp;90&nbsp;мм",
+      "clamps": "260&nbsp;мм",
+      "warranty": "12&nbsp;месяцев"
+    }
+  },
+  "es29": {
+    "model": "ES-29",
+    "rating": 5.0,
+    "reviews": 8,
+    "alt": "Пусковое устройство JOIM Easy Start ES-29: чёрный корпус с лаймовой кнопкой питания",
+    "specsHtml": "5&nbsp;000&nbsp;А&nbsp;· дизель от&nbsp;7&nbsp;л&nbsp;· 40+&nbsp;запусков",
+    "description": "Пусковое устройство 12 В для больших моторов: пиковый ток 5 000 А, ёмкость 59 000 мВт·ч, более 40 запусков на одном заряде. Дизель от 7 л, бензин от 8 л. Фонарь 1 000 лм.",
+    "specs": {
+      "current": "5&nbsp;000&nbsp;А",
+      "currentType": "пиковый",
+      "voltage": "12&nbsp;В",
+      "engines": "дизель от&nbsp;7&nbsp;л, бензин от&nbsp;8&nbsp;л",
+      "starts": "более&nbsp;40",
+      "capacity": "59&nbsp;000&nbsp;мВт·ч",
+      "battery": "литий-полимерная",
+      "temp": "до&nbsp;−30&nbsp;°C",
+      "lamp": "1&nbsp;000&nbsp;лм, стробоскоп и&nbsp;SOS",
+      "ports": "2&nbsp;×&nbsp;USB, Type-C, 2&nbsp;×&nbsp;DC",
+      "adapter": "Type-C, Lightning и&nbsp;Micro-USB",
+      "size": "190&nbsp;×&nbsp;95&nbsp;×&nbsp;40&nbsp;мм",
+      "warranty": "12&nbsp;месяцев"
+    }
+  },
+  "pvc1": {
+    "model": "PVC-1",
+    "rating": 5.0,
+    "reviews": 9,
+    "alt": "Беспроводной автопылесос JOIM PVC-1 в чёрном алюминиевом корпусе",
+    "specsHtml": "до&nbsp;40&nbsp;минут работы&nbsp;· HEPA&#8209;фильтр&nbsp;· обдув",
+    "description": "Беспроводной автомобильный пылесос: бесщёточный двигатель, до 40 минут работы, зарядка 2,5 часа по USB Type-C. Циклон и HEPA-фильтр, режимы всасывания и обдува.",
+    "specs": {
+      "motor": "бесщёточный",
+      "runtime": "до&nbsp;40&nbsp;минут",
+      "charge": "2,5&nbsp;часа по&nbsp;USB Type-C",
+      "filters": "циклон, фильтр грубой очистки и&nbsp;HEPA",
+      "modes": "всасывание и&nbsp;обдув",
+      "length": "352&nbsp;мм",
+      "hose": "445&nbsp;мм",
+      "warranty": "12&nbsp;месяцев"
+    }
+  }
+}

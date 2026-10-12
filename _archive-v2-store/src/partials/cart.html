@@ -1,0 +1,22 @@
+<dialog class="drawer cart is-empty" id="cart" aria-labelledby="cart-title" data-cart>
+  <div class="drawer__head">
+    <h2 class="drawer__title" id="cart-title">Корзина<span class="drawer__count" data-cart-count hidden>0</span></h2>
+    <button class="icon-btn" type="button" data-dialog-close aria-label="Закрыть корзину">{{icon close}}</button>
+  </div>
+  <div class="drawer__body">
+    <ul class="cart__list" data-cart-list></ul>
+    <div class="cart__empty">
+      {{icon cart cart__empty-icon}}
+      <p class="cart__empty-title">В&nbsp;корзине пусто</p>
+      <p class="cart__empty-text">Выберите пусковое устройство или автопылесос: товар появится здесь.</p>
+      <a class="btn btn--dark btn--block" href="/catalog/puskovye-ustroystva/">Смотреть пусковые устройства</a>
+      <a class="more-link" href="/catalog/">Весь каталог{{icon chevron-right}}</a>
+    </div>
+  </div>
+  <div class="drawer__foot cart__foot">
+    <p class="cart__delivery" data-cart-delivery></p>
+    <p class="cart__total"><span>Итого</span><b class="price" data-cart-total>0&nbsp;₽</b></p>
+    <a class="btn btn--lime btn--lg btn--block" href="/cart/">Оформить заказ</a>
+    <button class="cart__continue" type="button" data-dialog-close>Продолжить покупки</button>
+  </div>
+</dialog>

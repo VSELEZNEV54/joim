@@ -1,0 +1,222 @@
+<!--page
+{
+  "path": "/podbor/",
+  "title": "Подбор пускового устройства по автомобилю: какое выбрать",
+  "description": "Подбор пускового устройства JOIM по автомобилю: три вопроса про топливо, объём двигателя и зимнюю стоянку. Покажем подходящую модель и цену от 5 837 ₽.",
+  "h1": "Подбор пускового устройства по&nbsp;автомобилю",
+  "crumb": "Подбор по&nbsp;машине",
+  "parents": [],
+  "nav": "podbor",
+  "css": ["pages/podbor.css"],
+  "js": ["pages/podbor.js"],
+  "preloadImage": "/assets/img/deck/es19-stage.jpg",
+  "ogImage": "/assets/img/deck/es19-stage.jpg"
+}
+-->
+
+<!-- 1. Заголовок и одна строка -->
+<div class="container">
+  <div class="page-head pick-head">
+    <h1 class="page-title">Подбор пускового устройства по&nbsp;автомобилю</h1>
+    <p class="lead">Три вопроса про&nbsp;мотор: сразу покажем подходящую модель и&nbsp;цену.</p>
+  </div>
+</div>
+
+<!-- 2. Виджет: слева светлая карточка с тремя вопросами и чертежом устройства внизу, справа результат на тёмной странице:
+     рендер модели стоит прямо на ней (общая сцена .stage), вокруг тонкая линия.
+     Без скрипта показан ответ для значений по умолчанию (бензин, 1,6 л, гараж или паркинг).
+     Расчёт ведёт /assets/js/pages/podbor.js по пределам из справочника товаров. -->
+<section class="pick-tool" aria-labelledby="pick-title">
+  <div class="container">
+    <h2 class="visually-hidden" id="pick-title">Параметры автомобиля и&nbsp;подходящая модель</h2>
+    <div class="pick" data-pick>
+
+      <div class="paper pick__form">
+        <fieldset class="pick-q">
+          <legend class="pick-q__label">Топливо</legend>
+          <div class="pick-seg pick-q__control">
+            <label class="pick-seg__opt"><input type="radio" name="fuel" value="petrol" checked><span class="pick-seg__label">Бензин</span></label>
+            <label class="pick-seg__opt"><input type="radio" name="fuel" value="diesel"><span class="pick-seg__label">Дизель</span></label>
+          </div>
+        </fieldset>
+
+        <div class="pick-q pick-volume">
+          <div class="pick-volume__head">
+            <label class="pick-q__label" for="pick-volume">Объём двигателя</label>
+            <div class="qty pick-volume__stepper" role="group" aria-label="Объём двигателя с шагом 0,1 литра">
+              <button class="qty__btn" type="button" data-pick-step="-1" aria-label="Уменьшить объём на 0,1 литра">{{icon minus}}</button>
+              <output class="qty__val" for="pick-volume" aria-live="off" data-pick-out>1,6&nbsp;л</output>
+              <button class="qty__btn" type="button" data-pick-step="1" aria-label="Увеличить объём на 0,1 литра">{{icon plus}}</button>
+            </div>
+          </div>
+          <input class="range pick-range" type="range" id="pick-volume" min="0.8" max="8" step="0.1" value="1.6" aria-valuetext="1,6 литра" data-pick-volume>
+          <div class="pick-scale" aria-hidden="true">
+            <span style="--at: 0%">0,8</span>
+            <span style="--at: 16.667%">2</span>
+            <span style="--at: 44.444%">4</span>
+            <span style="--at: 72.222%">6</span>
+            <span style="--at: 100%">8&nbsp;л</span>
+          </div>
+        </div>
+
+        <fieldset class="pick-q">
+          <legend class="pick-q__label">Где зимует машина</legend>
+          <div class="pick-seg pick-q__control">
+            <label class="pick-seg__opt"><input type="radio" name="parking" value="garage" checked><span class="pick-seg__label">Гараж или паркинг</span></label>
+            <label class="pick-seg__opt"><input type="radio" name="parking" value="street"><span class="pick-seg__label">Улица</span></label>
+          </div>
+          <p class="pick-q__hint">Для&nbsp;улицы считаем с&nbsp;запасом в&nbsp;полтора раза.</p>
+        </fieldset>
+        <!-- низ карточки занят чертежом устройства: вопросы прижаты к верху, пустоты под ними нет (на планшете и телефоне чертежа нет) -->
+        {{> bp-device cls=pick__art}}
+      </div>
+
+      <div class="pick-result" id="result" data-pick-result data-model="es19">
+        <div class="pick-result__media stage">
+          <span class="stage__link">
+            <img class="stage__img is-active" style="{{products.es19.stageStyle}}" src="{{products.es19.stage.src}}" alt="{{products.es19.alt}}" width="{{products.es19.stage.w}}" height="{{products.es19.stage.h}}" fetchpriority="high" decoding="async" data-pick-img="es19">
+            <img class="stage__img" style="{{products.es29.stageStyle}}" src="{{products.es29.stage.src}}" alt="{{products.es29.alt}}" width="{{products.es29.stage.w}}" height="{{products.es29.stage.h}}" decoding="async" data-pick-img="es29">
+          </span>
+        </div>
+        <div class="pick-result__body">
+          <div class="pick-result__head">
+            <p class="label pick-result__label">Вам подойдёт</p>
+            <div class="pick-model" data-pick-model="es19">
+              <h3 class="pick-model__name"><a href="{{products.es19.url}}"><span class="visually-hidden">Пусковое устройство JOIM </span>Easy&nbsp;Start <span class="nowrap">{{products.es19.model}}</span></a></h3>
+              <!-- средняя часть строки зависит от топлива: её переключает podbor.js; цифры из справочника -->
+              <p class="pick-model__specs">{{{products.es19.specs.current}}}&nbsp;· <span data-pick-fuel="petrol">бензин до&nbsp;{{products.es19.limitPetrol}}&nbsp;л</span><span data-pick-fuel="diesel" hidden>дизель до&nbsp;{{products.es19.limitDiesel}}&nbsp;л</span>&nbsp;· {{{products.es19.specs.starts}}}&nbsp;запусков</p>
+            </div>
+            <div class="pick-model" data-pick-model="es29" hidden>
+              <h3 class="pick-model__name"><a href="{{products.es29.url}}"><span class="visually-hidden">Пусковое устройство JOIM </span>Easy&nbsp;Start <span class="nowrap">{{products.es29.model}}</span></a></h3>
+              <!-- у старшей модели нижней границы объёма в строке нет: она спорила бы с рекомендацией для моторов меньше 7 л -->
+              <p class="pick-model__specs">{{{products.es29.specs.current}}}&nbsp;· {{{products.es29.specs.capacity}}}&nbsp;· {{{products.es29.specs.starts}}}&nbsp;запусков</p>
+            </div>
+          </div>
+
+          <div class="pick-why">
+            <div class="pick-meter">
+              <p class="pick-meter__scale"><span class="nowrap">Считаем как <b data-pick-need>1,6&nbsp;л</b></span> <span class="nowrap">Предел ES-19: <b data-pick-limit>{{products.es19.limitPetrol}}&nbsp;л</b></span></p>
+              <div class="pick-meter__track" aria-hidden="true"><span class="pick-meter__fill" data-pick-fill></span></div>
+            </div>
+            <p class="pick-why__text"><span data-pick-why>Бензин 1,6&nbsp;л, гараж или паркинг: считаем как есть. <span class="nowrap">ES-19</span> хватит с&nbsp;запасом.</span></p>
+          </div>
+
+          <div class="pick-buy" data-pick-buy>
+            <p class="pick-buy__price">
+              <span class="price" data-pick-price>{{price es19}}</span>
+              <span class="pick-buy__stock">{{icon check}}В&nbsp;наличии</span>
+            </p>
+            <div class="pick-buy__actions">
+              <button class="btn btn--accent btn--lg pick-buy__btn" type="button" data-add-to-cart="es19" data-pick-add>В&nbsp;корзину</button>
+              <a class="btn btn--outline btn--lg pick-buy__more" href="{{products.es19.url}}" data-pick-url>О&nbsp;модели{{icon arrow-up-right icon--move}}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 3. Как мы считаем: светлая карточка с правилом и чертежом, рядом шпаргалка. Строки таблицы пересчитывает тот же скрипт по той же формуле. -->
+<section class="section pick-how" aria-labelledby="how-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title" id="how-title">Как мы считаем</h2>
+    </div>
+    <div class="pick-how__grid">
+      <div class="bp-card pick-how__card">
+        <h3 class="bp-card__title">Предел <span class="nowrap">ES-19</span> и&nbsp;запас на&nbsp;зиму</h3>
+        <p class="bp-card__text"><span class="nowrap">ES-19</span> рассчитан на&nbsp;бензиновые моторы до&nbsp;{{products.es19.limitPetrol}}&nbsp;л и&nbsp;дизельные до&nbsp;{{products.es19.limitDiesel}}&nbsp;л. Если машина зимует на&nbsp;улице, берём запас в&nbsp;полтора раза: литий на&nbsp;холоде отдаёт меньше.</p>
+        <p class="bp-card__text">Объём с&nbsp;запасом укладывается в&nbsp;предел: подойдёт <a class="link nowrap" href="{{products.es19.url}}">ES-19</a>. Выходит за&nbsp;него: нужна <a class="link nowrap" href="{{products.es29.url}}">ES-29</a>.</p>
+        <dl class="pick-rule">
+          <div><dt>Предел <span class="nowrap">ES-19</span>, бензин</dt><dd>{{products.es19.limitPetrol}}&nbsp;л</dd></div>
+          <div><dt>Предел <span class="nowrap">ES-19</span>, дизель</dt><dd>{{products.es19.limitDiesel}}&nbsp;л</dd></div>
+          <div><dt>Запас, если зимует на&nbsp;улице</dt><dd>×&nbsp;1,5</dd></div>
+        </dl>
+        {{> bp-battery cls=bp-card__art}}
+      </div>
+      <div class="pick-how__sheet">
+        <table class="table pick-sheet">
+          <caption>Шесть примеров: мотор и&nbsp;подходящая модель</caption>
+          <thead>
+            <tr><th scope="col">Мотор</th><th class="pick-sheet__parking" scope="col">Зимует</th><th scope="col">Считаем как</th><th scope="col">Модель</th></tr>
+          </thead>
+          <tbody>
+            <tr data-pick-row data-fuel="petrol" data-volume="1.6" data-parking="garage">
+              <th scope="row">Бензин 1,6&nbsp;л <span class="pick-sheet__where">гараж</span></th><td class="pick-sheet__parking">гараж</td><td data-pick-row-need>1,6&nbsp;л</td>
+              <td data-pick-row-model><a class="link" href="{{products.es19.url}}">{{products.es19.model}}</a> <span class="pick-sheet__price">{{price es19}}</span></td>
+            </tr>
+            <tr data-pick-row data-fuel="petrol" data-volume="3.5" data-parking="garage">
+              <th scope="row">Бензин 3,5&nbsp;л <span class="pick-sheet__where">гараж</span></th><td class="pick-sheet__parking">гараж</td><td data-pick-row-need>3,5&nbsp;л</td>
+              <td data-pick-row-model><a class="link" href="{{products.es19.url}}">{{products.es19.model}}</a> <span class="pick-sheet__price">{{price es19}}</span></td>
+            </tr>
+            <tr data-pick-row data-fuel="diesel" data-volume="2.0" data-parking="garage">
+              <th scope="row">Дизель 2,0&nbsp;л <span class="pick-sheet__where">гараж</span></th><td class="pick-sheet__parking">гараж</td><td data-pick-row-need>2,0&nbsp;л</td>
+              <td data-pick-row-model><a class="link" href="{{products.es19.url}}">{{products.es19.model}}</a> <span class="pick-sheet__price">{{price es19}}</span></td>
+            </tr>
+            <tr data-pick-row data-fuel="diesel" data-volume="3.0" data-parking="street">
+              <th scope="row">Дизель 3,0&nbsp;л <span class="pick-sheet__where">улица</span></th><td class="pick-sheet__parking">улица</td><td data-pick-row-need>4,5&nbsp;л</td>
+              <td data-pick-row-model><a class="link" href="{{products.es19.url}}">{{products.es19.model}}</a> <span class="pick-sheet__price">{{price es19}}</span></td>
+            </tr>
+            <tr data-pick-row data-fuel="diesel" data-volume="5.0" data-parking="street">
+              <th scope="row">Дизель 5,0&nbsp;л <span class="pick-sheet__where">улица</span></th><td class="pick-sheet__parking">улица</td><td data-pick-row-need>7,5&nbsp;л</td>
+              <td data-pick-row-model><a class="link" href="{{products.es29.url}}">{{products.es29.model}}</a> <span class="pick-sheet__price">{{price es29}}</span></td>
+            </tr>
+            <tr data-pick-row data-fuel="petrol" data-volume="5.7" data-parking="street">
+              <th scope="row">Бензин 5,7&nbsp;л <span class="pick-sheet__where">улица</span></th><td class="pick-sheet__parking">улица</td><td data-pick-row-need>8,55&nbsp;л</td>
+              <td data-pick-row-model><a class="link" href="{{products.es29.url}}">{{products.es29.model}}</a> <span class="pick-sheet__price">{{price es29}}</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <template data-pick-cell="es19"><a class="link" href="{{products.es19.url}}">{{products.es19.model}}</a> <span class="pick-sheet__price">{{price es19}}</span></template>
+        <template data-pick-cell="es29"><a class="link" href="{{products.es29.url}}">{{products.es29.model}}</a> <span class="pick-sheet__price">{{price es29}}</span></template>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Ссылки: сравнение и каталог плитками с рендерами, телефон светлой карточкой с чертежом -->
+<section class="section section--line pick-more" aria-labelledby="more-title">
+  <div class="container">
+    <h2 class="visually-hidden" id="more-title">Сравнение, каталог и&nbsp;телефон</h2>
+    <ul class="pick-more__grid">
+      <li>
+        <a class="cat-tile pick-duo" href="/compare/es19-vs-es29/">
+          <span class="pick-duo__imgs" aria-hidden="true">
+            <img src="{{products.es19.img}}" alt="" width="{{products.es19.w}}" height="{{products.es19.h}}" loading="lazy" decoding="async">
+            <img src="{{products.es29.img}}" alt="" width="{{products.es29.w}}" height="{{products.es29.h}}" loading="lazy" decoding="async">
+          </span>
+          <span class="cat-tile__title">Сравнить <span class="nowrap">ES-19</span> и&nbsp;<span class="nowrap">ES-29</span><span class="cat-tile__note">Ток, ёмкость, запуски на&nbsp;заряде и&nbsp;цена в&nbsp;одной таблице</span></span>
+          <span class="round-btn round-btn--glass cat-tile__arrow" aria-hidden="true">{{icon arrow-up-right}}</span>
+        </a>
+      </li>
+      <li>
+        <a class="cat-tile" href="/catalog/puskovye-ustroystva/" style="--pos: 92% 50%">
+          <img class="cat-tile__img" src="/assets/img/deck/es55-stage.jpg" alt="Пусковое устройство с&nbsp;компрессором JOIM Easy Start ES-55" width="1448" height="1082" loading="lazy" decoding="async">
+          <span class="cat-tile__title">Все пусковые устройства<span class="cat-tile__note">{{categoryById.puskovye.count}}&nbsp;моделей, от&nbsp;{{price es19}}</span></span>
+          <span class="round-btn round-btn--glass cat-tile__arrow" aria-hidden="true">{{icon arrow-up-right}}</span>
+        </a>
+      </li>
+      <li>
+        <a class="bp-card pick-call" href="tel:+74951201140">
+          <span class="bp-card__title pick-call__title">Или позвоните, подберём вместе</span>
+          <b class="pick-call__tel">+7&nbsp;495&nbsp;120-11-40</b>
+          <span class="round-btn pick-call__btn" aria-hidden="true">{{icon phone}}</span>
+          {{> bp-gear cls=bp-card__art}}
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- Нижняя панель на телефоне и планшете: модель, цена и кнопка, пока блок результата не виден на экране -->
+<div class="pick-bar" data-pick-bar>
+  <div class="container pick-bar__in">
+    <a class="pick-bar__info" href="#result">
+      <span class="pick-bar__name"><span class="pick-bar__pre">Подойдёт </span><b data-pick-short>{{products.es19.short}}</b></span>
+      <span class="price pick-bar__price" data-pick-price>{{price es19}}</span>
+    </a>
+    <button class="btn btn--accent btn--sm pick-bar__btn" type="button" data-add-to-cart="es19" data-pick-add>В&nbsp;корзину</button>
+  </div>
+</div>

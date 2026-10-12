@@ -1,0 +1,527 @@
+<!--page
+{
+  "path": "/",
+  "title": "JOIM: пусковые устройства и автопылесосы, магазин производителя",
+  "description": "Магазин производителя JOIM: пусковые устройства Easy Start ES-19 и ES-29 от 5 837 ₽, автопылесос PVC-1. Гарантия 12 месяцев, доставка по России за 2–7 дней.",
+  "h1": "Пусковые устройства и&nbsp;автопылесосы JOIM",
+  "darkTop": true,
+  "css": ["pages/home.css"],
+  "js": ["pages/home.js"],
+  "preloadImage": ["https://joim.netlify.app/images/products/joim-es19-card.webp"]
+}
+-->
+
+<!-- 1. Первый экран: тёмная сцена с крупными мягкими волнами-лепестками (формы из знака JOIM) и тонкой сеткой, справа ES-19 стоит
+     в ракурсе три четверти, слева заголовок с печатающимся хвостом, внизу строка из четырёх показателей.
+     В разметке заголовок всегда полный: печать делает home.js, при prefers-reduced-motion текст стоит сразу -->
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__scene" aria-hidden="true">
+    <svg class="hero__waves" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" focusable="false">
+      <path class="hero__wave hero__wave--a" d="M0 0H820C700 70 560 96 430 168C270 256 130 318 0 344Z"/>
+      <path class="hero__wave hero__wave--b" d="M0 344C150 430 262 540 272 676C280 780 190 862 70 900H0Z"/>
+      <path class="hero__wave hero__wave--c" d="M1600 0H1352C1300 118 1296 232 1366 318C1432 398 1530 410 1600 436Z"/>
+      <path class="hero__wave hero__wave--d" d="M0 900C250 880 520 760 800 700C1090 638 1380 664 1600 590V900Z"/>
+    </svg>
+    <span class="hero__grid"></span>
+    <span class="hero__glow"></span>
+  </div>
+  <div class="container hero__in">
+    <div class="hero__copy">
+      <h1 class="hero__title" id="hero-title">Пусковые устройства и&nbsp;автопылесосы JOIM <span class="hero__typed" data-type>для&nbsp;машины, мотоцикла, катера</span></h1>
+      <p class="hero__text">Заводят мотор с&nbsp;полностью севшим аккумулятором и&nbsp;держат салон в&nbsp;чистоте. Своё производство, гарантия 12&nbsp;месяцев и&nbsp;доставка по&nbsp;всей России.</p>
+      <ul class="hero__plaques">
+        <li class="plaque">Своё производство</li>
+        <li class="plaque">Заводят с&nbsp;севшим в&nbsp;ноль аккумулятором</li>
+      </ul>
+      <a class="btn btn--accent btn--lg hero__btn" href="/catalog/">Перейти в&nbsp;каталог</a>
+    </div>
+    <div class="hero__product">
+      <img src="https://joim.netlify.app/images/products/joim-es19-card.webp" alt="{{products.es19.alt}}" width="564" height="1200" fetchpriority="high" decoding="async">
+      <span class="hero__shadow" aria-hidden="true"></span>
+    </div>
+  </div>
+  <div class="container hero__bottom">
+    <ul class="stats hero__stats" aria-label="JOIM в цифрах">
+      <li class="stat"><b class="stat__value">2019</b><span class="stat__label">Год основания, своё производство</span></li>
+      <li class="stat"><b class="stat__value">{{categoryById.all.count}}</b><span class="stat__label">Моделей в&nbsp;линейке: пусковые и&nbsp;автопылесосы</span></li>
+      <li class="stat"><b class="stat__value">{{reviewStats.ratingFmt}}</b><span class="stat__label">Средняя оценка по&nbsp;отзывам владельцев</span></li>
+      <li class="stat"><b class="stat__value">12<span class="stat__unit">мес</span></b><span class="stat__label">Гарантии на&nbsp;каждое устройство</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- 2. Популярные товары: карточки «по две в ряд» -->
+<section class="section home-popular" aria-labelledby="popular-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title" id="popular-title">Популярные товары</h2>
+      <a class="btn btn--soft btn--sm" href="/catalog/">Все товары{{icon arrow-up-right icon--move}}</a>
+    </div>
+    <ul class="product-pairs">
+      <li>{{> product-card es19 view=duo}}</li>
+      <li>{{> product-card es29 view=duo}}</li>
+      <li>{{> product-card pvc1 view=duo}}</li>
+      <li>{{> product-card es99 view=duo}}</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 3. Каталог: мозаика 3 + 2 + 3, все плитки из одной тёмной серии: рендеры слиты со страницей, плитки делят тонкие линии -->
+<section class="section section--alt home-catalog" aria-labelledby="catalog-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title" id="catalog-title">Каталог</h2>
+      <a class="home-catalog__all" href="/catalog/" aria-label="Весь каталог">{{icon grid}}</a>
+    </div>
+    <ul class="mosaic">
+      <li class="mosaic__cell mosaic__cell--3">
+        <a class="cat-tile" href="/catalog/puskovye-ustroystva/" style="--pos: 100% 50%">
+          <img class="cat-tile__img" src="/assets/img/deck/es19-stage.jpg" alt="Пусковое устройство JOIM Easy Start ES-19 на&nbsp;тёмной сцене" width="1258" height="941" loading="lazy" decoding="async">
+          <span class="cat-tile__title">Пусковые устройства<span class="cat-tile__note">{{{categoryById.puskovye.modelsHtml}}}, от&nbsp;{{price es19}}</span></span>
+          <span class="round-btn round-btn--glass cat-tile__arrow" aria-hidden="true">{{icon arrow-up-right}}</span>
+        </a>
+      </li>
+      <li class="mosaic__cell mosaic__cell--3">
+        <a class="cat-tile" href="/catalog/puskovye-ustroystva/s-kompressorom/" style="--pos: 88% 50%">
+          <img class="cat-tile__img" src="/assets/img/deck/es99-stage.jpg" alt="Пусковое устройство с&nbsp;компрессором JOIM Easy Start ES-99" width="1258" height="941" loading="lazy" decoding="async">
+          <span class="cat-tile__title">С&nbsp;компрессором<span class="cat-tile__note">Заводят и&nbsp;подкачивают колёса</span></span>
+          <span class="round-btn round-btn--glass cat-tile__arrow" aria-hidden="true">{{icon arrow-up-right}}</span>
+        </a>
+      </li>
+      <li class="mosaic__cell mosaic__cell--3 mosaic__cell--m-wide">
+        <a class="cat-tile" href="/catalog/puskovye-ustroystva/dlya-dizelya/" style="--pos: 100% 50%">
+          <img class="cat-tile__img" src="/assets/img/deck/es29-stage.jpg" alt="Пусковое устройство JOIM Easy Start ES-29 для&nbsp;больших моторов" width="1258" height="941" loading="lazy" decoding="async">
+          <span class="cat-tile__title">Для&nbsp;дизеля и&nbsp;больших моторов<span class="cat-tile__note home-cap">{{{products.es29.specs.engines}}}</span></span>
+          <span class="round-btn round-btn--glass cat-tile__arrow" aria-hidden="true">{{icon arrow-up-right}}</span>
+        </a>
+      </li>
+      <li class="mosaic__cell mosaic__cell--2 mosaic__cell--m-wide">
+        <a class="cat-tile" href="/catalog/avtopylesosy/" style="--pos: 70% 50%; --fl: 10%">
+          <img class="cat-tile__img" src="/assets/img/deck/pvc8-stage.jpg" alt="Автомобильный пылесос JOIM PVC-8 с&nbsp;кейсом и&nbsp;насадками" width="1619" height="971" loading="lazy" decoding="async">
+          <span class="cat-tile__title">Автомобильные пылесосы<span class="cat-tile__note">{{{categoryById.pylesosy.modelsHtml}}}, от&nbsp;{{price pvc1}}</span></span>
+          <span class="round-btn round-btn--glass cat-tile__arrow" aria-hidden="true">{{icon arrow-up-right}}</span>
+        </a>
+      </li>
+      <li class="mosaic__cell mosaic__cell--2 mosaic__cell--m-wide">
+        <a class="cat-tile cat-tile--kit" href="/gifts/">
+          <img class="cat-tile__img" src="/assets/img/deck/gift-es19-kit.jpg" alt="Комплект ES-19 в&nbsp;кейсе: устройство, клеммы, адаптер и&nbsp;кабель" width="1000" height="700" loading="lazy" decoding="async">
+          <span class="cat-tile__title">Подарки автомобилисту<span class="cat-tile__note">Приезжает в&nbsp;жёстком кейсе, заряжено с&nbsp;завода</span></span>
+          <span class="round-btn round-btn--glass cat-tile__arrow" aria-hidden="true">{{icon arrow-up-right}}</span>
+        </a>
+      </li>
+      <li class="mosaic__cell mosaic__cell--3">
+        <a class="cat-tile" href="/podbor/" style="--pos: 80% 50%">
+          <img class="cat-tile__img" src="/assets/img/deck/es2-stage.jpg" alt="Пусковое устройство JOIM Easy Start ES-2 с&nbsp;дисплеем заряда" width="1258" height="941" loading="lazy" decoding="async">
+          <span class="cat-tile__title">Подбор по&nbsp;машине<span class="cat-tile__note">Три вопроса про&nbsp;мотор</span></span>
+          <span class="round-btn round-btn--glass cat-tile__arrow" aria-hidden="true">{{icon arrow-up-right}}</span>
+        </a>
+      </li>
+      <li class="mosaic__cell mosaic__cell--3">
+        <a class="cat-tile cat-tile--duo" href="/compare/es19-vs-es29/">
+          <span class="cat-tile__duo" aria-hidden="true">
+            <img src="/assets/img/deck/es19.jpg" alt="" width="572" height="911" loading="lazy" decoding="async">
+            <img src="/assets/img/deck/es29.jpg" alt="" width="614" height="881" loading="lazy" decoding="async">
+          </span>
+          <span class="cat-tile__title">Сравнение <span class="nowrap">ES-19</span> и&nbsp;<span class="nowrap">ES-29</span><span class="cat-tile__note">Что выбрать под&nbsp;свой мотор</span></span>
+          <span class="round-btn round-btn--glass cat-tile__arrow" aria-hidden="true">{{icon arrow-up-right}}</span>
+        </a>
+      </li>
+      <li class="mosaic__cell mosaic__cell--3 mosaic__cell--m-wide">
+        <a class="cat-tile" href="/catalog/" style="--pos: 92% 50%">
+          <img class="cat-tile__img" src="/assets/img/deck/pvc7-stage.jpg" alt="Автомобильный пылесос JOIM PVC-7 с&nbsp;кейсом" width="1672" height="941" loading="lazy" decoding="async">
+          <span class="cat-tile__title">Все товары<span class="cat-tile__note">{{{categoryById.all.modelsHtml}}} JOIM</span></span>
+          <span class="round-btn round-btn--glass cat-tile__arrow" aria-hidden="true">{{icon arrow-up-right}}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- 4. О бренде: фото во всю ширину, белая карточка с уголками, слева внизу документы (открываются крупно) -->
+<section class="home-about" aria-labelledby="about-title">
+  <img class="home-about__bg" src="/assets/img/deck/photo-hood.jpg" alt="Пусковое устройство JOIM ES-19 с&nbsp;клеммами под&nbsp;капотом автомобиля ночью" width="1672" height="940" loading="lazy" decoding="async">
+  <div class="gridlines" aria-hidden="true"></div>
+  <div class="container home-about__in">
+    <ul class="home-docs" aria-label="Документы JOIM">
+      <li>
+        <a class="home-doc" href="/assets/img/deck/doc-eaes-puskovye.jpg" data-lightbox data-caption="Декларация ЕАЭС: пусковые устройства">
+          <img src="/assets/img/deck/doc-eaes-puskovye.jpg" alt="Декларация о&nbsp;соответствии ЕАЭС на&nbsp;пусковые устройства JOIM" width="756" height="1069" loading="lazy" decoding="async">
+          <span>Декларация ЕАЭС: пусковые устройства</span>
+        </a>
+      </li>
+      <li>
+        <a class="home-doc" href="/assets/img/deck/doc-trademark-967852.jpg" data-lightbox data-caption="Свидетельство на товарный знак JOIM № 967852">
+          <img src="/assets/img/deck/doc-trademark-967852.jpg" alt="Свидетельство на&nbsp;товарный знак JOIM №&nbsp;967852" width="746" height="1056" loading="lazy" decoding="async">
+          <span>Товарный знак №&nbsp;967852</span>
+        </a>
+      </li>
+      <li>
+        <a class="home-doc" href="/assets/img/deck/doc-eaes-pylesosy.jpg" data-lightbox data-caption="Декларация ЕАЭС: пылесосы">
+          <img src="/assets/img/deck/doc-eaes-pylesosy.jpg" alt="Декларация о&nbsp;соответствии ЕАЭС на&nbsp;пылесосы JOIM" width="747" height="1056" loading="lazy" decoding="async">
+          <span>Декларация ЕАЭС: пылесосы</span>
+        </a>
+      </li>
+    </ul>
+    <div class="bracket-card home-about__card">
+      <h2 class="section-title" id="about-title">JOIM — бренд автомобильной электроники</h2>
+      <div class="home-about__text">
+        <p>Своё сертифицированное производство с&nbsp;2019&nbsp;года. Разработка, плата, сборка, тесты и&nbsp;упаковка свои: не&nbsp;переклеиваем шильдик на&nbsp;чужой корпус.</p>
+        <p>Пусковое устройство достают раз в&nbsp;год и&nbsp;всегда не&nbsp;вовремя. Значит, оно обязано сработать с&nbsp;первого раза: после года в&nbsp;бардачке, на&nbsp;морозе, без&nbsp;подготовки.</p>
+        <p>Поддержка на&nbsp;русском, без&nbsp;колл-центра подрядчика.</p>
+      </div>
+      <a class="btn btn--soft btn--sm" href="/about/">О&nbsp;бренде{{icon arrow-up-right icon--move}}</a>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Преимущества: четыре карточки с чертежами -->
+<section class="section home-why" aria-labelledby="why-title">
+  <div class="container">
+    <h2 class="visually-hidden" id="why-title">Почему JOIM</h2>
+    <ul class="home-why__grid">
+      <li class="bp-card">
+        <h3 class="bp-card__title">Своё производство</h3>
+        <p class="bp-card__text">Выбор ячеек, плата, сборка и&nbsp;тесты свои. На&nbsp;одной плате шесть защит: от&nbsp;короткого замыкания до&nbsp;перепутанных клемм.</p>
+        {{> bp-device cls=bp-card__art}}
+      </li>
+      <li class="bp-card">
+        <h3 class="bp-card__title">Гарантия 12&nbsp;месяцев</h3>
+        <p class="bp-card__text">Брак меняем без&nbsp;экспертизы, обратную отправку оплачиваем сами. Чек искать не&nbsp;нужно: заказ находим по&nbsp;телефону.</p>
+        {{> bp-seal cls=bp-card__art}}
+      </li>
+      <li class="bp-card">
+        <h3 class="bp-card__title">Не&nbsp;только автомобиль</h3>
+        <p class="bp-card__text">Пусковые устройства JOIM подходят не&nbsp;только машине:</p>
+        <ul class="chips">
+          <li class="chip chip--outline">легковые</li>
+          <li class="chip chip--outline">грузовые</li>
+          <li class="chip chip--outline">мотоциклы</li>
+          <li class="chip chip--outline">лодки и&nbsp;катера</li>
+          <li class="chip chip--outline">снегоходы</li>
+        </ul>
+        {{> bp-battery cls=bp-card__art}}
+      </li>
+      <li class="bp-card">
+        <h3 class="bp-card__title">Поддержка производителя</h3>
+        <p class="bp-card__text">Отвечаем сами, без&nbsp;колл-центра подрядчика. Интерфейс, маркировка и&nbsp;инструкция на&nbsp;русском, поддержка в&nbsp;Telegram.</p>
+        {{> bp-gear cls=bp-card__art}}
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- 6. Отзывы: заголовок-цитата, лента светлых карточек (отзывы дословно), ряд кадров «JOIM в деле» -->
+<section class="section--alt home-reviews" aria-labelledby="reviews-title" data-slider>
+  <div class="container">
+    <div class="home-reviews__head">
+      <div>
+        <h2 class="section-title home-reviews__quote" id="reviews-title">«Это просто выручалка!!!»</h2>
+        <p class="home-reviews__author">Константин о&nbsp;пусковом устройстве ES-19</p>
+      </div>
+    </div>
+    <div class="home-reviews__bar">
+      <p class="home-reviews__sub">Отзывы тех, кто уже возит JOIM в&nbsp;машине.</p>
+      <p class="home-reviews__rating">{{> stars}}<span><b>{{reviewStats.ratingFmt}}</b> {{{reviewStats.countByHtml}}}</span></p>
+      <div class="home-reviews__nav">
+        <a class="btn btn--outline btn--sm" href="/reviews/">Все отзывы</a>
+        <button class="round-btn" type="button" data-slider-prev aria-label="Предыдущие отзывы">{{icon arrow-left}}</button>
+        <button class="round-btn" type="button" data-slider-next aria-label="Следующие отзывы">{{icon arrow-right}}</button>
+      </div>
+    </div>
+  </div>
+  <div class="home-reviews__rail">
+    <ul class="slider__track home-reviews__track" data-slider-track tabindex="0" aria-label="Отзывы покупателей">
+      <li>
+        <article class="review-card">
+          <p class="review-card__product home-review__prod"><a href="{{products.es19.url}}"><span class="mini-tile"><img src="{{products.es19.img}}" alt="" width="{{products.es19.w}}" height="{{products.es19.h}}" loading="lazy" decoding="async"></span><span>{{{products.es19.nameHtml}}}</span></a></p>
+          <h3 class="review-card__name">Константин</h3>
+          {{> stars}}
+          <p class="review-card__text">Это просто выручалка!!! Очень часто забываю выключить фары, и естественно разряжается аккумулятор, эта штука заводит про то бомба!! Спасибо большое!</p>
+          <p class="review-card__date"><time datetime="2026-06-16">16&nbsp;июня 2026</time></p>
+        </article>
+      </li>
+      <li>
+        <article class="review-card">
+          <p class="review-card__product home-review__prod"><a href="{{products.es29.url}}"><span class="mini-tile"><img src="{{products.es29.img}}" alt="" width="{{products.es29.w}}" height="{{products.es29.h}}" loading="lazy" decoding="async"></span><span>{{{products.es29.nameHtml}}}</span></a></p>
+          <h3 class="review-card__name">Геннадий</h3>
+          {{> stars}}
+          <p class="review-card__text">Отличное пусковое. Уже пришлось попробовать. Результат вообще класс шкоду фабиа завёл на мертвом аккумуляторе с полу оборота. Ну я думаю и помощней технику заведёт без проблем.</p>
+          <p class="review-card__date"><time datetime="2026-07-19">19&nbsp;июля 2026</time></p>
+        </article>
+      </li>
+      <li class="home-reviews__long">
+        <article class="review-card">
+          <p class="review-card__product home-review__prod"><a href="{{products.pvc1.url}}"><span class="mini-tile"><img src="{{products.pvc1.img}}" alt="" width="{{products.pvc1.w}}" height="{{products.pvc1.h}}" loading="lazy" decoding="async"></span><span>{{{products.pvc1.nameHtml}}}</span></a></p>
+          <h3 class="review-card__name">Ксения</h3>
+          {{> stars}}
+          <p class="review-card__text">Крутой пылесос для быстрой поверхностной уборки. В машине ездит собака, от нее много шерсти. Пылесос справляется, есть разные насадки. Очень удобно что аккумуляторный, заряда хватает на 2-3 раза полностью пропылесосить машину, с коврами, багажником и прочим мусором. Было важно наличие узкой части, чтоб пролезать между сидениями. Приходит в чехле-кейса. В целом за свои деньги огонь.</p>
+          <p class="review-card__date"><time datetime="2026-07-16">16&nbsp;июля 2026</time></p>
+        </article>
+      </li>
+      <li>
+        <article class="review-card">
+          <p class="review-card__product home-review__prod"><a href="{{products.es19.url}}"><span class="mini-tile"><img src="{{products.es19.img}}" alt="" width="{{products.es19.w}}" height="{{products.es19.h}}" loading="lazy" decoding="async"></span><span>{{{products.es19.nameHtml}}}</span></a></p>
+          <h3 class="review-card__name">Вячеслав</h3>
+          {{> stars}}
+          <p class="review-card__text">Запускает. Очень помогла в прошедшую зиму. Пузотерки по 4-5 штук за утро. У меня внедорожник - легко!</p>
+          <p class="review-card__date"><time datetime="2026-05-11">11&nbsp;мая 2026</time></p>
+        </article>
+      </li>
+      <li>
+        <article class="review-card">
+          <p class="review-card__product home-review__prod"><a href="{{products.es29.url}}"><span class="mini-tile"><img src="{{products.es29.img}}" alt="" width="{{products.es29.w}}" height="{{products.es29.h}}" loading="lazy" decoding="async"></span><span>{{{products.es29.nameHtml}}}</span></a></p>
+          <h3 class="review-card__name">Наталья</h3>
+          {{> stars}}
+          <p class="review-card__text">Отличное пусковое устройство!Муж запускал аккумулятор на машине, в сильные морозы.Я использую как зарядное устройство для часов и телефона.Пришло все упакованное. Очень красивый ,приятный чехол .Инструкция на русском языке. Мощный фонарик. Покупкой очень довольны!!!</p>
+          <p class="review-card__date"><time datetime="2026-01-28">28&nbsp;января 2026</time></p>
+        </article>
+      </li>
+      <li>
+        <article class="review-card">
+          <p class="review-card__product home-review__prod"><a href="{{products.es19.url}}"><span class="mini-tile"><img src="{{products.es19.img}}" alt="" width="{{products.es19.w}}" height="{{products.es19.h}}" loading="lazy" decoding="async"></span><span>{{{products.es19.nameHtml}}}</span></a></p>
+          <h3 class="review-card__name">Оксана</h3>
+          {{> stars}}
+          <p class="review-card__text">Просто лучшая покупка за последние полгода. Машина стала как новее. Ездишь и не паришься: хоть музыку слушай хоть зарядку телефона оставь - знаешь что в багажнике лежит Джоим и в любой момент даст искру. Вещь обязательная как огнетушитель и знак аварийной остановки. Joim ES‑19 однозначно 5 баллов!</p>
+          <p class="review-card__date"><time datetime="2026-05-07">7&nbsp;мая 2026</time></p>
+        </article>
+      </li>
+      <li>
+        <article class="review-card">
+          <p class="review-card__product home-review__prod"><a href="{{products.pvc1.url}}"><span class="mini-tile"><img src="{{products.pvc1.img}}" alt="" width="{{products.pvc1.w}}" height="{{products.pvc1.h}}" loading="lazy" decoding="async"></span><span>{{{products.pvc1.nameHtml}}}</span></a></p>
+          <h3 class="review-card__name">Эля</h3>
+          {{> stars}}
+          <p class="review-card__text">Хватает на полную уборку салона и багажника. Зарядила до полного успела пропылесосить оба ряда коврики багажник и ещё дверные карманы. В конце оставалось одно деление. 40 минут – честное время не завышенное. Для кроссовера самое то. JOIM не обманывает в характеристиках проверено на двух их устройствах.</p>
+          <p class="review-card__date"><time datetime="2026-04-22">22&nbsp;апреля 2026</time></p>
+        </article>
+      </li>
+      <li>
+        <article class="review-card">
+          <p class="review-card__product home-review__prod"><a href="{{products.es19.url}}"><span class="mini-tile"><img src="{{products.es19.img}}" alt="" width="{{products.es19.w}}" height="{{products.es19.h}}" loading="lazy" decoding="async"></span><span>{{{products.es19.nameHtml}}}</span></a></p>
+          <h3 class="review-card__name">Варя</h3>
+          {{> stars}}
+          <p class="review-card__text">Думаете летом не нужен? Очень нужен. Забыла включить вентилятор охлаждения на стоянке сел аккумулятор в ноль. Жара 35 градусов. Joim завёл без проблем. А ещё встроенный фонарик очень выручил ночью у моря искала ключи в песке. Устройство на все сезоны. Не только морозилка.</p>
+          <p class="review-card__date"><time datetime="2026-05-05">5&nbsp;мая 2026</time></p>
+        </article>
+      </li>
+    </ul>
+  </div>
+  <div class="container home-action">
+    <div class="home-action__head">
+      <h3 class="home-action__title">JOIM в&nbsp;деле</h3>
+      <p class="home-action__text">Кадры из&nbsp;обзоров блогеров: внедорожник, трактор, мотоцикл и&nbsp;мотор V12.</p>
+    </div>
+    <ul class="home-action__list">
+      <li><figure class="home-shot home-shot--review"><span class="home-shot__media"><img src="/assets/img/deck/blogger-neverstop.jpg" alt="Пусковое устройство JOIM в&nbsp;руке на&nbsp;фоне спортивного автомобиля" width="1280" height="960" loading="lazy" decoding="async"></span><figcaption>Обзор Andrey Never Stop</figcaption></figure></li>
+      <li><figure class="home-shot"><span class="home-shot__media"><img src="/assets/img/deck/action-2-vnedorozhnik.jpg" alt="Пусковое устройство JOIM под&nbsp;капотом внедорожника" width="518" height="1016" loading="lazy" decoding="async"></span><figcaption>Внедорожник</figcaption></figure></li>
+      <li><figure class="home-shot"><span class="home-shot__media"><img src="/assets/img/deck/action-3-traktor.jpg" alt="Пусковое устройство JOIM подключено к&nbsp;аккумулятору трактора" width="519" height="925" loading="lazy" decoding="async"></span><figcaption>Подключение к&nbsp;трактору</figcaption></figure></li>
+      <li><figure class="home-shot"><span class="home-shot__media"><img src="/assets/img/deck/action-4-podkachka.jpg" alt="Подкачка колеса устройством JOIM с&nbsp;компрессором" width="506" height="922" loading="lazy" decoding="async"></span><figcaption>Подкачка колеса</figcaption></figure></li>
+      <li><figure class="home-shot"><span class="home-shot__media"><img src="/assets/img/deck/action-5-motocikl.jpg" alt="Пусковое устройство JOIM подключают к&nbsp;мотоциклу" width="519" height="915" loading="lazy" decoding="async"></span><figcaption>Подключение к&nbsp;мотоциклу</figcaption></figure></li>
+      <li><figure class="home-shot home-shot--hood"><span class="home-shot__media"><img src="/assets/img/deck/action-6-pod-kapotom.jpg" alt="Пусковое устройство JOIM под&nbsp;капотом на&nbsp;моторе V12" width="464" height="848" loading="lazy" decoding="async"></span><figcaption>Под капотом</figcaption></figure></li>
+    </ul>
+  </div>
+</section>
+
+<!-- 7. Оплата, доставка и гарантия: три карточки с чертежами -->
+<section class="section home-service" aria-labelledby="service-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title" id="service-title">Оплата, доставка и&nbsp;гарантия</h2>
+    </div>
+    <ul class="home-service__grid">
+      <li class="bp-card bp-card--tall">
+        <h3 class="bp-card__title">Оплата</h3>
+        <p class="bp-card__text">Картой на&nbsp;сайте, наличными или картой при&nbsp;получении в&nbsp;Москве, по&nbsp;счёту для&nbsp;юрлиц.</p>
+        <p class="bp-card__text">Рассрочка на&nbsp;6&nbsp;месяцев без&nbsp;переплаты при&nbsp;заказе от&nbsp;20&nbsp;000&nbsp;₽.</p>
+        <a class="btn btn--sm bp-card__more" href="/delivery/">Подробнее<span class="visually-hidden"> об&nbsp;оплате</span>{{icon arrow-up-right icon--move}}</a>
+        {{> bp-card cls=bp-card__art}}
+      </li>
+      <li class="bp-card bp-card--tall bp-card--map">
+        <h3 class="bp-card__title">Доставка по&nbsp;всей России</h3>
+        <ul class="bp-card__list">
+          <li><span>СДЭК по&nbsp;России, 2–7&nbsp;дней</span><b>от&nbsp;390&nbsp;₽</b></li>
+          <li><span>Курьер по&nbsp;Москве в&nbsp;день заказа</span><b>490&nbsp;₽</b></li>
+          <li><span>Самовывоз в&nbsp;Москве</span><b>бесплатно</b></li>
+        </ul>
+        <p class="bp-card__text bp-card__text--note">От&nbsp;15&nbsp;000&nbsp;₽ курьер и&nbsp;СДЭК бесплатно.</p>
+        <a class="btn btn--sm bp-card__more" href="/delivery/">Подробнее<span class="visually-hidden"> о&nbsp;доставке</span>{{icon arrow-up-right icon--move}}</a>
+        {{> bp-map cls=bp-card__art}}
+      </li>
+      <li class="bp-card bp-card--tall">
+        <h3 class="bp-card__title">Гарантия и&nbsp;возврат</h3>
+        <p class="bp-card__text">12&nbsp;месяцев гарантии от&nbsp;производителя. Брак меняем без&nbsp;экспертизы, обратную отправку оплачиваем сами.</p>
+        <p class="bp-card__text">Передумали? Вернуть товар можно в&nbsp;течение 14&nbsp;дней.</p>
+        <a class="btn btn--sm bp-card__more" href="/warranty/">Подробнее<span class="visually-hidden"> о&nbsp;гарантии и&nbsp;возврате</span>{{icon arrow-up-right icon--move}}</a>
+        {{> bp-box cls=bp-card__art}}
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- 8. Вопросы и ответы: слева заголовок и кнопка «Задать вопрос», справа аккордеон -->
+<section class="section section--alt home-faq" aria-labelledby="faq-title">
+  <div class="container home-faq__in">
+    <h2 class="section-title home-faq__title" id="faq-title">Ответы на&nbsp;популярные вопросы</h2>
+    <div class="accordion home-faq__list">
+      <div class="accordion__item is-open">
+        <h3 class="accordion__head"><button class="accordion__btn" type="button">Заведёт, если аккумулятор сел полностью?</button></h3>
+        <div class="accordion__panel"><div class="accordion__body"><p>Да. Устройство не&nbsp;подзаряжает аккумулятор, а&nbsp;отдаёт ток прямо на&nbsp;стартер.</p></div></div>
+      </div>
+      <div class="accordion__item">
+        <h3 class="accordion__head"><button class="accordion__btn" type="button">Что будет, если перепутать клеммы?</button></h3>
+        <div class="accordion__panel"><div class="accordion__body"><p>Ничего. MCU-чип проверяет полярность до&nbsp;подачи тока и&nbsp;не&nbsp;запустит процесс, индикатор покажет ошибку.</p></div></div>
+      </div>
+      <div class="accordion__item">
+        <h3 class="accordion__head"><button class="accordion__btn" type="button">Сколько держит заряд без&nbsp;использования?</button></h3>
+        <div class="accordion__panel"><div class="accordion__body"><p>Несколько месяцев в&nbsp;режиме ожидания. Подзаряжать стоит раз в&nbsp;3–4&nbsp;месяца, индикатор 0–100&nbsp;% покажет остаток.</p></div></div>
+      </div>
+      <div class="accordion__item">
+        <h3 class="accordion__head"><button class="accordion__btn" type="button">Работает на&nbsp;морозе?</button></h3>
+        <div class="accordion__panel"><div class="accordion__body"><p>Да. Встроенный датчик температуры следит за&nbsp;нагревом батареи и&nbsp;корректирует отдачу. На&nbsp;сильном морозе устройство лучше держать в&nbsp;салоне, а&nbsp;не&nbsp;в&nbsp;багажнике: любой литий на&nbsp;холоде отдаёт меньше.</p></div></div>
+      </div>
+      <div class="accordion__item">
+        <h3 class="accordion__head"><button class="accordion__btn" type="button"><span>Чем <span class="nowrap">ES-19</span> отличается от&nbsp;<span class="nowrap">ES-29</span>?</span></button></h3>
+        <div class="accordion__panel"><div class="accordion__body"><p>Запасом и&nbsp;моторами. <span class="nowrap">ES-19</span>: {{products.es19.specs.currentType}} ток {{{products.es19.specs.current}}}, {{{products.es19.specs.capacity}}}, {{{products.es19.specs.starts}}} запусков, {{{products.es19.specs.engines}}}. <span class="nowrap">ES-29</span>: {{products.es29.specs.currentType}} ток {{{products.es29.specs.current}}}, {{{products.es29.specs.capacity}}}, {{{products.es29.specs.starts}}} запусков, {{{products.es29.specs.engines}}}. Ещё у&nbsp;<span class="nowrap">ES-29</span> ярче фонарь и&nbsp;в&nbsp;комплекте адаптер с&nbsp;Lightning. Подробнее в&nbsp;<a href="/compare/es19-vs-es29/">сравнении <span class="nowrap">ES-19</span> и&nbsp;<span class="nowrap">ES-29</span></a>.</p></div></div>
+      </div>
+      <div class="accordion__item">
+        <h3 class="accordion__head"><button class="accordion__btn" type="button">Пылесос справится с&nbsp;песком и&nbsp;шерстью?</button></h3>
+        <div class="accordion__panel"><div class="accordion__body"><p>Да. В&nbsp;циклонной схеме тяжёлая фракция уходит в&nbsp;контейнер, не&nbsp;забивая фильтр. Фильтры промываются под&nbsp;водой и&nbsp;ставятся обратно.</p></div></div>
+      </div>
+      <div class="accordion__item">
+        <h3 class="accordion__head"><button class="accordion__btn" type="button">Пусковое и&nbsp;пуско-зарядное устройство: в&nbsp;чём разница?</button></h3>
+        <div class="accordion__panel"><div class="accordion__body"><p>Пуско-зарядное работает от&nbsp;розетки и&nbsp;стоит в&nbsp;гараже. Пусковое (бустер) работает от&nbsp;своей батареи и&nbsp;лежит в&nbsp;машине: заводит мотор там, где сел аккумулятор.</p></div></div>
+      </div>
+    </div>
+    <div class="home-faq__more">
+      <p>Не&nbsp;нашли ответа на&nbsp;свой вопрос?</p>
+      <button class="btn btn--solid" type="button" data-dialog-open="ask" aria-haspopup="dialog">Задать вопрос</button>
+      <a class="link home-faq__all" href="/faq/">Все вопросы и&nbsp;ответы</a>
+    </div>
+  </div>
+</section>
+
+<!-- 9. Опт: тёмная сцена с чертежом партии на поддоне, слева светлая карточка-форма с уголками -->
+<section class="home-opt" aria-labelledby="opt-title">
+  {{> bp-crate cls=home-opt__art}}
+  <div class="gridlines" aria-hidden="true"></div>
+  <div class="container home-opt__in">
+    <div class="bracket-card home-opt__card">
+      <form class="form" data-form novalidate>
+        <div class="form__main">
+          <h2 class="section-title" id="opt-title">Нужны устройства оптом?</h2>
+          <p class="home-opt__lead">Оптовые поставки и&nbsp;корпоративные подарки от&nbsp;производителя. <a class="link" href="/corporate/">Условия для&nbsp;компаний</a></p>
+          <p class="home-opt__tel">Или позвоните: <a href="tel:+74951201140">+7&nbsp;495&nbsp;120-11-40</a></p>
+          <div class="field">
+            <label class="visually-hidden" for="opt-name">Ваше имя</label>
+            <input class="input" id="opt-name" type="text" name="name" placeholder="Ваше имя" autocomplete="name" required data-error="Напишите, как к вам обращаться">
+          </div>
+          <div class="form__row">
+            <div class="field">
+              <label class="visually-hidden" for="opt-tel">Телефон</label>
+              <input class="input" id="opt-tel" type="tel" name="phone" placeholder="+7 000 000-00-00" autocomplete="tel" inputmode="tel" required data-error="Оставьте телефон для связи">
+            </div>
+            <div class="field">
+              <label class="visually-hidden" for="opt-mail">E-mail</label>
+              <input class="input" id="opt-mail" type="email" name="email" placeholder="E-mail" autocomplete="email" inputmode="email">
+            </div>
+          </div>
+          <div class="field">
+            <label class="visually-hidden" for="opt-msg">Комментарий</label>
+            <textarea class="textarea" id="opt-msg" name="message" placeholder="Какие модели интересуют и&nbsp;сколько штук"></textarea>
+          </div>
+          <label class="check">
+            <input class="check__input" type="checkbox" name="agree" required data-error="Нужно согласие на обработку данных">
+            <span class="check__box" aria-hidden="true">{{icon check}}</span>
+            <span class="check__text">Согласен с&nbsp;<a href="/privacy/">политикой конфиденциальности</a> и&nbsp;обработкой персональных данных</span>
+          </label>
+          <button class="btn btn--accent btn--lg btn--block" type="submit">Оставить заявку</button>
+        </div>
+        <div class="form__success" data-form-success hidden>
+          <h2 class="section-title">Заявка принята</h2>
+          <p class="home-opt__lead">Перезвоним по&nbsp;указанному номеру.</p>
+          <a class="btn btn--soft" href="/corporate/">Условия для&nbsp;компаний{{icon arrow-up-right icon--move}}</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Окно «Задать вопрос» -->
+<dialog class="modal" id="ask" aria-labelledby="ask-title">
+  <button class="round-btn modal__close" type="button" data-dialog-close aria-label="Закрыть окно">{{icon close}}</button>
+  <form class="form" data-form data-form-reset novalidate>
+    <div class="form__main">
+      <h2 class="modal__title" id="ask-title">Задать вопрос</h2>
+      <p class="modal__text">Отвечаем сами, без&nbsp;колл-центра подрядчика.</p>
+      <div class="field">
+        <label class="visually-hidden" for="ask-name">Ваше имя</label>
+        <input class="input" id="ask-name" type="text" name="name" placeholder="Ваше имя" autocomplete="name" required data-error="Напишите, как к вам обращаться">
+      </div>
+      <div class="field">
+        <label class="visually-hidden" for="ask-contact">Телефон или e-mail</label>
+        <input class="input" id="ask-contact" type="text" name="contact" placeholder="Телефон или e-mail" required data-contact data-error="Оставьте телефон или e-mail">
+      </div>
+      <div class="field">
+        <label class="visually-hidden" for="ask-msg">Ваш вопрос</label>
+        <textarea class="textarea" id="ask-msg" name="message" placeholder="Ваш вопрос" required data-error="Напишите вопрос"></textarea>
+      </div>
+      <label class="check">
+        <input class="check__input" type="checkbox" name="agree" required data-error="Нужно согласие на обработку данных">
+        <span class="check__box" aria-hidden="true">{{icon check}}</span>
+        <span class="check__text">Согласен с&nbsp;<a href="/privacy/">политикой конфиденциальности</a></span>
+      </label>
+      <button class="btn btn--accent btn--lg btn--block" type="submit">Отправить вопрос</button>
+    </div>
+    <div class="form__success" data-form-success hidden>
+      <h2 class="modal__title">Вопрос отправлен</h2>
+      <p class="modal__text">Ответим по&nbsp;указанному контакту.</p>
+      <button class="btn btn--solid btn--block" type="button" data-dialog-close>Хорошо</button>
+    </div>
+  </form>
+</dialog>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://joim-store.ru/#org",
+      "name": "JOIM",
+      "url": "https://joim-store.ru/",
+      "logo": "https://joim-store.ru/assets/img/deck/logo-on-light.png",
+      "slogan": "Надёжные гаджеты для вас и вашего автомобиля",
+      "sameAs": ["https://t.me/joim_ru", "https://vk.com/joim_store"],
+      "contactPoint": { "@type": "ContactPoint", "telephone": "+7-495-120-11-40", "email": "hello@joim-store.ru", "contactType": "customer service", "areaServed": "RU", "availableLanguage": "Russian" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://joim-store.ru/#site",
+      "url": "https://joim-store.ru/",
+      "name": "JOIM",
+      "inLanguage": "ru-RU",
+      "publisher": { "@id": "https://joim-store.ru/#org" }
+    },
+    {
+      "@type": "ItemList",
+      "name": "Товары JOIM в продаже",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "item": { "@type": "Product", "name": {{json products.es19.name}}, "image": "https://joim-store.ru{{products.es19.img}}", "description": {{json products.es19.aboutText}}, "brand": { "@type": "Brand", "name": "JOIM" }, "url": "https://joim-store.ru{{products.es19.url}}", "offers": { "@type": "Offer", "price": {{json products.es19.price}}, "priceCurrency": "RUB", "availability": "https://schema.org/InStock", "url": "https://joim-store.ru{{products.es19.url}}" }, "aggregateRating": { "@type": "AggregateRating", "ratingValue": {{json products.es19.rating}}, "bestRating": 5, "reviewCount": {{json products.es19.reviews}} } } },
+        { "@type": "ListItem", "position": 2, "item": { "@type": "Product", "name": {{json products.es29.name}}, "image": "https://joim-store.ru{{products.es29.img}}", "description": {{json products.es29.aboutText}}, "brand": { "@type": "Brand", "name": "JOIM" }, "url": "https://joim-store.ru{{products.es29.url}}", "offers": { "@type": "Offer", "price": {{json products.es29.price}}, "priceCurrency": "RUB", "availability": "https://schema.org/InStock", "url": "https://joim-store.ru{{products.es29.url}}" }, "aggregateRating": { "@type": "AggregateRating", "ratingValue": {{json products.es29.rating}}, "bestRating": 5, "reviewCount": {{json products.es29.reviews}} } } },
+        { "@type": "ListItem", "position": 3, "item": { "@type": "Product", "name": {{json products.pvc1.name}}, "image": "https://joim-store.ru{{products.pvc1.img}}", "description": {{json products.pvc1.aboutText}}, "brand": { "@type": "Brand", "name": "JOIM" }, "url": "https://joim-store.ru{{products.pvc1.url}}", "offers": { "@type": "Offer", "price": {{json products.pvc1.price}}, "priceCurrency": "RUB", "availability": "https://schema.org/InStock", "url": "https://joim-store.ru{{products.pvc1.url}}" }, "aggregateRating": { "@type": "AggregateRating", "ratingValue": {{json products.pvc1.rating}}, "bestRating": 5, "reviewCount": {{json products.pvc1.reviews}} } } }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Заведёт, если аккумулятор сел полностью?", "acceptedAnswer": { "@type": "Answer", "text": "Да. Устройство не подзаряжает аккумулятор, а отдаёт ток прямо на стартер." } },
+        { "@type": "Question", "name": "Что будет, если перепутать клеммы?", "acceptedAnswer": { "@type": "Answer", "text": "Ничего. MCU-чип проверяет полярность до подачи тока и не запустит процесс, индикатор покажет ошибку." } },
+        { "@type": "Question", "name": "Сколько держит заряд без использования?", "acceptedAnswer": { "@type": "Answer", "text": "Несколько месяцев в режиме ожидания. Подзаряжать стоит раз в 3–4 месяца, индикатор 0–100 % покажет остаток." } },
+        { "@type": "Question", "name": "Работает на морозе?", "acceptedAnswer": { "@type": "Answer", "text": "Да. Встроенный датчик температуры следит за нагревом батареи и корректирует отдачу. На сильном морозе устройство лучше держать в салоне, а не в багажнике: любой литий на холоде отдаёт меньше." } },
+        { "@type": "Question", "name": "Чем ES-19 отличается от ES-29?", "acceptedAnswer": { "@type": "Answer", "text": "Запасом и моторами. ES-19: {{products.es19.specs.currentType}} ток {{{products.es19.specs.current}}}, {{{products.es19.specs.capacity}}}, {{{products.es19.specs.starts}}} запусков, {{{products.es19.specs.engines}}}. ES-29: {{products.es29.specs.currentType}} ток {{{products.es29.specs.current}}}, {{{products.es29.specs.capacity}}}, {{{products.es29.specs.starts}}} запусков, {{{products.es29.specs.engines}}}. Ещё у ES-29 ярче фонарь и в комплекте адаптер с Lightning." } },
+        { "@type": "Question", "name": "Пылесос справится с песком и шерстью?", "acceptedAnswer": { "@type": "Answer", "text": "Да. В циклонной схеме тяжёлая фракция уходит в контейнер, не забивая фильтр. Фильтры промываются под водой и ставятся обратно." } },
+        { "@type": "Question", "name": "Пусковое и пуско-зарядное устройство: в чём разница?", "acceptedAnswer": { "@type": "Answer", "text": "Пуско-зарядное работает от розетки и стоит в гараже. Пусковое (бустер) работает от своей батареи и лежит в машине: заводит мотор там, где сел аккумулятор." } }
+      ]
+    }
+  ]
+}
+</script>

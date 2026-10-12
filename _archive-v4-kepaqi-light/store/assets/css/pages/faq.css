@@ -1,0 +1,56 @@
+/* faq: страница «Вопросы и ответы» (src/pages/faq.html).
+   Порядок как на странице: заголовок · слева три группы вопросов (аккордеон на серых строках), справа липкая карточка поддержки с чертежом ·
+   три ссылки. Все классы страницы начинаются с faq-. Общие компоненты (accordion, bp-card, link-card, modal) лежат в main.css. */
+
+/* ---------- Заголовок ---------- */
+.faq-head { padding-bottom: 32px; }
+.faq-head .lead { max-width: 60em; text-wrap: pretty; }
+
+/* ---------- Вопросы и карточка поддержки ---------- */
+.faq { padding-bottom: var(--section); }
+.faq__in { display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: 56px; align-items: start; }
+.faq__groups { display: grid; gap: 48px; min-width: 0; }
+.faq-group__title { margin-bottom: 16px; font: 500 22px/1.2 var(--font-head); letter-spacing: -.005em; }
+.faq .accordion__body > :first-child { max-width: 720px; font-size: 15px; line-height: 1.55; }
+.faq__side { min-width: 0; }
+@media (min-width: 1101px) and (min-height: 700px) {
+  .faq__side { position: sticky; top: calc(var(--sticky-top) + 20px); }
+}
+.faq-ask { min-height: 520px; padding: 24px 24px 28px; }
+.faq-ask .bp-card__text { max-width: none; }
+.faq-ask__actions { display: grid; gap: 8px; margin-top: 22px; }
+.faq-ask__actions .btn--white:hover { background: var(--accent); }
+.faq-ask .bp-card__art { right: -40px; bottom: -112px; width: 320px; }
+
+/* ---------- Куда дальше ---------- */
+.faq-more { padding-top: 64px; }
+.faq-more__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
+.faq-more__grid > li { display: flex; min-width: 0; }
+.faq-more .link-card { flex: 1; }
+.faq-more .link-card__arrow .icon { transition: transform .3s var(--ease); }
+.faq-more .link-card:hover .link-card__arrow .icon { transform: translate(2px, -2px); }
+
+/* ---------- Адаптив ---------- */
+@media (max-width: 1280px) {
+  .faq__in { grid-template-columns: minmax(0, 1fr) 360px; gap: 40px; }
+}
+@media (max-width: 1100px) {
+  .faq__in { grid-template-columns: minmax(0, 1fr); gap: 48px; }
+  .faq-ask { min-height: 0; padding-bottom: 28px; }
+  .faq-ask .bp-card__text { max-width: 31em; }
+  .faq-ask__actions { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 720px; }
+  .faq-ask .bp-card__art { display: none; }
+}
+@media (max-width: 767px) {
+  .faq-head { padding-bottom: 24px; }
+  .faq__in { gap: 40px; }
+  .faq__groups { gap: 36px; }
+  .faq-group__title { margin-bottom: 12px; font-size: 19px; }
+  .faq .accordion__body > :first-child { font-size: 14.5px; }
+  .faq-ask { padding: 20px 20px 22px; }
+  .faq-ask__actions { grid-template-columns: minmax(0, 1fr); }
+  .faq-more { padding-top: 48px; }
+  .faq-more__grid { grid-template-columns: minmax(0, 1fr); }
+  .faq-more .link-card { justify-content: center; min-height: 0; padding: 16px 76px 16px 18px; }
+  .faq-more .link-card__arrow { left: auto; right: 18px; top: 50%; bottom: auto; margin-top: -22px; }
+}

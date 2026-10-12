@@ -1,0 +1,398 @@
+/* Карточка товара ES-19: галерея и блок покупки, липкая под-навигация, описание сеткой 2 × 2, характеристики,
+   комплект, шаги, отзывы, вопросы, «с этим покупают», нижняя панель покупки на телефоне, окно «Купить в 1 клик».
+   Все классы страницы начинаются с pdp-. Двухколоночные секции стоят на сетке 12 колонок с зазором 24 px. */
+
+:root { --pdp-nav-h: 56px; }
+/* якоря встают под шапку и под-навигацию */
+html { scroll-padding-top: calc(var(--header-h) + var(--pdp-nav-h) + 20px); }
+
+/* ---------- Верх: галерея и блок покупки ---------- */
+.pdp-top { padding-block: 12px 48px; }
+.pdp-top__in { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: start; gap: 28px 48px; }
+
+/* галерея: кадры лежат стопкой, виден активный;
+   пока блок покупки длиннее галереи, галерея остаётся на экране */
+.pdp-gallery { position: sticky; top: calc(var(--header-h) + 16px); min-width: 0; }
+.pdp-gallery__stage { position: relative; border-radius: var(--r-card); overflow: hidden; }
+.pdp-gallery__track { position: relative; aspect-ratio: 5 / 4; }
+.pdp-gallery__frame {
+  position: absolute; inset: 0; opacity: 0; visibility: hidden;
+  transition: opacity var(--t-slow) var(--ease), visibility 0s linear var(--t-slow);
+}
+.pdp-gallery__frame.is-active { opacity: 1; visibility: visible; transition-delay: 0s; }
+/* стоящее устройство: крупнее, чем в плитке каталога, тень по ширине корпуса */
+.pdp-gallery__frame--stand > img { height: 86%; max-width: 70%; }
+.pdp-gallery__frame--stand::after { bottom: calc(7% - 9px); width: 32%; }
+
+/* видео: постер целиком на чёрном поле, как в плеере; само видео грузится только после клика */
+.pdp-gallery__frame--video { border-radius: var(--r-card); background: var(--black); overflow: hidden; }
+.pdp-gallery__play { position: absolute; inset: 0; display: grid; place-items: center; width: 100%; height: 100%; color: var(--text); --focus: var(--lime); }
+.pdp-gallery__play > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.pdp-gallery__play-icon {
+  position: relative; display: grid; place-items: center; width: 72px; height: 72px;
+  border-radius: var(--r-card); background: var(--lime);
+  transition: background-color var(--t-fast) var(--ease), scale var(--t) var(--ease);
+}
+.pdp-gallery__play-icon .icon { width: 30px; height: 30px; }
+@media (hover: hover) {
+  .pdp-gallery__play:hover .pdp-gallery__play-icon { background: var(--lime-hover); }
+}
+.pdp-gallery__play:active .pdp-gallery__play-icon { background: var(--lime-hover); scale: .96; }
+.pdp-gallery__play:focus-visible { outline-offset: -6px; }
+.pdp-gallery__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: var(--black); }
+.pdp-gallery__count { display: none; }
+/* без скриптов кадры идут лентой с прокруткой, видео доступно штатным плеером */
+.no-js .pdp-gallery__track { display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; }
+.no-js .pdp-gallery__frame { position: relative; flex: 0 0 100%; opacity: 1; visibility: visible; scroll-snap-align: start; }
+.no-js .pdp-gallery__play, .no-js .pdp-gallery__thumbs { display: none; }
+.no-js .pdp-gallery__video[hidden] { display: block !important; }
+
+/* миниатюры: шесть в ряд, в пропорции окна галереи */
+.pdp-gallery__thumbs { position: relative; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+/* текущий кадр отмечен обводкой снаружи: она одинаково видна на светлой вырезке и на тёмном фото */
+.pdp-thumb {
+  position: relative; display: block; width: 100%; aspect-ratio: 5 / 4;
+  border-radius: var(--r-ctl); background: var(--bg-soft); overflow: hidden;
+  outline: 2px solid transparent; outline-offset: 2px;
+  transition: background-color var(--t-fast) var(--ease), outline-color var(--t-fast) var(--ease);
+}
+.pdp-thumb > img { position: absolute; inset: 0; width: 100%; height: 100%; padding: 10%; object-fit: contain; }
+.pdp-thumb--photo > img { padding: 0; object-fit: cover; }
+.pdp-thumb__play {
+  position: absolute; inset: 0; display: grid; place-items: center; width: 28px; height: 28px; margin: auto;
+  border-radius: var(--r-ctl); background: var(--lime); color: var(--text);
+}
+.pdp-thumb__play .icon { width: 14px; height: 14px; }
+@media (hover: hover) {
+  .pdp-thumb:hover { outline-color: var(--line-strong); }
+}
+.pdp-thumb:active { background: var(--bg-soft-2); outline-color: var(--text-3); }
+.pdp-thumb.is-active, .pdp-thumb:focus-visible { outline-color: var(--text); }
+
+/* блок покупки: основная часть и строки доставки. На десктопе и телефоне это одна колонка
+   (ссылка на сравнение встаёт под доставкой через order), на планшете доставка уходит под обе колонки. */
+.pdp-buy { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
+.pdp-buy__main { display: contents; }
+.pdp-buy__title { margin-top: 14px; font-size: 36px; }
+.pdp-buy__rating { margin-top: 6px; }
+.pdp-buy__price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; margin-top: 4px; }
+.pdp-buy__keys { margin-top: 18px; }
+.pdp-buy__keys > li::first-letter { text-transform: uppercase; }
+.pdp-buy__actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; width: 100%; margin-top: 24px; }
+.pdp-ship { order: 1; width: 100%; margin-top: 24px; border: 1px solid var(--line); border-radius: var(--r-card); }
+.pdp-ship > li { display: flex; align-items: flex-start; gap: 12px; padding: 11px 16px; font-size: 14px; line-height: 1.45; color: var(--text-2); }
+.pdp-ship > li + li { border-top: 1px solid var(--line); }
+.pdp-ship .icon { width: 20px; height: 20px; color: var(--text); }
+.pdp-ship b { color: var(--text); }
+.pdp-buy__compare { order: 2; margin-top: 8px; }
+
+/* ---------- Липкая под-навигация ---------- */
+.pdp-nav { position: sticky; top: var(--header-h); z-index: var(--z-sticky); border-block: 1px solid var(--line); background: var(--bg); }
+.pdp-nav__in { position: relative; display: flex; align-items: stretch; gap: 24px; height: 56px; }
+.pdp-nav__list { display: flex; flex: 1; gap: 28px; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.pdp-nav__list::-webkit-scrollbar { display: none; }
+.pdp-nav__list > li { display: flex; flex: none; }
+.pdp-nav__link {
+  position: relative; display: inline-flex; align-items: center;
+  font-size: 15px; font-weight: 600; line-height: 1.2; color: var(--text-2); white-space: nowrap;
+  transition: color var(--t-fast) var(--ease);
+}
+.pdp-nav__link::after {
+  content: ""; position: absolute; inset: auto 0 0; height: 2px; background: var(--text);
+  transform: scaleX(0); transform-origin: left center; transition: transform var(--t) var(--ease);
+}
+@media (hover: hover) {
+  .pdp-nav__link:hover { color: var(--text); }
+}
+.pdp-nav__link:active { color: var(--text); }
+.pdp-nav__link[aria-current] { color: var(--text); }
+.pdp-nav__link[aria-current]::after { transform: scaleX(1); }
+.pdp-nav__link:focus-visible { outline-offset: -4px; }
+/* цена и кнопка появляются, когда кнопки блока покупки ушли под шапку;
+   пока они скрыты, места в строке не занимают: на планшете помещаются все шесть якорей */
+.pdp-nav__buy {
+  position: absolute; inset: 0 var(--gutter) 0 auto;
+  display: flex; align-items: center; gap: 16px; flex: none; opacity: 0; visibility: hidden; translate: 0 6px;
+  transition: opacity var(--t) var(--ease), translate var(--t) var(--ease), visibility 0s linear var(--t);
+}
+.pdp-nav.is-buy .pdp-nav__buy { position: static; opacity: 1; visibility: visible; translate: 0 0; transition-delay: 0s; }
+.pdp-nav__name { font-size: 14px; font-weight: 600; line-height: 1.2; color: var(--text-2); white-space: nowrap; }
+.pdp-nav__btn { min-width: 152px; }
+
+/* ---------- Описание: сетка 2 × 2, в ячейке картинка, заголовок и два предложения ---------- */
+.pdp-desc { padding-top: 56px; scroll-margin-top: -20px; }
+.pdp-features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px var(--gap); }
+.pdp-feature { display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; gap: 16px; min-width: 0; }
+.pdp-feature__media { aspect-ratio: 16 / 9; }
+.pdp-feature__body { max-width: 52ch; color: var(--text-2); }
+.pdp-feature__title { margin-bottom: 8px; color: var(--text); text-wrap: balance; }
+
+/* ---------- Характеристики: две таблицы рядом ---------- */
+.pdp-specs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 0 var(--gap); }
+/* вторая таблица: на телефоне свёрнута под кнопкой «Все характеристики», раскрывается как аккордеон */
+.pdp-specs__more { display: grid; grid-template-rows: 1fr; min-width: 0; }
+.pdp-specs__more-in { min-width: 0; min-height: 0; }
+.pdp-specs__toggle { display: none; }
+
+/* ---------- Комплект поставки: список слева, две плитки справа ---------- */
+.pdp-kit { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); align-items: center; gap: 24px var(--gap); }
+.pdp-kit__body { grid-column: span 7; }
+.pdp-kit__pics { grid-column: span 5; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap); }
+.pdp-kit__lead { margin-top: 12px; color: var(--text-2); }
+.pdp-kit__list { margin-top: 20px; border-top: 1px solid var(--line); }
+.pdp-kit__list > li {
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 2px 24px; padding: 13px 0;
+  border-bottom: 1px solid var(--line); font-size: 15px; line-height: 1.45;
+}
+.pdp-kit__list span { color: var(--text-2); font-variant-numeric: tabular-nums; }
+
+/* ---------- Как пользоваться ---------- */
+.pdp-howto { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); align-items: start; gap: 24px var(--gap); }
+.pdp-howto__intro { grid-column: span 5; padding-right: 24px; }
+.pdp-howto__steps { grid-column: span 7; }
+.pdp-howto__lead { margin-top: 12px; color: var(--text-2); }
+.pdp-howto__note { margin-top: 20px; }
+.pdp-howto__intro .more-link { margin-top: 8px; }
+
+/* ---------- Отзывы ---------- */
+#reviews { scroll-margin-top: -20px; }   /* серая полоса начинается сразу под под-навигацией */
+.pdp-reviews { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); align-items: start; gap: var(--gap); }
+.pdp-reviews__summary { grid-column: span 3; padding-right: 8px; }
+/* колонки вместо сетки: короткий отзыв не растягивается до высоты длинного соседа */
+.pdp-reviews__list { grid-column: span 9; columns: 3; column-gap: var(--gap); margin-bottom: calc(-1 * var(--gap)); }
+.pdp-reviews__list > li { min-width: 0; margin-bottom: var(--gap); break-inside: avoid; }
+
+/* ---------- Вопросы и ответы ---------- */
+#faq { scroll-margin-top: -40px; }
+.pdp-faq { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); align-items: start; gap: 24px var(--gap); }
+.pdp-faq__intro { grid-column: span 4; padding-right: 24px; }
+.pdp-faq__list { grid-column: span 8; }
+.pdp-faq__lead { margin-top: 12px; font-size: 15px; line-height: 1.5; color: var(--text-2); }
+
+/* ---------- С этим товаром покупают: заголовок слева, две карточки справа ---------- */
+.pdp-related { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); align-items: start; gap: 28px var(--gap); }
+.pdp-related__intro { grid-column: span 4; padding-right: 24px; }
+.pdp-related__grid { grid-column: span 8; }
+.pdp-related__lead { margin-top: 12px; font-size: 15px; line-height: 1.5; color: var(--text-2); }
+.pdp-related__link { margin-top: 8px; }
+@media (min-width: 600px) {
+  .pdp-related__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* ссылки строками в левой колонке «Вопросов»: поддержка */
+.pdp-links { margin-top: 20px; border-top: 1px solid var(--line); }
+.pdp-links > li { border-bottom: 1px solid var(--line); }
+.pdp-links a {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px; padding: 10px 0;
+  font-size: 15px; font-weight: 600; line-height: 1.4;
+}
+.pdp-links .icon { width: 18px; height: 18px; color: var(--text-3); transition: translate var(--t) var(--ease), color var(--t-fast) var(--ease); }
+@media (hover: hover) {
+  .pdp-links a:hover .icon { translate: 3px 0; color: var(--text); }
+}
+.pdp-links a:active { color: var(--text-2); }
+
+/* ---------- Нижняя панель покупки (только телефон) ---------- */
+.pdp-bar { display: none; }
+
+/* ---------- Окно «Купить в 1 клик»: что заказываем ---------- */
+.pdp-order {
+  display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 10px 14px 10px 10px;
+  border-radius: var(--r-card); background: var(--bg-soft);
+}
+.pdp-order__media { width: 52px; height: 60px; border-radius: var(--r-ctl); background: var(--bg); }
+.pdp-order__name { font-size: 15px; font-weight: 700; line-height: 1.3; }
+.pdp-order__name span { display: block; font-size: var(--fs-xs); font-weight: 400; color: var(--text-2); }
+.pdp-order__note { font-size: 15px; line-height: 1.45; color: var(--text-2); }
+.pdp-order__close { margin-top: 8px; }
+/* ссылка в подписи флажка: поля расширяют зону касания, строки при этом не раздвигаются */
+#one-click .checkbox a { padding-block: 4px; }
+@media (pointer: coarse) and (min-width: 480px) {
+  #one-click .checkbox a { padding-block: 12px; }
+}
+
+/* ==========================================================================
+   Адаптив
+   ========================================================================== */
+/* невысокий экран (1366 × 768, 1280 × 720): окно галереи ниже, ряд миниатюр остаётся в первом экране;
+   кадры вписаны целиком, фото под капотом подрезается по краям */
+@media (min-width: 1024px) {
+  .pdp-gallery__track { width: 100%; max-height: max(420px, calc(100vh - 290px)); }
+}
+@media (max-width: 1279px) {
+  .pdp-nav__list { gap: 24px; }
+}
+@media (max-width: 1139px) {
+  .pdp-top__in { gap: 28px 40px; }
+  .pdp-gallery__track { aspect-ratio: 1 / 1; }
+  .pdp-thumb { aspect-ratio: 1 / 1; }
+  .pdp-buy__title { font-size: 30px; }
+  .pdp-nav__name { display: none; }
+  /* отзывы: сводка строкой сверху, список на всю ширину */
+  .pdp-reviews__summary, .pdp-reviews__list { grid-column: 1 / -1; }
+  .pdp-reviews__summary { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 4px 24px; padding-right: 0; }
+  .pdp-reviews__summary .rating-summary__title { grid-column: 1 / -1; margin-bottom: 8px; }
+  .pdp-reviews__summary .rating-summary__count { grid-column: 1; }
+  .pdp-reviews__summary .more-link { grid-column: 2; grid-row: 2 / span 2; }
+}
+@media (max-width: 1023px) {
+  .pdp-top__in { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 32px; }
+  .pdp-gallery__track { aspect-ratio: 4 / 5; }
+  .pdp-buy__title { font-size: 26px; }
+  .pdp-buy__actions { grid-template-columns: minmax(0, 1fr); }
+  /* миниатюры: лента с прокруткой, поля оставляют место обводке фокуса */
+  .pdp-gallery__thumbs { display: flex; gap: 10px; margin: 8px -4px -4px; padding: 4px; overflow-x: auto; scrollbar-width: none; }
+  .pdp-gallery__thumbs::-webkit-scrollbar { display: none; }
+  .pdp-gallery__thumbs > li { flex: none; }
+  .pdp-thumb { width: 60px; }
+  .pdp-nav__list { gap: 22px; }
+  /* описание: компактные ряды «картинка слева, текст справа» */
+  .pdp-features { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .pdp-feature { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: center; gap: 14px var(--gap); }
+  .pdp-feature__media { aspect-ratio: 3 / 2; }
+  .pdp-feature__body { max-width: 56ch; }
+  .pdp-feature__title { margin-bottom: 10px; }
+  /* комплект в одну колонку: заголовок и строка, плитки, список */
+  .pdp-kit { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .pdp-kit__body { display: contents; }
+  .pdp-kit__pics { grid-column: auto; }
+  .pdp-kit__body > h2 { order: -3; }
+  .pdp-kit__lead { order: -2; margin-top: -8px; }
+  .pdp-kit__pics { order: -1; }
+  .pdp-kit__pics > .plate { aspect-ratio: 3 / 2; }
+  .pdp-kit__list { margin-top: 0; }
+  /* одна колонка: заголовок, карточки, потом ссылка на сравнение */
+  .pdp-related { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .pdp-related__intro { display: contents; }
+  .pdp-related__grid { grid-column: auto; order: 1; margin-top: 24px; }
+  .pdp-related__link { order: 2; justify-self: start; margin-top: 16px; }
+}
+/* планшет: доставка и гарантия уходят под обе колонки сеткой 2 × 2, колонка покупки равна галерее */
+@media (max-width: 1023px) and (min-width: 768px) {
+  .pdp-gallery__track { aspect-ratio: auto; height: 456px; }
+  .pdp-buy { display: contents; }
+  .pdp-buy__main { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
+  .pdp-buy__compare { margin-bottom: -8px; }
+  .pdp-ship { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 0; }
+  .pdp-ship > li + li { border-top: 0; }
+  .pdp-ship > li:nth-child(even) { border-left: 1px solid var(--line); }
+  .pdp-ship > li:nth-child(n+3) { border-top: 1px solid var(--line); }
+}
+@media (max-width: 1023px) and (min-width: 600px) {
+  .pdp-related__grid .product-card__media { aspect-ratio: 4 / 3; }
+}
+@media (max-width: 899px) {
+  .pdp-specs { grid-template-columns: minmax(0, 1fr); }
+  .pdp-specs__more-in > .specs { margin-top: 28px; }
+  /* одна колонка: заголовок, шаги, потом предупреждение и ссылка */
+  .pdp-howto { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .pdp-howto__intro { display: contents; }
+  .pdp-howto__steps { grid-column: auto; order: 1; margin-top: 20px; }
+  .pdp-howto__note { order: 2; margin-top: 20px; }
+  .pdp-howto__intro .more-link { order: 3; justify-self: start; }
+  /* одна колонка: заголовок, вопросы, потом контакты поддержки */
+  .pdp-faq { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .pdp-faq__intro { display: contents; }
+  .pdp-faq__list { grid-column: auto; order: 1; margin-top: 20px; }
+  .pdp-faq__lead { order: 2; margin-top: 24px; }
+  .pdp-faq .pdp-links { order: 3; margin-top: 14px; }
+  .pdp-reviews__list { columns: 2; }
+}
+
+@media (max-width: 767px) {
+  :root { --pdp-nav-h: 0px; }   /* под-навигация на телефоне не липкая */
+  .pdp-top { padding-block: 0 28px; }
+  .pdp-top__in { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .pdp-gallery { position: static; }
+
+  /* галерея листается пальцем, миниатюры и счётчик показывают текущий кадр */
+  .pdp-gallery__track {
+    display: flex; gap: 8px; aspect-ratio: auto; overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; scrollbar-width: none;
+  }
+  .pdp-gallery__track::-webkit-scrollbar { display: none; }
+  .pdp-gallery__frame {
+    position: relative; inset: auto; flex: 0 0 100%; aspect-ratio: 1 / 1; opacity: 1; visibility: visible;
+    scroll-snap-align: start; scroll-snap-stop: always; transition: none;
+  }
+  .pdp-gallery__frame--stand > img { height: 88%; }
+  .pdp-gallery__frame--stand::after { bottom: calc(6% - 9px); width: 40%; }
+  .pdp-gallery__play-icon { width: 64px; height: 64px; }
+  .pdp-gallery__count {
+    position: absolute; top: 8px; right: 8px; display: block; padding: 5px 8px; border-radius: var(--r-ctl);
+    background: var(--bg); color: var(--text-2); font-size: var(--fs-xs); font-weight: 600; line-height: 1;
+    font-variant-numeric: tabular-nums; pointer-events: none;
+  }
+  .pdp-gallery__count b { color: var(--text); }
+  .pdp-gallery__thumbs { margin: 8px calc(-1 * var(--gutter)) -4px; padding: 4px var(--gutter); }
+  .pdp-thumb { width: 56px; }
+
+  .pdp-buy__title { margin-top: 12px; font-size: 24px; }
+  .pdp-buy__rating { margin-top: 2px; }
+  .pdp-buy__price { margin-top: 0; }
+  .pdp-buy__keys { margin-top: 14px; }
+  .pdp-buy__actions { margin-top: 20px; }
+  .pdp-ship { margin-top: 20px; }
+  .pdp-ship > li { padding-inline: 14px; }
+
+  .pdp-nav { position: static; }
+  .pdp-nav__in { height: 48px; padding-inline: 0; }
+  .pdp-nav__list { gap: 22px; padding-inline: var(--gutter); }
+  .pdp-nav__buy { display: none; }
+
+  .pdp-desc { padding-top: 36px; scroll-margin-top: 0; }
+  #reviews, #faq { scroll-margin-top: -20px; }
+  /* описание: картинка 16:9 сверху, текст под ней */
+  .pdp-features { gap: 28px; }
+  .pdp-feature { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .pdp-feature__media { aspect-ratio: 16 / 9; }
+  .pdp-feature__title { margin-bottom: 6px; }
+  .pdp-feature__body { font-size: 15px; }
+
+  .pdp-kit__lead { font-size: 15px; }
+  .pdp-kit__pics { gap: 12px; }
+  .pdp-kit__list > li { grid-template-columns: minmax(0, 1fr); padding: 11px 0; }
+  .pdp-howto__lead, .pdp-related__lead { margin-top: 8px; font-size: 15px; }
+  .pdp-related__grid { margin-top: 20px; }
+  .pdp-related__link { margin-top: 12px; }
+
+  /* отзывы листаются вбок, как на главной: страница не растягивается */
+  .pdp-reviews__list {
+    display: flex; align-items: flex-start; gap: 12px; columns: auto; margin: 0 calc(-1 * var(--gutter)); padding-inline: var(--gutter);
+    overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+  .pdp-reviews__list::-webkit-scrollbar { display: none; }
+  .pdp-reviews__list > li { flex: 0 0 84%; margin-bottom: 0; scroll-snap-align: start; }
+  /* самый длинный отзыв стоит первым: лента сразу нужной высоты, под первой карточкой нет пустоты */
+  .pdp-reviews__list > li:last-child { order: -1; }
+  .pdp-reviews .review { padding: 20px; }
+
+  /* нижняя панель: название, цена и кнопка в зоне большого пальца (тот же вид, что в подборе);
+     прячется, пока на экране кнопки блока покупки */
+  .pdp-bar {
+    position: fixed; inset: auto 0 0; z-index: var(--z-sticky); display: block;
+    padding-bottom: env(safe-area-inset-bottom, 0px); background: var(--bg); box-shadow: var(--shadow-bar);
+    transition: transform var(--t-slow) var(--ease), visibility 0s linear 0s;
+  }
+  .pdp-bar.is-hidden { transform: translateY(100%); visibility: hidden; transition-delay: 0s, var(--t-slow); }
+  .pdp-bar__in { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 64px; padding-block: 10px; }
+  .pdp-bar__info { display: flex; flex-direction: column; justify-content: center; gap: 2px; min-width: 0; }
+  .pdp-bar__name { font-size: var(--fs-xs); line-height: 1.3; color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pdp-bar__price { font-size: 20px; }
+  .pdp-bar__btn { flex: none; min-width: 152px; }
+  /* подвал не прячется под панелью */
+  .page-product-es19 .footer__bottom { padding-bottom: 92px; }
+}
+@media (max-width: 599px) {
+  .pdp-kit__pics > .plate { aspect-ratio: 1 / 1; }
+  /* телефон: вторая таблица характеристик свёрнута; без скриптов она открыта */
+  .js .pdp-specs__more { grid-template-rows: 0fr; visibility: hidden; transition: grid-template-rows var(--t-slow) var(--ease), visibility 0s linear var(--t-slow); }
+  .js .pdp-specs__more.is-open { grid-template-rows: 1fr; visibility: visible; transition-delay: 0s; }
+  .js .pdp-specs__more-in { overflow: hidden; }
+  .js .pdp-specs__toggle { display: inline-flex; margin-top: 20px; }
+}
+@media (max-width: 359px) {
+  .pdp-buy__title { font-size: 22px; }
+  .pdp-bar__btn { min-width: 124px; padding-inline: 12px; }
+}

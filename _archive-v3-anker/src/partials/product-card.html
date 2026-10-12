@@ -1,0 +1,15 @@
+<article class="product-card" data-product="{{id}}">
+  <a class="product-card__media plate{{#if tilt}} plate--tilt{{/if}}{{#if badge}} product-card__media--badge{{/if}}" href="{{url}}" tabindex="-1" aria-hidden="true">
+    {{#if badge}}<span class="badge product-card__badge">{{badge}}</span>{{/if}}
+    <img src="{{img}}" alt="{{alt}}" width="{{w}}" height="{{h}}" loading="lazy" decoding="async">
+  </a>
+  <div class="product-card__body">
+    <h3 class="product-card__title">{{#if badge}}<span class="visually-hidden">{{badge}}. </span>{{/if}}<a href="{{url}}">{{name}}</a></h3>
+    <p class="product-card__specs">{{{specsHtml}}}</p>
+    <p class="rating">{{icon star}}<span class="visually-hidden">Оценка </span><b>{{ratingFmt}}</b> <span>{{{reviewsHtml}}}</span></p>
+    <div class="product-card__buy">
+      <span class="price">{{{priceHtml}}}</span>
+      <button class="btn btn--lime btn--sm" type="button" data-add-to-cart="{{id}}">В корзину</button>
+    </div>
+  </div>
+</article>
